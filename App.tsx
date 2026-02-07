@@ -19,6 +19,19 @@ const ScrollToTop = () => {
   return null;
 };
 
+const INITIAL_DATA: CoupleData = {
+  partner1: '', partner2: '',
+  startDate: '', images: [],
+  musicUrl: '',
+  message: '', effect: PageEffect.NONE,
+  theme: PageTheme.ROMANTIC,
+  frame: PhotoFrame.NONE,
+  fontFamily: CoupleFont.ROMANTIC,
+  milestones: [],
+  plan: PlanType.BASIC,
+  slug: ''
+};
+
 const AppContent: React.FC<{
   lang: Language;
   setLang: (l: Language) => void;
@@ -44,7 +57,7 @@ const AppContent: React.FC<{
       <main className="flex-grow">
         <Routes>
           <Route path="/" element={<LandingPage onSelectPlan={handleSelectPlan} lang={lang} t={t} />} />
-          <Route path="/editar" element={<Editor data={coupleData} plan={selectedPlan || PlanType.BASIC} onUpdate={updateCoupleData} lang={lang} t={t} />} />
+          <Route path="/editar" element={<Editor data={coupleData} plan={selectedPlan || coupleData.plan} onUpdate={updateCoupleData} lang={lang} t={t} />} />
           <Route path="/preview" element={<Preview data={coupleData} lang={lang} t={t} />} />
           <Route path="/checkout" element={<Checkout data={coupleData} lang={lang} t={t} />} />
           <Route path="/faq" element={<FAQ lang={lang} t={t} />} />
@@ -83,19 +96,27 @@ const AppContent: React.FC<{
 };
 
 const App: React.FC = () => {
-  const [lang, setLang] = useState<Language>('pt');
-  const [selectedPlan, setSelectedPlan] = useState<PlanType | null>(null);
-  const [coupleData, setCoupleData] = useState<CoupleData>({
-    partner1: '', partner2: '',
-    startDate: '', images: [],
-    message: '', effect: PageEffect.NONE,
-    theme: PageTheme.ROMANTIC,
-    frame: PhotoFrame.NONE,
-    fontFamily: CoupleFont.ROMANTIC,
-    milestones: [],
-    plan: PlanType.BASIC,
-    slug: ''
+  const [lang, setLang] = useState<Language>(() => {
+    return (localStorage.getItem('kizuna_lang') as Language) || 'pt';
   });
+  
+  const [selectedPlan, setSelectedPlan] = useState<PlanType | null>(() => {
+    return (localStorage.getItem('kizuna_plan') as PlanType) || null;
+  });
+
+  const [coupleData, setCoupleData] = useState<CoupleData>(() => {
+    const saved = localStorage.getItem('kizuna_data');
+    return saved ? JSON.parse(saved) : INITIAL_DATA;
+  });
+
+  useEffect(() => {
+    localStorage.setItem('kizuna_lang', lang);
+  }, [lang]);
+
+  useEffect(() => {
+    localStorage.setItem('kizuna_data', JSON.stringify(coupleData));
+    if (coupleData.plan) setSelectedPlan(coupleData.plan);
+  }, [coupleData]);
 
   const updateCoupleData = (data: Partial<CoupleData>) => setCoupleData(prev => ({ ...prev, ...data }));
 

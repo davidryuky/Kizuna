@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CoupleData, PlanType, PageEffect, Language, PageTheme, PhotoFrame, Milestone, CoupleFont } from '../types';
-import { Camera, Calendar, Sparkles, User, ArrowRight, ArrowLeft, Youtube, Palette, Frame, Plus, Trash2, Link as LinkIcon, Zap, Type, Crown } from 'lucide-react';
+import { Camera, Calendar, Sparkles, User, ArrowRight, ArrowLeft, Youtube, Palette, Frame, Plus, Trash2, Link as LinkIcon, Zap, Type, Music } from 'lucide-react';
 import { THEMES, FRAMES, EFFECTS, FONTS } from '../constants';
 
 interface EditorProps {
@@ -127,6 +127,21 @@ const Editor: React.FC<EditorProps> = ({ data, plan, onUpdate, lang, t }) => {
           </div>
         </div>
 
+        {/* Música (Premium) */}
+        <div className="space-y-3">
+          <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2 px-1">
+            <Music size={14} /> Música de Fundo (YouTube URL) {!isPremium && <span className="text-rose-400 ml-2">🔒 {t.premiumOnly}</span>}
+          </label>
+          <input 
+            type="text" 
+            disabled={!isPremium}
+            value={data.musicUrl} 
+            onChange={e => onUpdate({ musicUrl: e.target.value })} 
+            className={`${inputClasses} ${!isPremium ? 'opacity-50 cursor-not-allowed' : ''}`} 
+            placeholder="Ex: https://www.youtube.com/watch?v=..." 
+          />
+        </div>
+
         {/* Data e Fotos */}
         <div className="grid md:grid-cols-2 gap-8">
           <div className="space-y-3">
@@ -143,6 +158,26 @@ const Editor: React.FC<EditorProps> = ({ data, plan, onUpdate, lang, t }) => {
               </div>
             </div>
           </div>
+        </div>
+
+        {/* Linha do Tempo (Premium) */}
+        <div className="space-y-6">
+           <div className="flex justify-between items-center">
+             <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2 px-1"><Calendar size={14} /> {t.milestones} {!isPremium && <span className="text-rose-400 ml-2">🔒 {t.premiumOnly}</span>}</label>
+             {isPremium && (
+               <button onClick={addMilestone} className="text-rose-500 hover:text-rose-600 flex items-center gap-1 text-xs font-black uppercase tracking-widest">
+                 <Plus size={16} /> {t.addMilestone}
+               </button>
+             )}
+           </div>
+           
+           {isPremium && data.milestones.map((m) => (
+             <div key={m.id} className="flex flex-col md:flex-row gap-4 p-6 bg-gray-50 rounded-2xl border border-gray-100 animate-in slide-in-from-top-4 duration-300">
+                <input type="date" value={m.date} onChange={e => updateMilestone(m.id, { date: e.target.value })} className={`${inputClasses} md:w-48`} />
+                <input type="text" value={m.title} onChange={e => updateMilestone(m.id, { title: e.target.value })} className={inputClasses} placeholder={t.milestoneTitle} />
+                <button onClick={() => removeMilestone(m.id)} className="text-gray-300 hover:text-rose-500 p-2"><Trash2 size={20} /></button>
+             </div>
+           ))}
         </div>
 
         {/* Mensagem */}
