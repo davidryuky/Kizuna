@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { HashRouter, Routes, Route, useLocation, Link } from 'react-router-dom';
+import { HashRouter, Routes, Route, useLocation, Link, Navigate } from 'react-router-dom';
 import { PlanType, CoupleData, PageEffect, Language, PageTheme, PhotoFrame, CoupleFont } from './types';
 import LandingPage from './components/LandingPage';
 import Editor from './components/Editor';
@@ -50,6 +50,7 @@ const AppContent: React.FC<{
           <Route path="/faq" element={<FAQ lang={lang} t={t} />} />
           <Route path="/privacidade" element={<Privacy lang={lang} t={t} />} />
           <Route path="/contato" element={<Contact lang={lang} t={t} />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>
       
@@ -71,7 +72,7 @@ const AppContent: React.FC<{
             
             <div className="pt-8 border-t border-gray-50 w-full">
               <p className="text-gray-400 text-[10px] font-black uppercase tracking-[0.2em]">
-                Desenvolvido com ❤️ por Davi .S
+                Desenvolvido com ❤️ para Casais Apaixonados
               </p>
             </div>
           </div>
@@ -98,7 +99,18 @@ const App: React.FC = () => {
 
   const updateCoupleData = (data: Partial<CoupleData>) => setCoupleData(prev => ({ ...prev, ...data }));
 
-  return (<HashRouter><AppContent lang={lang} setLang={setLang} selectedPlan={selectedPlan} setSelectedPlan={setSelectedPlan} coupleData={coupleData} updateCoupleData={updateCoupleData} /></HashRouter>);
+  return (
+    <HashRouter>
+      <AppContent 
+        lang={lang} 
+        setLang={setLang} 
+        selectedPlan={selectedPlan} 
+        setSelectedPlan={setSelectedPlan} 
+        coupleData={coupleData} 
+        updateCoupleData={updateCoupleData} 
+      />
+    </HashRouter>
+  );
 };
 
 export default App;

@@ -8,8 +8,8 @@ import { THEMES } from '../constants';
 
 const HeartEffect = () => (
   <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-    {[...Array(15)].map((_, i) => (
-      <div key={i} className="heart text-rose-400 opacity-30" style={{ left: `${Math.random() * 100}%`, animationDuration: `${Math.random() * 8 + 6}s`, animationDelay: `${Math.random() * 5}s`, fontSize: `${Math.random() * 20 + 10}px` }}>
+    {[...Array(20)].map((_, i) => (
+      <div key={i} className="heart text-rose-400 opacity-20" style={{ left: `${Math.random() * 100}%`, animationDuration: `${Math.random() * 8 + 6}s`, animationDelay: `${Math.random() * 5}s`, fontSize: `${Math.random() * 24 + 12}px` }}>
         <Heart fill="currentColor" />
       </div>
     ))}
@@ -17,10 +17,10 @@ const HeartEffect = () => (
 );
 
 const StarEffect = () => (
-  <div className="fixed inset-0 pointer-events-none overflow-hidden z-0 bg-[#020617]/20">
-    {[...Array(40)].map((_, i) => (
+  <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+    {[...Array(50)].map((_, i) => (
       <div key={i} className="absolute animate-pulse text-yellow-200" style={{ left: `${Math.random() * 100}%`, top: `${Math.random() * 100}%`, animationDuration: `${Math.random() * 3 + 1}s`, opacity: Math.random() }}>
-        <Star size={Math.random() * 10 + 4} fill="currentColor" />
+        <Star size={Math.random() * 8 + 2} fill="currentColor" />
       </div>
     ))}
   </div>
@@ -28,9 +28,9 @@ const StarEffect = () => (
 
 const PetalEffect = () => (
   <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-    {[...Array(20)].map((_, i) => (
-      <div key={i} className="heart text-rose-200 opacity-40" style={{ left: `${Math.random() * 100}%`, animationDuration: `${Math.random() * 10 + 10}s`, animationDelay: `${Math.random() * 10}s` }}>
-        <div className="w-4 h-5 bg-rose-200 rounded-full rotate-45" style={{ borderRadius: '100% 0% 100% 0%' }}></div>
+    {[...Array(25)].map((_, i) => (
+      <div key={i} className="heart text-rose-200 opacity-30" style={{ left: `${Math.random() * 100}%`, animationDuration: `${Math.random() * 12 + 8}s`, animationDelay: `${Math.random() * 10}s` }}>
+        <div className="w-4 h-6 bg-rose-100 rounded-full rotate-45 shadow-sm" style={{ borderRadius: '100% 10% 100% 10%' }}></div>
       </div>
     ))}
   </div>
@@ -38,14 +38,14 @@ const PetalEffect = () => (
 
 const FirefliesEffect = () => (
   <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-    {[...Array(25)].map((_, i) => (
-      <div key={i} className="absolute bg-yellow-400/60 rounded-full blur-[2px] animate-pulse" 
+    {[...Array(30)].map((_, i) => (
+      <div key={i} className="absolute bg-yellow-300/40 rounded-full blur-[3px] animate-pulse" 
         style={{ 
           left: `${Math.random() * 100}%`, 
           top: `${Math.random() * 100}%`, 
-          width: `${Math.random() * 4 + 2}px`, 
-          height: `${Math.random() * 4 + 2}px`,
-          animationDuration: `${Math.random() * 4 + 2}s`,
+          width: `${Math.random() * 6 + 2}px`, 
+          height: `${Math.random() * 6 + 2}px`,
+          animationDuration: `${Math.random() * 5 + 2}s`,
           animationDelay: `${Math.random() * 5}s`
         }} 
       />
@@ -72,33 +72,11 @@ const Preview: React.FC<{ data: CoupleData, lang: any, t: any }> = ({ data, lang
   const activeTheme = useMemo(() => THEMES.find(th => th.id === data.theme) || THEMES[0], [data.theme]);
   const isPremium = data.plan === PlanType.PREMIUM;
 
-  // SEO DINÂMICO
-  useEffect(() => {
-    const title = `${data.partner1 || 'Você'} & ${data.partner2 || 'Eu'} | KIZUNA`;
-    document.title = title;
-    
-    // Update Meta Tags (simulated for client-side)
-    const updateMeta = (name: string, content: string) => {
-      let el = document.querySelector(`meta[name="${name}"]`);
-      if (!el) {
-        el = document.createElement('meta');
-        el.setAttribute('name', name);
-        document.head.appendChild(el);
-      }
-      el.setAttribute('content', content);
-    };
-
-    updateMeta('description', `Veja a história de amor de ${data.partner1} e ${data.partner2} no KIZUNA.`);
-    updateMeta('og:title', title);
-    updateMeta('og:description', data.message || 'Um laço eterno celebrado no KIZUNA.');
-    if (data.images.length > 0) updateMeta('og:image', data.images[0]);
-  }, [data.partner1, data.partner2, data.message, data.images]);
-
   useEffect(() => {
     if (isPremium && data.images.length > 1) {
       const interval = setInterval(() => {
         setCurrentSlide(prev => (prev + 1) % data.images.length);
-      }, 3000);
+      }, 4000);
       return () => clearInterval(interval);
     }
   }, [isPremium, data.images.length]);
@@ -119,10 +97,10 @@ const Preview: React.FC<{ data: CoupleData, lang: any, t: any }> = ({ data, lang
   }, [data.startDate]);
 
   const frameClasses = {
-    [PhotoFrame.NONE]: "rounded-2xl",
-    [PhotoFrame.POLAROID]: "p-3 pb-16 bg-white shadow-xl rounded-sm rotate-1",
-    [PhotoFrame.GOLD]: "p-4 bg-gradient-to-br from-amber-600 via-amber-200 to-amber-700 shadow-2xl rounded-sm",
-    [PhotoFrame.ORGANIC]: "rounded-3xl border-4 border-white/50 shadow-inner"
+    [PhotoFrame.NONE]: "rounded-[2rem]",
+    [PhotoFrame.POLAROID]: "p-4 pb-20 bg-white shadow-2xl rounded-sm rotate-1 border border-gray-100",
+    [PhotoFrame.GOLD]: "p-5 bg-gradient-to-br from-amber-600 via-amber-100 to-amber-700 shadow-2xl rounded-sm",
+    [PhotoFrame.ORGANIC]: "rounded-[3.5rem] border-8 border-white shadow-inner"
   };
 
   const pageUrl = `https://kizuna.love/${data.slug || 'nosso-amor'}`;
@@ -130,33 +108,20 @@ const Preview: React.FC<{ data: CoupleData, lang: any, t: any }> = ({ data, lang
 
   const handleShareClick = async () => {
     setIsSharing(true);
-    try {
-      const response = await fetch(qrUrl);
-      const blob = await response.blob();
-      const file = new File([blob], 'kizuna-qrcode.png', { type: 'image/png' });
-
-      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+    if (navigator.share) {
+      try {
         await navigator.share({
           title: `KIZUNA - ${data.partner1} & ${data.partner2}`,
           text: t.nativeShareMsg,
           url: pageUrl,
-          files: [file]
         });
-      } else if (navigator.share) {
-        await navigator.share({
-          title: `KIZUNA - ${data.partner1} & ${data.partner2}`,
-          text: t.nativeShareMsg,
-          url: pageUrl
-        });
-      } else {
+      } catch (err) {
         setShowShareModal(true);
       }
-    } catch (err) {
-      console.error('Erro ao compartilhar:', err);
+    } else {
       setShowShareModal(true);
-    } finally {
-      setIsSharing(false);
     }
+    setIsSharing(false);
   };
 
   const selectedFontClass = data.fontFamily || 'font-inter';
@@ -168,129 +133,134 @@ const Preview: React.FC<{ data: CoupleData, lang: any, t: any }> = ({ data, lang
       {data.effect === PageEffect.FLOWER_PETALS && <PetalEffect />}
       {data.effect === PageEffect.FIREFLIES && <FirefliesEffect />}
       
+      {/* Barra de Ações Superior */}
       <div className="fixed top-6 left-0 right-0 z-[100] flex justify-between px-6 pointer-events-none">
-        <button onClick={() => navigate('/editar')} className="pointer-events-auto bg-white/95 shadow-lg px-5 py-2 rounded-lg text-gray-900 border border-gray-100 flex items-center gap-2 font-bold text-[10px] uppercase tracking-widest hover:bg-gray-50 transition-colors"><ArrowLeft size={14} /> {t.backEditor}</button>
-        <button onClick={() => navigate('/checkout')} className="pointer-events-auto bg-rose-500 text-white shadow-lg px-6 py-2 rounded-lg flex items-center gap-2 font-bold text-[10px] uppercase tracking-widest hover:bg-rose-600 transition-colors">{t.finishPage} <CheckCircle size={14} /></button>
+        <button onClick={() => navigate('/editar')} className="pointer-events-auto bg-white/90 backdrop-blur shadow-xl px-5 py-2.5 rounded-full text-gray-900 border border-white/50 flex items-center gap-2 font-black text-[10px] uppercase tracking-widest hover:bg-white transition-all transform hover:scale-105 active:scale-95"><ArrowLeft size={14} /> {t.backEditor}</button>
+        <button onClick={() => navigate('/checkout')} className="pointer-events-auto bg-rose-500 text-white shadow-xl px-6 py-2.5 rounded-full flex items-center gap-2 font-black text-[10px] uppercase tracking-widest hover:bg-rose-600 transition-all transform hover:scale-105 active:scale-95">{t.finishPage} <CheckCircle size={14} /></button>
       </div>
 
       {videoId && isMusicPlaying && (
         <div className="fixed -top-[2000px]"><iframe width="100" height="100" src={`https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0&loop=1&playlist=${videoId}&enablejsapi=1`} allow="autoplay" title="Music"></iframe></div>
       )}
 
-      <div className={`max-w-2xl w-full ${activeTheme.card} backdrop-blur-md rounded-2xl shadow-2xl p-8 md:p-12 relative z-10 animate-in fade-in duration-1000 mt-28 border border-white/20`}>
+      {/* Card Principal da Página */}
+      <div className={`max-w-2xl w-full ${activeTheme.card} backdrop-blur-xl rounded-[3rem] shadow-2xl p-8 md:p-16 relative z-10 animate-in fade-in zoom-in duration-1000 mt-28 border border-white/30 overflow-hidden`}>
+        
+        {/* Decoração Superior */}
+        <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-transparent via-rose-300 to-transparent opacity-50"></div>
+
         <header className="text-center mb-16">
-          <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6 mb-4">
-            <h2 className={`text-5xl md:text-7xl ${selectedFontClass} animate-in slide-in-from-bottom-4 duration-1000 ${activeTheme.text}`}>{data.partner1 || 'Você'}</h2>
+          <div className="flex flex-col items-center justify-center gap-4 mb-8">
             <div className="relative">
-              <Heart className="w-8 h-8 text-rose-500 fill-rose-500 animate-pulse" />
+              <Heart className="w-12 h-12 text-rose-500 fill-rose-500 animate-pulse" />
+              <Heart className="absolute inset-0 w-12 h-12 text-rose-300 fill-rose-300 animate-ping opacity-20" />
             </div>
-            <h2 className={`text-5xl md:text-7xl ${selectedFontClass} animate-in slide-in-from-bottom-4 duration-1000 delay-150 ${activeTheme.text}`}>{data.partner2 || 'Eu'}</h2>
+            <div className="flex flex-wrap items-center justify-center gap-4 md:gap-8">
+              <h2 className={`text-5xl md:text-8xl ${selectedFontClass} ${activeTheme.text} drop-shadow-sm`}>{data.partner1 || 'Amor'}</h2>
+              <span className="text-2xl font-elegant italic text-gray-300">&</span>
+              <h2 className={`text-5xl md:text-8xl ${selectedFontClass} ${activeTheme.text} drop-shadow-sm`}>{data.partner2 || 'Eterno'}</h2>
+            </div>
           </div>
-          <p className="text-gray-400 font-elegant italic tracking-[0.2em] text-[10px] uppercase">{t.togetherForever}</p>
+          <p className="text-gray-400 font-elegant italic tracking-[0.4em] text-[11px] uppercase opacity-80">{t.togetherForever}</p>
         </header>
 
-        <div className={`relative mx-auto max-w-sm ${frameClasses[data.frame]} overflow-hidden mb-12 group transition-all duration-500 shadow-xl bg-gray-50/50`}>
+        {/* Galeria / Foto Central */}
+        <div className={`relative mx-auto max-w-sm ${frameClasses[data.frame]} overflow-hidden mb-16 shadow-2xl group transition-all duration-700 bg-gray-50/20`}>
           {data.images.length > 0 ? (
             <div className="aspect-square relative overflow-hidden">
                {data.images.map((img, idx) => (
                  <img 
                     key={idx} 
                     src={img} 
-                    className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out ${currentSlide === idx ? 'opacity-100 z-10' : 'opacity-0 z-0'}`} 
-                    alt="Memória de Amor" 
+                    className={`absolute inset-0 w-full h-full object-cover transition-all duration-1000 ease-in-out ${currentSlide === idx ? 'opacity-100 scale-100 z-10' : 'opacity-0 scale-110 z-0'}`} 
+                    alt="Memória" 
                   />
                ))}
             </div>
           ) : (
-            <div className="aspect-square flex items-center justify-center text-rose-100 bg-gray-100"><Heart size={64} fill="currentColor" className="opacity-10" /></div>
+            <div className="aspect-square flex items-center justify-center text-rose-100 bg-gray-50"><Heart size={80} fill="currentColor" className="opacity-10" /></div>
           )}
           
           {data.images.length > 1 && (
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 z-20">
+            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-20">
               {data.images.map((_, idx) => (
-                <div key={idx} className={`h-1 rounded-full transition-all duration-500 ${currentSlide === idx ? 'w-6 bg-white shadow-sm' : 'w-2 bg-white/40'}`} />
+                <button key={idx} onClick={() => setCurrentSlide(idx)} className={`h-1.5 rounded-full transition-all duration-500 ${currentSlide === idx ? 'w-10 bg-white shadow-md' : 'w-2 bg-white/40'}`} />
               ))}
-            </div>
-          )}
-
-          {data.images.length > 1 && (
-            <div className="absolute inset-0 flex items-center justify-between px-2 opacity-0 group-hover:opacity-100 transition-opacity z-20">
-              <button onClick={() => setCurrentSlide(p => p === 0 ? data.images.length - 1 : p - 1)} className="bg-white/80 p-2 rounded-full shadow-lg hover:bg-white transition-colors"><ChevronLeft size={20} className="text-rose-500" /></button>
-              <button onClick={() => setCurrentSlide(p => p === data.images.length - 1 ? 0 : p + 1)} className="bg-white/80 p-2 rounded-full shadow-lg hover:bg-white transition-colors"><ChevronRight size={20} className="text-rose-500" /></button>
             </div>
           )}
         </div>
 
+        {/* Contador */}
         {counter && (
-          <div className="grid grid-cols-4 gap-3 mb-12">
+          <div className="grid grid-cols-4 gap-4 mb-16">
             {Object.entries(counter).map(([k, v]) => (
-              <div key={k} className="bg-white/40 p-4 rounded-xl text-center border border-white/30 shadow-sm transition-transform hover:-translate-y-1">
-                <span className={`block text-2xl font-black ${activeTheme.text}`}>{v}</span>
-                <span className="text-[8px] uppercase font-black text-gray-400 tracking-widest">{t[k] || k}</span>
+              <div key={k} className="bg-white/30 backdrop-blur-sm p-4 md:p-6 rounded-3xl text-center border border-white/40 shadow-sm transition-all hover:-translate-y-1">
+                <span className={`block text-3xl md:text-4xl font-black ${activeTheme.text} tracking-tighter`}>{v}</span>
+                <span className="text-[9px] uppercase font-black text-gray-400 tracking-widest mt-1 block">{t[k] || k}</span>
               </div>
             ))}
           </div>
         )}
 
-        <div className={`text-center italic ${selectedFontClass} text-lg leading-relaxed mb-12 px-6 opacity-80 ${activeTheme.text.includes('slate') ? 'text-slate-300' : 'text-gray-600'}`}>
-          "{data.message || "Sua mensagem especial aqui..."}"
+        {/* Mensagem */}
+        <div className={`text-center italic ${selectedFontClass} text-xl md:text-2xl leading-relaxed mb-16 px-6 opacity-90 ${activeTheme.text.includes('slate') ? 'text-slate-300' : 'text-gray-700'}`}>
+          "{data.message || "Escreva aqui as palavras que definem o seu amor..."}"
         </div>
 
+        {/* Timeline */}
         <Timeline milestones={data.milestones} colorClass={activeTheme.text} />
       </div>
 
-      <div className="max-w-sm w-full mt-12 mb-32 text-center relative z-10">
+      {/* Rodapé de Compartilhamento */}
+      <div className="max-w-sm w-full mt-16 mb-32 text-center relative z-10">
          <button 
            onClick={handleShareClick}
            disabled={isSharing}
-           className="bg-white shadow-xl px-10 py-4 rounded-xl border-2 border-rose-100 text-rose-500 font-bold flex items-center justify-center gap-3 mx-auto hover:bg-rose-50 transition-all transform hover:-translate-y-1 active:scale-95 disabled:opacity-50"
+           className="bg-white/90 backdrop-blur shadow-2xl px-12 py-5 rounded-2xl border border-white/50 text-rose-500 font-black uppercase text-xs tracking-[0.2em] flex items-center justify-center gap-4 mx-auto hover:bg-white transition-all transform hover:-translate-y-1 active:scale-95 disabled:opacity-50"
          >
-           {isSharing ? (
-             <div className="w-5 h-5 border-2 border-rose-500 border-t-transparent rounded-full animate-spin"></div>
-           ) : (
-             <>
-               <Share2 size={20} />
-               {t.shareBtn}
-             </>
-           )}
+           {isSharing ? <div className="w-5 h-5 border-2 border-rose-500 border-t-transparent rounded-full animate-spin"></div> : <><Share2 size={20} /> {t.shareBtn}</>}
          </button>
 
          {showShareModal && (
-           <div className="fixed inset-0 z-[200] flex items-center justify-center p-6 bg-rose-900/40 backdrop-blur-sm animate-in fade-in duration-300">
-             <div className="bg-white rounded-3xl p-8 max-w-sm w-full shadow-2xl relative animate-in zoom-in duration-300">
-                <button onClick={() => setShowShareModal(false)} className="absolute top-4 right-4 text-gray-400 hover:text-rose-500 transition-colors p-2"><X size={20} /></button>
+           <div className="fixed inset-0 z-[200] flex items-center justify-center p-6 bg-rose-900/60 backdrop-blur-md animate-in fade-in duration-500">
+             <div className="bg-white rounded-[3rem] p-10 max-w-sm w-full shadow-2xl relative animate-in zoom-in slide-in-from-bottom-8 duration-500">
+                <button onClick={() => setShowShareModal(false)} className="absolute top-6 right-6 text-gray-400 hover:text-rose-500 transition-colors p-2"><X size={24} /></button>
                 
-                <div className="text-center mb-8">
-                  <h4 className="font-bold text-gray-900 mb-2 text-xl flex items-center justify-center gap-2">
-                    <QrCode size={20} className="text-rose-500" /> {t.giftCardTitle}
-                  </h4>
-                  <p className="text-xs text-gray-500 px-2 leading-relaxed">{t.giftCardDesc}</p>
+                <div className="text-center mb-10">
+                  <div className="w-16 h-16 bg-rose-50 text-rose-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-inner">
+                    <QrCode size={32} />
+                  </div>
+                  <h4 className="font-bold text-gray-900 mb-2 text-2xl">{t.giftCardTitle}</h4>
+                  <p className="text-sm text-gray-500 leading-relaxed px-4">{t.giftCardDesc}</p>
                 </div>
                 
-                <div className="bg-gray-50 p-6 rounded-2xl border-2 border-rose-50 inline-block mb-8 shadow-inner transform transition-transform hover:scale-105">
-                   <img src={qrUrl} alt="QR Code" className="w-32 h-32 mix-blend-multiply" />
+                <div className="bg-white p-6 rounded-[2rem] border-2 border-rose-50 shadow-inner mb-8 flex justify-center group transition-transform hover:scale-105">
+                   <img src={qrUrl} alt="QR Code" className="w-40 h-40 mix-blend-multiply" />
                 </div>
 
                 <div className="space-y-4">
-                  <div className="bg-rose-50 py-3 px-4 rounded-xl border border-rose-100 overflow-hidden">
-                     <p className="text-rose-600 font-bold text-[11px] select-all cursor-pointer tracking-widest truncate">{pageUrl}</p>
+                  <div className="bg-rose-50/50 py-4 px-6 rounded-2xl border border-rose-100 overflow-hidden group cursor-pointer" onClick={() => {
+                    navigator.clipboard.writeText(pageUrl);
+                    alert('Link copiado!');
+                  }}>
+                     <p className="text-rose-600 font-bold text-xs tracking-widest truncate">{pageUrl}</p>
                   </div>
-                  <a href={qrUrl} download="kizuna-qrcode.png" className="w-full bg-rose-500 text-white py-3 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-rose-600 transition-colors">
+                  <a href={qrUrl} download="kizuna-qrcode.png" className="w-full bg-rose-500 text-white py-4 rounded-2xl font-black uppercase text-xs tracking-widest flex items-center justify-center gap-3 hover:bg-rose-600 shadow-xl shadow-rose-100 transition-all">
                     <Download size={18} /> Baixar QR Code
                   </a>
-                  <button onClick={() => setShowShareModal(false)} className="w-full text-xs font-black uppercase text-gray-400 tracking-widest hover:text-rose-500 transition-colors">Fechar</button>
                 </div>
              </div>
            </div>
          )}
       </div>
 
+      {/* Controle de Música Flutuante */}
       {videoId && (
-        <button onClick={() => setIsMusicPlaying(!isMusicPlaying)} className="fixed bottom-10 right-10 z-[100] bg-white shadow-xl p-4 rounded-full flex items-center gap-3 border border-rose-50 hover:scale-105 transition-all">
-           <div className={`w-10 h-10 ${isMusicPlaying ? 'bg-rose-500 animate-spin-slow shadow-lg shadow-rose-200' : 'bg-gray-200'} rounded-full flex items-center justify-center text-white transition-colors duration-500`}>
-             <Music size={18} fill={isMusicPlaying ? "white" : "none"} />
+        <button onClick={() => setIsMusicPlaying(!isMusicPlaying)} className="fixed bottom-10 right-10 z-[100] bg-white/90 backdrop-blur shadow-2xl p-5 rounded-full flex items-center gap-4 border border-white/50 hover:scale-110 transition-all group">
+           <div className={`w-12 h-12 ${isMusicPlaying ? 'bg-rose-500 animate-spin-slow shadow-lg shadow-rose-200' : 'bg-gray-200'} rounded-full flex items-center justify-center text-white transition-all duration-500`}>
+             <Music size={20} fill={isMusicPlaying ? "white" : "none"} />
            </div>
-           {isMusicPlaying && <span className="text-[9px] font-black text-rose-500 uppercase tracking-widest pr-2">Tocando</span>}
+           {isMusicPlaying && <span className="text-[10px] font-black text-rose-500 uppercase tracking-widest pr-2 animate-pulse">Tocando</span>}
         </button>
       )}
     </div>

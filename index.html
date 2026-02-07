@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KIZUNA - Páginas para Casais</title>
+    <title>KIZUNA - Eternize seu Amor</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Noto+Sans+JP:wght@300;400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
@@ -42,6 +42,24 @@
         .animate-spin-slow {
             animation: spin-slow 8s linear infinite;
         }
+        
+        /* Preloader simples */
+        #root:empty {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background: #fff5f6;
+        }
+        #root:empty::after {
+            content: "💕";
+            font-size: 3rem;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.2); opacity: 1; }
+        }
     </style>
 <script type="importmap">
 {
@@ -58,5 +76,6 @@
 </head>
 <body class="bg-rose-50 text-gray-900 overflow-x-hidden">
     <div id="root"></div>
+    <script type="module" src="index.tsx"></script>
 </body>
 </html>

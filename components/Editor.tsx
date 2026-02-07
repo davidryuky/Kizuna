@@ -47,55 +47,61 @@ const Editor: React.FC<EditorProps> = ({ data, plan, onUpdate, lang, t }) => {
     onUpdate({ milestones: data.milestones.filter(m => m.id !== id) });
   };
 
-  const inputClasses = "w-full px-6 py-4 rounded-xl border-2 border-gray-400 bg-white focus:border-rose-500 focus:ring-4 focus:ring-rose-100 outline-none transition-all font-medium text-gray-800 shadow-sm placeholder:text-gray-400";
+  const inputClasses = "w-full px-6 py-4 rounded-2xl border-2 border-gray-100 bg-gray-50/50 focus:bg-white focus:border-rose-400 focus:ring-4 focus:ring-rose-50 outline-none transition-all font-medium text-gray-800 shadow-sm placeholder:text-gray-400";
 
   return (
     <div className={`max-w-4xl mx-auto px-4 py-12 animate-in fade-in duration-500`}>
-      <button onClick={() => navigate('/')} className="mb-8 flex items-center gap-3 bg-white text-rose-500 border-2 border-rose-500 px-8 py-3 rounded-full font-black text-xs uppercase tracking-widest hover:bg-rose-50 transition-all shadow-md group">
-        <ArrowLeft size={18} className="group-hover:-translate-x-1" /> {lang === 'pt' ? 'Mudar Plano' : 'プラン変更'}
+      <button 
+        onClick={() => navigate('/')} 
+        className="mb-8 flex items-center gap-3 text-rose-500 font-black text-xs uppercase tracking-widest hover:translate-x-[-4px] transition-transform"
+      >
+        <ArrowLeft size={18} /> {lang === 'pt' ? 'Mudar Plano' : 'プラン変更'}
       </button>
 
-      <div className="bg-white rounded-3xl shadow-xl p-8 md:p-12 border border-gray-100 space-y-10">
-        <header className="border-b border-gray-100 pb-8 flex flex-col md:flex-row justify-between items-start gap-4">
+      <div className="bg-white rounded-[2.5rem] shadow-2xl p-8 md:p-12 border border-gray-50 space-y-12">
+        <header className="border-b border-gray-50 pb-8 flex flex-col md:flex-row justify-between items-start gap-4">
           <div>
-            <h2 className="text-3xl font-elegant font-bold text-gray-900">{lang === 'pt' ? 'Personalize seu Amor' : 'カスタマイズ'}</h2>
-            <p className="text-gray-500 mt-1 text-sm">{lang === 'pt' ? 'Cada detalhe importa na sua história eterna.' : '細部までこだわって作りましょう。'}</p>
+            <h2 className="text-4xl font-elegant font-bold text-gray-900">{lang === 'pt' ? 'Sua História de Amor' : 'カスタマイズ'}</h2>
+            <p className="text-gray-500 mt-2 text-lg font-light">{lang === 'pt' ? 'Personalize cada detalhe do seu santuário digital.' : '細部までこだわって作りましょう。'}</p>
           </div>
-          <div className="inline-flex items-center gap-2 bg-rose-50 text-rose-600 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest border border-rose-100">
-            <Sparkles size={12} /> {isPremium ? t.premiumPlan : t.basicPlan}
+          <div className="inline-flex items-center gap-2 bg-rose-50 text-rose-600 px-5 py-2 rounded-full text-[10px] font-black uppercase tracking-widest border border-rose-100 shadow-sm">
+            <Sparkles size={14} /> {isPremium ? t.premiumPlan : t.basicPlan}
           </div>
         </header>
 
-        <div className="grid md:grid-cols-2 gap-6">
-          <div className="space-y-2">
-            <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.15em] flex items-center gap-2 px-1"><User size={12} /> {lang === 'pt' ? 'Seu Nome' : 'お名前1'}</label>
+        {/* Nomes */}
+        <div className="grid md:grid-cols-2 gap-8">
+          <div className="space-y-3">
+            <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2 px-1"><User size={14} /> {lang === 'pt' ? 'Seu Nome' : 'お名前1'}</label>
             <input type="text" value={data.partner1} onChange={e => onUpdate({ partner1: e.target.value })} className={inputClasses} placeholder="Ex: Lucas" />
           </div>
-          <div className="space-y-2">
-            <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.15em] flex items-center gap-2 px-1"><User size={12} /> {lang === 'pt' ? 'Nome do Par' : 'お名前2'}</label>
+          <div className="space-y-3">
+            <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2 px-1"><User size={14} /> {lang === 'pt' ? 'Nome do Amor' : 'お名前2'}</label>
             <input type="text" value={data.partner2} onChange={e => onUpdate({ partner2: e.target.value })} className={inputClasses} placeholder="Ex: Júlia" />
           </div>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-6">
-          <div className="space-y-2">
-            <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.15em] flex items-center gap-2 px-1"><LinkIcon size={12} /> {t.customUrl}</label>
-            <div className="flex items-center gap-2 bg-gray-50 px-6 py-4 rounded-xl border-2 border-gray-400 focus-within:border-rose-500 focus-within:ring-4 focus-within:ring-rose-100 transition-all shadow-sm">
-               <span className="text-gray-500 text-sm font-bold">kizuna.love/</span>
-               <input type="text" value={data.slug} onChange={e => onUpdate({ slug: e.target.value.toLowerCase().replace(/\s+/g, '-') })} placeholder={t.slugPlaceholder} className="bg-transparent outline-none flex-grow font-bold text-rose-600" />
+        {/* Link e Fonte */}
+        <div className="grid md:grid-cols-2 gap-8">
+          <div className="space-y-3">
+            <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2 px-1"><LinkIcon size={14} /> {t.customUrl}</label>
+            <div className="flex items-center gap-2 bg-gray-50/50 px-6 py-4 rounded-2xl border-2 border-gray-100 focus-within:border-rose-400 transition-all shadow-sm">
+               <span className="text-gray-400 text-sm font-bold">kizuna.love/</span>
+               <input type="text" value={data.slug} onChange={e => onUpdate({ slug: e.target.value.toLowerCase().replace(/\s+/g, '-') })} placeholder={t.slugPlaceholder} className="bg-transparent outline-none flex-grow font-bold text-rose-500" />
             </div>
           </div>
-          <div className="space-y-2">
-            <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.15em] flex items-center gap-2 px-1"><Type size={12} /> {t.fonts}</label>
+          <div className="space-y-3">
+            <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2 px-1"><Type size={14} /> {t.fonts}</label>
             <select value={data.fontFamily} onChange={e => onUpdate({ fontFamily: e.target.value as CoupleFont })} className={inputClasses}>
               {FONTS.map(f => <option key={f.id} value={f.id}>{f.name}</option>)}
             </select>
           </div>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-6 items-start">
-           <div className="space-y-2">
-            <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.15em] flex items-center gap-2 px-1"><Zap size={12} /> {t.effects}</label>
+        {/* Efeitos e Temas */}
+        <div className="grid md:grid-cols-2 gap-8 items-start">
+           <div className="space-y-3">
+            <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2 px-1"><Zap size={14} /> {t.effects}</label>
             <select 
               value={data.effect} 
               onChange={e => {
@@ -111,62 +117,37 @@ const Editor: React.FC<EditorProps> = ({ data, plan, onUpdate, lang, t }) => {
                 </option>
               ))}
             </select>
-            {!isPremium && <p className="text-[9px] text-rose-400 font-bold px-1 flex items-center gap-1"><Crown size={10} /> Algumas opções exigem plano Premium</p>}
           </div>
 
-          <div className="space-y-2">
-            <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.15em] flex items-center gap-2 px-1"><Palette size={12} /> {t.themes}</label>
-            <select value={data.theme} disabled={!isPremium} onChange={e => onUpdate({ theme: e.target.value as PageTheme })} className={`${inputClasses} ${!isPremium ? 'bg-gray-100 cursor-not-allowed opacity-60' : ''}`}>
+          <div className="space-y-3">
+            <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2 px-1"><Palette size={14} /> {t.themes}</label>
+            <select value={data.theme} disabled={!isPremium} onChange={e => onUpdate({ theme: e.target.value as PageTheme })} className={`${inputClasses} ${!isPremium ? 'opacity-50 cursor-not-allowed' : ''}`}>
               {THEMES.map(th => <option key={th.id} value={th.id}>{th.name}</option>)}
             </select>
-            {!isPremium && <p className="text-[9px] text-gray-400 font-bold px-1">Tema Padrão no Plano Básico</p>}
           </div>
         </div>
 
-        {isPremium && (
-          <div className="grid md:grid-cols-1 gap-6 p-6 bg-rose-50/20 rounded-2xl border border-rose-100">
-            <div className="space-y-2">
-              <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.15em] flex items-center gap-2 px-1"><Frame size={12} /> {t.frames}</label>
-              <select value={data.frame} onChange={e => onUpdate({ frame: e.target.value as PhotoFrame })} className={inputClasses}>
-                {FRAMES.map(fr => <option key={fr.id} value={fr.id}>{fr.name}</option>)}
-              </select>
-            </div>
-          </div>
-        )}
-
-        <div className="grid md:grid-cols-2 gap-6">
-          <div className="space-y-2">
-            <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.15em] flex items-center gap-2 px-1"><Calendar size={12} /> {lang === 'pt' ? 'Quando tudo começou?' : '記念日'}</label>
+        {/* Data e Fotos */}
+        <div className="grid md:grid-cols-2 gap-8">
+          <div className="space-y-3">
+            <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2 px-1"><Calendar size={14} /> {lang === 'pt' ? 'O início de tudo' : '記念日'}</label>
             <input type="date" value={data.startDate} onChange={e => onUpdate({ startDate: e.target.value })} className={inputClasses} />
           </div>
-          <div className="space-y-2">
-            <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.15em] flex items-center gap-2 px-1"><Camera size={12} /> {lang === 'pt' ? 'Memórias (Fotos)' : '写真'} ({data.images.length}/{isPremium ? 4 : 1})</label>
+          <div className="space-y-3">
+            <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2 px-1"><Camera size={14} /> {lang === 'pt' ? 'Fotos das memórias' : '写真'} ({data.images.length}/{isPremium ? 4 : 1})</label>
             <div className="relative group">
               <input type="file" multiple={isPremium} accept="image/*" onChange={handleFileChange} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" />
-              <div className="w-full px-6 py-4 rounded-xl border-2 border-dashed border-gray-400 bg-gray-50 group-hover:bg-white group-hover:border-rose-500 transition-all flex items-center gap-3">
+              <div className="w-full px-6 py-4 rounded-2xl border-2 border-dashed border-gray-200 bg-gray-50/50 group-hover:bg-white group-hover:border-rose-400 transition-all flex items-center gap-3">
                 <Camera size={18} className="text-gray-400 group-hover:text-rose-500" />
-                <span className="text-sm font-medium text-gray-500">{lang === 'pt' ? 'Selecionar Imagens' : '画像を選択'}</span>
+                <span className="text-sm font-medium text-gray-400">{lang === 'pt' ? 'Clique para enviar fotos' : '画像を選択'}</span>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="space-y-2">
-          <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.15em] flex items-center gap-2 px-1"><Youtube size={12} /> {lang === 'pt' ? 'Trilha Sonora (Link YouTube)' : 'BGM (YouTube)'}</label>
-          <input 
-            type="text" 
-            value={data.musicUrl} 
-            onChange={e => onUpdate({ musicUrl: e.target.value })} 
-            className={`${inputClasses} ${!isPremium ? 'bg-gray-100 cursor-not-allowed border-gray-300 opacity-60' : ''}`} 
-            disabled={!isPremium}
-            placeholder={isPremium ? "https://www.youtube.com/watch?v=..." : "Disponível no Plano Premium"} 
-          />
-        </div>
-
-        <div className="space-y-4">
-          <div className="px-1">
-             <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.15em]">Mensagem de Amor</label>
-          </div>
+        {/* Mensagem */}
+        <div className="space-y-3">
+          <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest px-1">Mensagem de Amor</label>
           <textarea 
             rows={4}
             value={data.message} 
@@ -176,29 +157,20 @@ const Editor: React.FC<EditorProps> = ({ data, plan, onUpdate, lang, t }) => {
           />
         </div>
 
-        {isPremium && (
-          <div className="space-y-6 pt-4">
-            <div className="flex justify-between items-center px-1">
-              <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.15em] flex items-center gap-2"><Sparkles size={12} /> {t.milestones}</label>
-              <button onClick={addMilestone} className="text-rose-500 font-bold text-xs flex items-center gap-1 hover:underline">
-                <Plus size={14} /> {t.addMilestone}
-              </button>
-            </div>
-            <div className="space-y-4">
-              {data.milestones.map((m) => (
-                <div key={m.id} className="flex flex-col md:flex-row gap-4 bg-gray-50 p-5 rounded-xl border-2 border-gray-300">
-                  <input type="date" value={m.date} onChange={e => updateMilestone(m.id, { date: e.target.value })} className="px-4 py-2 rounded-lg border-2 border-gray-400 outline-none focus:border-rose-500 bg-white" />
-                  <input type="text" value={m.title} onChange={e => updateMilestone(m.id, { title: e.target.value })} placeholder={t.milestoneTitle} className="flex-grow px-4 py-2 rounded-lg border-2 border-gray-400 outline-none focus:border-rose-500 bg-white" />
-                  <button onClick={() => removeMilestone(m.id)} className="text-gray-400 hover:text-red-500 transition-colors"><Trash2 size={18} /></button>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        <div className="flex flex-col sm:flex-row gap-4 pt-6">
-          <button onClick={() => navigate('/preview')} className="flex-1 border-2 border-rose-500 text-rose-500 py-4 rounded-xl font-black uppercase text-xs tracking-widest hover:bg-rose-50 transition-all">{t.preview}</button>
-          <button onClick={() => navigate('/checkout')} className="flex-1 bg-rose-500 text-white py-4 rounded-xl font-black uppercase text-xs tracking-widest shadow-lg shadow-rose-200 flex items-center justify-center gap-2 hover:bg-rose-600 transition-all">{t.finalize} <ArrowRight size={18} /></button>
+        {/* Botões de Ação */}
+        <div className="flex flex-col sm:flex-row gap-6 pt-10">
+          <button 
+            onClick={() => navigate('/preview')} 
+            className="flex-1 border-2 border-rose-500 text-rose-500 py-5 rounded-2xl font-black uppercase text-xs tracking-widest hover:bg-rose-50 transition-all shadow-md"
+          >
+            {t.preview}
+          </button>
+          <button 
+            onClick={() => navigate('/checkout')} 
+            className="flex-1 bg-rose-500 text-white py-5 rounded-2xl font-black uppercase text-xs tracking-widest shadow-xl shadow-rose-200 flex items-center justify-center gap-3 hover:bg-rose-600 transition-all transform hover:-translate-y-1"
+          >
+            {t.finalize} <ArrowRight size={18} />
+          </button>
         </div>
       </div>
     </div>
