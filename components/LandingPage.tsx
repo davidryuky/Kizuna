@@ -35,7 +35,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onSelectPlan, lang, t }) => {
           
           {/* Coluna de Texto */}
           <div className="relative z-10 text-left animate-in slide-in-from-left-10 duration-1000 lg:mt-12">
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-elegant font-bold mb-10 leading-[1.05] tracking-tight">
+            <h1 className="text-[2.4rem] md:text-[3.6rem] lg:text-[4.8rem] font-elegant font-bold mb-10 leading-[1.05] tracking-tight">
               <span className="bg-clip-text text-transparent bg-gradient-to-br from-gray-900 via-rose-700 to-rose-400">
                 {t.heroTitle}
               </span>
