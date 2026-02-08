@@ -30,40 +30,40 @@ const LandingPage: React.FC<LandingPageProps> = ({ onSelectPlan, lang, t }) => {
       <SocialProof t={t} />
       
       {/* Hero Section */}
-      <section className="relative pt-24 pb-32 px-6 overflow-hidden flex items-start lg:items-center min-h-[90vh]">
+      <section className="relative pt-12 md:pt-24 pb-16 md:pb-32 px-6 overflow-hidden flex items-start lg:items-center min-h-[70vh] lg:min-h-[90vh]">
         <div className="max-w-7xl mx-auto w-full grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           
           {/* Coluna de Texto */}
           <div className="relative z-10 text-left animate-in slide-in-from-left-10 duration-1000 lg:mt-12">
-            <h1 className="text-[2.4rem] md:text-[3.6rem] lg:text-[4.8rem] font-elegant font-bold mb-10 leading-[1.05] tracking-tight">
+            <h1 className="text-[2.2rem] md:text-[3.6rem] lg:text-[4.8rem] font-elegant font-bold mb-8 md:mb-10 leading-[1.1] tracking-tight">
               <span className="bg-clip-text text-transparent bg-gradient-to-br from-gray-900 via-rose-700 to-rose-400">
                 {t.heroTitle}
               </span>
             </h1>
             
-            <p className="text-lg md:text-xl text-gray-500 mb-12 max-w-xl leading-relaxed font-light">
+            <p className="text-base md:text-xl text-gray-500 mb-10 md:mb-12 max-w-xl leading-relaxed font-light">
               {t.heroSubtitle}
             </p>
             
-            <div className="flex flex-col gap-10">
-              <div className="flex flex-col sm:flex-row gap-5">
+            <div className="flex flex-col gap-8 md:gap-10">
+              <div className="flex flex-col sm:flex-row gap-4 md:gap-5">
                 <button 
                   onClick={scrollToPlans}
-                  className="bg-rose-500 text-white px-10 py-5 rounded-2xl font-bold text-xl shadow-2xl shadow-rose-200 hover:bg-rose-600 transition-all flex items-center justify-center gap-4 transform hover:-translate-y-1 active:scale-95"
+                  className="bg-rose-500 text-white px-8 py-4 md:px-10 md:py-5 rounded-2xl font-bold text-lg md:text-xl shadow-2xl shadow-rose-200 hover:bg-rose-600 transition-all flex items-center justify-center gap-4 transform hover:-translate-y-1 active:scale-95"
                 >
-                  {t.createBtn} <ArrowRight size={24} />
+                  {t.createBtn} <ArrowRight size={22} />
                 </button>
                 
                 <button 
                   onClick={scrollToPlans}
-                  className="bg-white text-rose-500 border-2 border-rose-100 px-10 py-5 rounded-2xl font-bold text-xl hover:bg-rose-50 hover:border-rose-200 transition-all flex items-center justify-center gap-2 transform hover:-translate-y-1 active:scale-95"
+                  className="bg-white text-rose-500 border-2 border-rose-100 px-8 py-4 md:px-10 md:py-5 rounded-2xl font-bold text-lg md:text-xl hover:bg-rose-50 hover:border-rose-200 transition-all flex items-center justify-center gap-2 transform hover:-translate-y-1 active:scale-95"
                 >
                   {t.viewPlans}
                 </button>
               </div>
 
               {/* Filosofia da Marca */}
-              <p className="text-xs md:text-sm text-gray-500 max-w-md leading-relaxed border-l-2 border-rose-200 pl-4 font-medium tracking-wide">
+              <p className="text-xs md:text-sm text-gray-400 max-w-md leading-relaxed border-l-2 border-rose-100 pl-4 font-medium tracking-wide italic">
                 {t.brandPhilosophy}
               </p>
             </div>
@@ -100,54 +100,54 @@ const LandingPage: React.FC<LandingPageProps> = ({ onSelectPlan, lang, t }) => {
       </section>
 
       {/* Plans Section */}
-      <section id="plans" className="py-24 bg-[#fafafa] relative overflow-hidden">
+      <section id="plans" className="py-16 md:py-24 bg-[#fafafa] relative overflow-hidden border-t border-gray-50">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
+          <div className="flex flex-col md:flex-row justify-between items-end mb-12 md:mb-16 gap-8">
             <div className="text-left">
-              <h2 className="text-5xl md:text-6xl font-elegant font-bold mb-4 text-gray-900">{t.planSelectionTitle}</h2>
-              <p className="text-rose-500 uppercase tracking-[0.3em] text-[11px] font-black">{t.planSelectionSub}</p>
+              <h2 className="text-4xl md:text-6xl font-elegant font-bold mb-4 text-gray-900">{t.planSelectionTitle}</h2>
+              <p className="text-rose-500 uppercase tracking-[0.3em] text-[10px] md:text-[11px] font-black">{t.planSelectionSub}</p>
             </div>
-            <div className="hidden md:block">
-              <p className="text-gray-400 max-w-xs text-right text-sm italic font-elegant">Escolha a base ideal para sua celebração digital. Ativação imediata.</p>
+            <div className="hidden md:block text-right">
+              <p className="text-gray-400 max-w-xs text-sm italic font-elegant">Escolha a base ideal para sua celebração digital. Ativação imediata.</p>
             </div>
           </div>
           
-          <div className="grid md:grid-cols-2 gap-10 items-stretch max-w-5xl mx-auto mb-32">
+          <div className="grid md:grid-cols-2 gap-8 md:gap-10 items-stretch max-w-5xl mx-auto mb-20 md:mb-32">
             {plans.map((plan) => (
               <div 
                 key={plan.id}
-                className={`flex flex-col bg-white p-9 lg:p-11 rounded-[2.5rem] border-2 transition-all duration-700 hover:-translate-y-3 ${
+                className={`flex flex-col bg-white p-8 md:p-11 rounded-[2.5rem] border-2 transition-all duration-700 hover:-translate-y-2 ${
                   plan.id === PlanType.PREMIUM 
                     ? 'border-rose-500 shadow-[0_45px_85px_-20px_rgba(225,29,72,0.14)] relative md:scale-[1.03] z-10' 
                     : 'border-gray-100 shadow-xl opacity-95'
                 }`}
               >
                 {plan.id === PlanType.PREMIUM && (
-                  <div className="absolute -top-6 left-12 bg-rose-500 text-white px-8 py-2.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] shadow-xl flex items-center gap-2">
+                  <div className="absolute -top-6 left-8 md:left-12 bg-rose-500 text-white px-6 md:px-8 py-2 md:py-2.5 rounded-full text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] shadow-xl flex items-center gap-2">
                     <Star size={12} fill="white" /> {t.bestSeller}
                   </div>
                 )}
                 
-                <h3 className="text-2xl lg:text-3xl font-black text-gray-900 mb-4 uppercase tracking-tighter">{plan.name}</h3>
-                <div className="mb-7">
-                  <span className="text-4xl lg:text-5xl font-black text-gray-900 tracking-tighter">{plan.price}</span>
-                  <span className="text-gray-400 text-sm font-bold ml-3 uppercase tracking-widest">/ único</span>
+                <h3 className="text-xl md:text-3xl font-black text-gray-900 mb-4 uppercase tracking-tighter">{plan.name}</h3>
+                <div className="mb-6 md:mb-7">
+                  <span className="text-3xl md:text-5xl font-black text-gray-900 tracking-tighter">{plan.price}</span>
+                  <span className="text-gray-400 text-xs md:text-sm font-bold ml-3 uppercase tracking-widest">/ único</span>
                 </div>
 
-                <ul className="space-y-4 mb-10 text-left flex-grow">
+                <ul className="space-y-3 md:space-y-4 mb-8 md:mb-10 text-left flex-grow">
                   {plan.features.map((feat, i) => (
-                    <li key={i} className="flex items-start gap-4 text-gray-500 text-base font-medium leading-tight group">
-                      <div className="w-6 h-6 rounded-full bg-rose-50 flex items-center justify-center flex-shrink-0 group-hover:bg-rose-500 group-hover:text-white transition-colors duration-300">
-                        <CheckCircle2 size={14} className="flex-shrink-0" />
+                    <li key={i} className="flex items-start gap-3 md:gap-4 text-gray-500 text-sm md:text-base font-medium leading-tight group">
+                      <div className="w-5 h-5 md:w-6 md:h-6 rounded-full bg-rose-50 flex items-center justify-center flex-shrink-0 group-hover:bg-rose-500 group-hover:text-white transition-colors duration-300">
+                        <CheckCircle2 size={12} className="flex-shrink-0" />
                       </div>
-                      <span className="group-hover:text-gray-900 transition-colors text-sm lg:text-base">{feat}</span>
+                      <span className="group-hover:text-gray-900 transition-colors">{feat}</span>
                     </li>
                   ))}
                 </ul>
 
                 <button 
                   onClick={() => handleSelect(plan.id)}
-                  className={`w-full py-5 rounded-2xl font-black text-xl transition-all transform active:scale-95 ${
+                  className={`w-full py-4 md:py-5 rounded-2xl font-black text-lg md:text-xl transition-all transform active:scale-95 ${
                     plan.id === PlanType.PREMIUM 
                     ? 'bg-rose-500 text-white hover:bg-rose-600 shadow-2xl shadow-rose-200' 
                     : 'bg-gray-900 text-white hover:bg-black shadow-xl shadow-gray-200'
@@ -160,56 +160,30 @@ const LandingPage: React.FC<LandingPageProps> = ({ onSelectPlan, lang, t }) => {
           </div>
 
           {/* Seção Como Funciona */}
-          <div className="pt-24 border-t border-gray-100">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-elegant font-bold text-gray-900 mb-4">{t.howItWorksTitle}</h2>
-              <div className="w-24 h-1 bg-rose-500 mx-auto rounded-full opacity-20"></div>
+          <div className="pt-16 md:pt-24 border-t border-gray-100">
+            <div className="text-center mb-12 md:mb-16">
+              <h2 className="text-3xl md:text-5xl font-elegant font-bold text-gray-900 mb-4">{t.howItWorksTitle}</h2>
+              <div className="w-20 md:w-24 h-1 bg-rose-500 mx-auto rounded-full opacity-20"></div>
             </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {/* Passo 1 */}
-              <div className="bg-white p-8 rounded-[2rem] border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-500 group">
-                <div className="w-16 h-16 bg-rose-50 rounded-2xl flex items-center justify-center text-rose-500 mb-6 group-hover:scale-110 group-hover:bg-rose-500 group-hover:text-white transition-all">
-                  <Heart size={32} />
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+              {/* Passos */}
+              {[
+                { icon: <Heart size={32} />, title: t.step1Title, desc: t.step1Desc },
+                { icon: <CreditCard size={32} />, title: t.step2Title, desc: t.step2Desc },
+                { icon: <Mail size={32} />, title: t.step3Title, desc: t.step3Desc },
+                { icon: <Gift size={32} />, title: t.step4Title, desc: t.step4Desc }
+              ].map((step, i) => (
+                <div key={i} className="bg-white p-7 md:p-8 rounded-[2rem] border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-500 group">
+                  <div className="w-14 h-14 md:w-16 md:h-16 bg-rose-50 rounded-2xl flex items-center justify-center text-rose-500 mb-6 group-hover:scale-110 group-hover:bg-rose-500 group-hover:text-white transition-all">
+                    {step.icon}
+                  </div>
+                  <h3 className="text-base md:text-lg font-bold text-gray-900 mb-3 leading-tight">{step.title}</h3>
+                  <p className="text-xs md:text-sm text-gray-400 leading-relaxed font-medium">
+                    {step.desc}
+                  </p>
                 </div>
-                <h3 className="text-lg font-bold text-gray-900 mb-3 leading-tight">{t.step1Title}</h3>
-                <p className="text-sm text-gray-500 leading-relaxed font-medium">
-                  {t.step1Desc}
-                </p>
-              </div>
-
-              {/* Passo 2 */}
-              <div className="bg-white p-8 rounded-[2rem] border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-500 group">
-                <div className="w-16 h-16 bg-rose-50 rounded-2xl flex items-center justify-center text-rose-500 mb-6 group-hover:scale-110 group-hover:bg-rose-500 group-hover:text-white transition-all">
-                  <CreditCard size={32} />
-                </div>
-                <h3 className="text-lg font-bold text-gray-900 mb-3 leading-tight">{t.step2Title}</h3>
-                <p className="text-sm text-gray-500 leading-relaxed font-medium">
-                  {t.step2Desc}
-                </p>
-              </div>
-
-              {/* Passo 3 */}
-              <div className="bg-white p-8 rounded-[2rem] border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-500 group">
-                <div className="w-16 h-16 bg-rose-50 rounded-2xl flex items-center justify-center text-rose-500 mb-6 group-hover:scale-110 group-hover:bg-rose-500 group-hover:text-white transition-all">
-                  <Mail size={32} />
-                </div>
-                <h3 className="text-lg font-bold text-gray-900 mb-3 leading-tight">{t.step3Title}</h3>
-                <p className="text-sm text-gray-500 leading-relaxed font-medium">
-                  {t.step3Desc}
-                </p>
-              </div>
-
-              {/* Passo 4 */}
-              <div className="bg-white p-8 rounded-[2rem] border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-500 group">
-                <div className="w-16 h-16 bg-rose-50 rounded-2xl flex items-center justify-center text-rose-500 mb-6 group-hover:scale-110 group-hover:bg-rose-500 group-hover:text-white transition-all">
-                  <Gift size={32} />
-                </div>
-                <h3 className="text-lg font-bold text-gray-900 mb-3 leading-tight">{t.step4Title}</h3>
-                <p className="text-sm text-gray-500 leading-relaxed font-medium">
-                  {t.step4Desc}
-                </p>
-              </div>
+              ))}
             </div>
           </div>
         </div>

@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, Menu, X, HelpCircle, Mail } from 'lucide-react';
 import { Language } from '../types';
 
 interface NavbarProps {
@@ -14,9 +14,11 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, t }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const [showLangs, setShowLangs] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleCtaClick = (e: React.MouseEvent) => {
     e.preventDefault();
+    setIsMenuOpen(false);
     if (location.pathname === '/') {
       const element = document.getElementById('plans');
       if (element) {
@@ -36,21 +38,24 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, t }) => {
   const currentFlag = lang === 'pt' ? '🇧🇷' : '🇯🇵';
 
   return (
-    <nav className="sticky top-0 z-50 bg-white/90 backdrop-blur-xl border-b border-rose-50 shadow-sm">
+    <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-xl border-b border-rose-50 shadow-sm">
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
         <Link to="/" className="flex items-center group transition-transform duration-300 hover:scale-105">
           <img 
             src="https://younextweb.com/kizuna/logo.png" 
             alt="KIZUNA Logo" 
-            className="h-10 md:h-12 w-auto object-contain"
+            className="h-9 md:h-12 w-auto object-contain"
           />
         </Link>
         
-        <div className="flex gap-4 md:gap-8 items-center">
-          {/* Menu Links */}
-          <div className="hidden md:flex items-center gap-6">
+        <div className="flex gap-3 md:gap-8 items-center">
+          {/* Menu Desktop */}
+          <div className="hidden md:flex items-center gap-8 mr-4">
             <Link to="/duvidas" className="text-[11px] font-black uppercase tracking-widest text-gray-400 hover:text-rose-500 transition-colors">
               {t.faq}
+            </Link>
+            <Link to="/contato" className="text-[11px] font-black uppercase tracking-widest text-gray-400 hover:text-rose-500 transition-colors">
+              {t.contact}
             </Link>
           </div>
 
@@ -58,10 +63,10 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, t }) => {
           <div className="relative">
             <button 
               onClick={() => { setShowLangs(!showLangs); }}
-              className="flex items-center gap-2 bg-rose-50/50 border border-rose-100 px-3 py-2 md:px-4 md:py-2 rounded-full hover:bg-rose-50 transition-all shadow-sm group"
+              className="flex items-center gap-1.5 bg-rose-50/50 border border-rose-100 px-3 py-1.5 md:px-4 md:py-2 rounded-full hover:bg-rose-50 transition-all shadow-sm group"
             >
-              <span className="text-lg md:text-xl leading-none">{currentFlag}</span>
-              <ChevronDown size={14} className={`text-rose-300 transition-transform duration-300 ${showLangs ? 'rotate-180' : ''}`} />
+              <span className="text-base md:text-lg leading-none">{currentFlag}</span>
+              <ChevronDown size={12} className={`text-rose-300 transition-transform duration-300 ${showLangs ? 'rotate-180' : ''}`} />
             </button>
             
             {showLangs && (
@@ -82,14 +87,56 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, t }) => {
             )}
           </div>
 
+          {/* CTA Desktop */}
           <button 
             onClick={handleCtaClick}
-            className="bg-rose-500 text-white px-6 py-2.5 md:px-8 md:py-3 rounded-full hover:bg-rose-600 transition-all shadow-lg shadow-rose-200 hover:shadow-rose-300 transform hover:-translate-y-0.5 font-black text-[10px] md:text-xs uppercase tracking-widest"
+            className="hidden md:block bg-rose-500 text-white px-8 py-3 rounded-full hover:bg-rose-600 transition-all shadow-lg shadow-rose-200 hover:shadow-rose-300 transform hover:-translate-y-0.5 font-black text-xs uppercase tracking-widest"
           >
             {t.createBtn}
           </button>
+
+          {/* Botão Hambúrguer Mobile */}
+          <button 
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="md:hidden p-2 text-gray-500 hover:text-rose-500 transition-colors"
+          >
+            {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
+          </button>
         </div>
       </div>
+
+      {/* Menu Mobile Overlay */}
+      {isMenuOpen && (
+        <div className="fixed inset-0 top-20 bg-white z-[90] md:hidden animate-in slide-in-from-top duration-300 overflow-y-auto">
+          <div className="flex flex-col p-8 gap-8">
+            <Link 
+              to="/duvidas" 
+              onClick={() => setIsMenuOpen(false)}
+              className="flex items-center gap-4 text-2xl font-elegant font-bold text-gray-900 border-b border-gray-50 pb-4"
+            >
+              <HelpCircle className="text-rose-500" size={24} />
+              {t.faq}
+            </Link>
+            <Link 
+              to="/contato" 
+              onClick={() => setIsMenuOpen(false)}
+              className="flex items-center gap-4 text-2xl font-elegant font-bold text-gray-900 border-b border-gray-50 pb-4"
+            >
+              <Mail className="text-rose-500" size={24} />
+              {t.contact}
+            </Link>
+            <button 
+              onClick={handleCtaClick}
+              className="mt-4 w-full bg-rose-500 text-white py-5 rounded-2xl font-black text-lg uppercase tracking-widest shadow-xl shadow-rose-100"
+            >
+              {t.createBtn}
+            </button>
+            <div className="mt-8 text-center">
+              <p className="text-gray-400 text-xs font-medium italic">KIZUNA - Eternizando Laços</p>
+            </div>
+          </div>
+        </div>
+      )}
     </nav>
   );
 };
