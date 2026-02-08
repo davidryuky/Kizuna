@@ -60,7 +60,8 @@ const AppContent: React.FC<{
           <Route path="/editar" element={<Editor data={coupleData} plan={selectedPlan || coupleData.plan} onUpdate={updateCoupleData} lang={lang} t={t} />} />
           <Route path="/preview" element={<Preview data={coupleData} lang={lang} t={t} />} />
           <Route path="/checkout" element={<Checkout data={coupleData} lang={lang} t={t} />} />
-          <Route path="/faq" element={<FAQ lang={lang} t={t} />} />
+          <Route path="/duvidas" element={<FAQ lang={lang} t={t} />} />
+          <Route path="/faq" element={<Navigate to="/duvidas" replace />} />
           <Route path="/privacidade" element={<Privacy lang={lang} t={t} />} />
           <Route path="/contato" element={<Contact lang={lang} t={t} />} />
           <Route path="*" element={<Navigate to="/" replace />} />
@@ -68,24 +69,36 @@ const AppContent: React.FC<{
       </main>
       
       {!isPreview && (
-        <footer className="bg-white py-12 border-t border-gray-100 mt-auto">
+        <footer className="bg-white py-16 border-t border-gray-100 mt-auto">
           <div className="max-w-7xl mx-auto px-6 flex flex-col items-center text-center">
-            <Link to="/" className="text-rose-500 font-romance text-5xl mb-4">KIZUNA</Link>
-            <p className="text-gray-400 text-sm font-medium mb-8 max-w-lg leading-relaxed">
+            <Link to="/" className="mb-8 transition-transform hover:scale-105">
+              <img 
+                src="https://younextweb.com/kizuna/logo.png" 
+                alt="KIZUNA Logo" 
+                className="h-14 md:h-16 w-auto object-contain"
+              />
+            </Link>
+            <p className="text-gray-400 text-sm font-medium mb-10 max-w-lg leading-relaxed">
               {t.footerDesc}
             </p>
             
-            <div className="flex gap-6 mb-10 text-gray-300">
-              <a href="#" className="hover:text-rose-500 transition-colors"><Instagram size={24} /></a>
-              <a href="#" className="hover:text-rose-500 transition-colors"><Twitter size={24} /></a>
-              <a href="#" className="hover:text-rose-500 transition-colors"><Facebook size={24} /></a>
-              <a href="#" className="hover:text-rose-500 transition-colors"><Youtube size={24} /></a>
-              <a href="#" className="hover:text-rose-500 transition-colors"><Heart size={24} /></a>
+            <div className="flex gap-8 mb-12 text-gray-300">
+              <a href="#" className="hover:text-rose-500 transition-colors"><Instagram size={22} /></a>
+              <a href="#" className="hover:text-rose-500 transition-colors"><Twitter size={22} /></a>
+              <a href="#" className="hover:text-rose-500 transition-colors"><Facebook size={22} /></a>
+              <a href="#" className="hover:text-rose-500 transition-colors"><Youtube size={22} /></a>
+              <a href="#" className="hover:text-rose-500 transition-colors"><Heart size={22} /></a>
+            </div>
+
+            <div className="flex flex-wrap justify-center gap-x-8 gap-y-4 mb-12 text-[11px] font-black uppercase tracking-widest text-gray-400">
+              <Link to="/duvidas" className="hover:text-rose-500 transition-colors">{t.faq}</Link>
+              <Link to="/privacidade" className="hover:text-rose-500 transition-colors">{t.privacy}</Link>
+              <Link to="/contato" className="hover:text-rose-500 transition-colors">{t.contact}</Link>
             </div>
             
-            <div className="pt-8 border-t border-gray-50 w-full">
-              <p className="text-gray-400 text-[10px] font-black uppercase tracking-[0.2em]">
-                Desenvolvido com ❤️ para Casais Apaixonados
+            <div className="pt-10 border-t border-gray-50 w-full">
+              <p className="text-gray-400 text-[10px] font-black uppercase tracking-[0.3em]">
+                {lang === 'pt' ? 'Desenvolvido com ❤️ para Casais Apaixonados' : '愛するカップルのために❤️で作られました'}
               </p>
             </div>
           </div>

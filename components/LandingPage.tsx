@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Heart, Sparkles, Star, CheckCircle2, ArrowRight } from 'lucide-react';
+import { Heart, Sparkles, Star, CheckCircle2, ArrowRight, CreditCard, Mail, Gift } from 'lucide-react';
 import { PlanType, Language } from '../types';
 import { getPlans } from '../constants';
 import { SocialProof } from './SocialProof';
@@ -62,7 +62,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onSelectPlan, lang, t }) => {
                 </button>
               </div>
 
-              {/* Filosofia da Marca - Posicionada abaixo do botão "Ver Planos" com fonte limpa e legível */}
+              {/* Filosofia da Marca */}
               <p className="text-xs md:text-sm text-gray-500 max-w-md leading-relaxed border-l-2 border-rose-200 pl-4 font-medium tracking-wide">
                 {t.brandPhilosophy}
               </p>
@@ -112,7 +112,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onSelectPlan, lang, t }) => {
             </div>
           </div>
           
-          <div className="grid md:grid-cols-2 gap-10 items-stretch max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-10 items-stretch max-w-5xl mx-auto mb-32">
             {plans.map((plan) => (
               <div 
                 key={plan.id}
@@ -157,6 +157,60 @@ const LandingPage: React.FC<LandingPageProps> = ({ onSelectPlan, lang, t }) => {
                 </button>
               </div>
             ))}
+          </div>
+
+          {/* Seção Como Funciona */}
+          <div className="pt-24 border-t border-gray-100">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-elegant font-bold text-gray-900 mb-4">{t.howItWorksTitle}</h2>
+              <div className="w-24 h-1 bg-rose-500 mx-auto rounded-full opacity-20"></div>
+            </div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+              {/* Passo 1 */}
+              <div className="bg-white p-8 rounded-[2rem] border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-500 group">
+                <div className="w-16 h-16 bg-rose-50 rounded-2xl flex items-center justify-center text-rose-500 mb-6 group-hover:scale-110 group-hover:bg-rose-500 group-hover:text-white transition-all">
+                  <Heart size={32} />
+                </div>
+                <h3 className="text-lg font-bold text-gray-900 mb-3 leading-tight">{t.step1Title}</h3>
+                <p className="text-sm text-gray-500 leading-relaxed font-medium">
+                  {t.step1Desc}
+                </p>
+              </div>
+
+              {/* Passo 2 */}
+              <div className="bg-white p-8 rounded-[2rem] border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-500 group">
+                <div className="w-16 h-16 bg-rose-50 rounded-2xl flex items-center justify-center text-rose-500 mb-6 group-hover:scale-110 group-hover:bg-rose-500 group-hover:text-white transition-all">
+                  <CreditCard size={32} />
+                </div>
+                <h3 className="text-lg font-bold text-gray-900 mb-3 leading-tight">{t.step2Title}</h3>
+                <p className="text-sm text-gray-500 leading-relaxed font-medium">
+                  {t.step2Desc}
+                </p>
+              </div>
+
+              {/* Passo 3 */}
+              <div className="bg-white p-8 rounded-[2rem] border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-500 group">
+                <div className="w-16 h-16 bg-rose-50 rounded-2xl flex items-center justify-center text-rose-500 mb-6 group-hover:scale-110 group-hover:bg-rose-500 group-hover:text-white transition-all">
+                  <Mail size={32} />
+                </div>
+                <h3 className="text-lg font-bold text-gray-900 mb-3 leading-tight">{t.step3Title}</h3>
+                <p className="text-sm text-gray-500 leading-relaxed font-medium">
+                  {t.step3Desc}
+                </p>
+              </div>
+
+              {/* Passo 4 */}
+              <div className="bg-white p-8 rounded-[2rem] border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-500 group">
+                <div className="w-16 h-16 bg-rose-50 rounded-2xl flex items-center justify-center text-rose-500 mb-6 group-hover:scale-110 group-hover:bg-rose-500 group-hover:text-white transition-all">
+                  <Gift size={32} />
+                </div>
+                <h3 className="text-lg font-bold text-gray-900 mb-3 leading-tight">{t.step4Title}</h3>
+                <p className="text-sm text-gray-500 leading-relaxed font-medium">
+                  {t.step4Desc}
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>

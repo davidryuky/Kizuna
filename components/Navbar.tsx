@@ -1,8 +1,8 @@
 
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Heart, ChevronDown } from 'lucide-react';
-import { Language, PlanType } from '../types';
+import { ChevronDown } from 'lucide-react';
+import { Language } from '../types';
 
 interface NavbarProps {
   lang: Language;
@@ -18,14 +18,14 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, t }) => {
   const handleCtaClick = (e: React.MouseEvent) => {
     e.preventDefault();
     if (location.pathname === '/') {
-      const element = document.getElementById('plano-premium');
+      const element = document.getElementById('plans');
       if (element) {
         element.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     } else {
       navigate('/');
       setTimeout(() => {
-        const element = document.getElementById('plano-premium');
+        const element = document.getElementById('plans');
         if (element) {
           element.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
@@ -38,22 +38,29 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, t }) => {
   return (
     <nav className="sticky top-0 z-50 bg-white/90 backdrop-blur-xl border-b border-rose-50 shadow-sm">
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-        <Link to="/" className="flex items-center gap-3 group">
-          <div className="relative">
-            <Heart className="w-10 h-10 text-rose-500 fill-rose-500 group-hover:scale-110 transition-transform duration-500" />
-            <Heart className="absolute inset-0 w-10 h-10 text-rose-300 fill-rose-300 animate-ping opacity-20" />
-          </div>
-          <span className="text-3xl font-romance font-bold text-rose-600 tracking-tighter">KIZUNA</span>
+        <Link to="/" className="flex items-center group transition-transform duration-300 hover:scale-105">
+          <img 
+            src="https://younextweb.com/kizuna/logo.png" 
+            alt="KIZUNA Logo" 
+            className="h-10 md:h-12 w-auto object-contain"
+          />
         </Link>
         
-        <div className="flex gap-6 items-center">
+        <div className="flex gap-4 md:gap-8 items-center">
+          {/* Menu Links */}
+          <div className="hidden md:flex items-center gap-6">
+            <Link to="/duvidas" className="text-[11px] font-black uppercase tracking-widest text-gray-400 hover:text-rose-500 transition-colors">
+              {t.faq}
+            </Link>
+          </div>
+
           {/* Language Selector */}
           <div className="relative">
             <button 
               onClick={() => { setShowLangs(!showLangs); }}
-              className="flex items-center gap-2 bg-rose-50/50 border border-rose-100 px-4 py-2 rounded-full hover:bg-rose-50 transition-all shadow-sm group"
+              className="flex items-center gap-2 bg-rose-50/50 border border-rose-100 px-3 py-2 md:px-4 md:py-2 rounded-full hover:bg-rose-50 transition-all shadow-sm group"
             >
-              <span className="text-xl leading-none">{currentFlag}</span>
+              <span className="text-lg md:text-xl leading-none">{currentFlag}</span>
               <ChevronDown size={14} className={`text-rose-300 transition-transform duration-300 ${showLangs ? 'rotate-180' : ''}`} />
             </button>
             
@@ -77,7 +84,7 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, t }) => {
 
           <button 
             onClick={handleCtaClick}
-            className="bg-rose-500 text-white px-8 py-3 rounded-full hover:bg-rose-600 transition-all shadow-lg shadow-rose-200 hover:shadow-rose-300 transform hover:-translate-y-0.5 font-black text-sm uppercase tracking-widest hidden sm:block"
+            className="bg-rose-500 text-white px-6 py-2.5 md:px-8 md:py-3 rounded-full hover:bg-rose-600 transition-all shadow-lg shadow-rose-200 hover:shadow-rose-300 transform hover:-translate-y-0.5 font-black text-[10px] md:text-xs uppercase tracking-widest"
           >
             {t.createBtn}
           </button>
