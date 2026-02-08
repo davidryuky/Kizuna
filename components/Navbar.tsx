@@ -38,106 +38,113 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, t }) => {
   const currentFlag = lang === 'pt' ? '🇧🇷' : '🇯🇵';
 
   return (
-    <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-xl border-b border-rose-50 shadow-sm">
-      <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-        <Link to="/" className="flex items-center group transition-transform duration-300 hover:scale-105">
-          <img 
-            src="https://younextweb.com/kizuna/logo.png" 
-            alt="KIZUNA Logo" 
-            className="h-9 md:h-12 w-auto object-contain"
-          />
-        </Link>
-        
-        <div className="flex gap-3 md:gap-8 items-center">
-          {/* Menu Desktop */}
-          <div className="hidden md:flex items-center gap-8 mr-4">
-            <Link to="/duvidas" className="text-[11px] font-black uppercase tracking-widest text-gray-400 hover:text-rose-500 transition-colors">
-              {t.faq}
-            </Link>
-            <Link to="/contato" className="text-[11px] font-black uppercase tracking-widest text-gray-400 hover:text-rose-500 transition-colors">
-              {t.contact}
-            </Link>
-          </div>
+    <>
+      <nav className="sticky top-0 z-[100] bg-white/95 backdrop-blur-xl border-b border-rose-50 shadow-sm">
+        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+          <Link to="/" className="flex items-center group transition-transform duration-300 hover:scale-105">
+            <img 
+              src="https://younextweb.com/kizuna/logo.png" 
+              alt="KIZUNA Logo" 
+              className="h-9 md:h-12 w-auto object-contain"
+            />
+          </Link>
+          
+          <div className="flex gap-3 md:gap-8 items-center">
+            {/* Menu Desktop */}
+            <div className="hidden md:flex items-center gap-8 mr-4">
+              <Link to="/duvidas" className="text-[11px] font-black uppercase tracking-widest text-gray-400 hover:text-rose-500 transition-colors">
+                {t.faq}
+              </Link>
+              <Link to="/contato" className="text-[11px] font-black uppercase tracking-widest text-gray-400 hover:text-rose-500 transition-colors">
+                {t.contact}
+              </Link>
+            </div>
 
-          {/* Language Selector */}
-          <div className="relative">
+            {/* Language Selector */}
+            <div className="relative">
+              <button 
+                onClick={() => { setShowLangs(!showLangs); }}
+                className="flex items-center gap-1.5 bg-rose-50/50 border border-rose-100 px-3 py-1.5 md:px-4 md:py-2 rounded-full hover:bg-rose-50 transition-all shadow-sm group"
+              >
+                <span className="text-base md:text-lg leading-none">{currentFlag}</span>
+                <ChevronDown size={12} className={`text-rose-300 transition-transform duration-300 ${showLangs ? 'rotate-180' : ''}`} />
+              </button>
+              
+              {showLangs && (
+                <div className="absolute right-0 mt-3 w-40 bg-white rounded-2xl shadow-2xl border border-rose-50 overflow-hidden animate-in fade-in zoom-in slide-in-from-top-2 duration-300 z-[110]">
+                  <button 
+                    onClick={() => { setLang('pt'); setShowLangs(false); }}
+                    className={`w-full flex items-center gap-3 px-5 py-3 hover:bg-rose-50 text-sm font-semibold transition-colors ${lang === 'pt' ? 'text-rose-600 bg-rose-50/50' : 'text-gray-500'}`}
+                  >
+                    <span className="text-lg">🇧🇷</span> Português
+                  </button>
+                  <button 
+                    onClick={() => { setLang('jp'); setShowLangs(false); }}
+                    className={`w-full flex items-center gap-3 px-5 py-3 hover:bg-rose-50 text-sm font-semibold transition-colors ${lang === 'jp' ? 'text-rose-600 bg-rose-50/50' : 'text-gray-500'}`}
+                  >
+                    <span className="text-lg">🇯🇵</span> 日本語
+                  </button>
+                </div>
+              )}
+            </div>
+
+            {/* CTA Desktop */}
             <button 
-              onClick={() => { setShowLangs(!showLangs); }}
-              className="flex items-center gap-1.5 bg-rose-50/50 border border-rose-100 px-3 py-1.5 md:px-4 md:py-2 rounded-full hover:bg-rose-50 transition-all shadow-sm group"
+              onClick={handleCtaClick}
+              className="hidden md:block bg-rose-500 text-white px-8 py-3 rounded-full hover:bg-rose-600 transition-all shadow-lg shadow-rose-200 hover:shadow-rose-300 transform hover:-translate-y-0.5 font-black text-xs uppercase tracking-widest"
             >
-              <span className="text-base md:text-lg leading-none">{currentFlag}</span>
-              <ChevronDown size={12} className={`text-rose-300 transition-transform duration-300 ${showLangs ? 'rotate-180' : ''}`} />
+              {t.createBtn}
             </button>
-            
-            {showLangs && (
-              <div className="absolute right-0 mt-3 w-40 bg-white rounded-2xl shadow-2xl border border-rose-50 overflow-hidden animate-in fade-in zoom-in slide-in-from-top-2 duration-300 z-[100]">
-                <button 
-                  onClick={() => { setLang('pt'); setShowLangs(false); }}
-                  className={`w-full flex items-center gap-3 px-5 py-3 hover:bg-rose-50 text-sm font-semibold transition-colors ${lang === 'pt' ? 'text-rose-600 bg-rose-50/50' : 'text-gray-500'}`}
-                >
-                  <span className="text-lg">🇧🇷</span> Português
-                </button>
-                <button 
-                  onClick={() => { setLang('jp'); setShowLangs(false); }}
-                  className={`w-full flex items-center gap-3 px-5 py-3 hover:bg-rose-50 text-sm font-semibold transition-colors ${lang === 'jp' ? 'text-rose-600 bg-rose-50/50' : 'text-gray-500'}`}
-                >
-                  <span className="text-lg">🇯🇵</span> 日本語
-                </button>
-              </div>
-            )}
+
+            {/* Botão Hambúrguer Mobile */}
+            <button 
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="md:hidden p-2 text-gray-500 hover:text-rose-500 transition-colors z-[120]"
+              aria-label="Abrir menu"
+            >
+              {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
+            </button>
           </div>
-
-          {/* CTA Desktop */}
-          <button 
-            onClick={handleCtaClick}
-            className="hidden md:block bg-rose-500 text-white px-8 py-3 rounded-full hover:bg-rose-600 transition-all shadow-lg shadow-rose-200 hover:shadow-rose-300 transform hover:-translate-y-0.5 font-black text-xs uppercase tracking-widest"
-          >
-            {t.createBtn}
-          </button>
-
-          {/* Botão Hambúrguer Mobile */}
-          <button 
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden p-2 text-gray-500 hover:text-rose-500 transition-colors"
-          >
-            {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
-          </button>
         </div>
-      </div>
+      </nav>
 
       {/* Menu Mobile Overlay */}
       {isMenuOpen && (
-        <div className="fixed inset-0 top-20 bg-white z-[90] md:hidden animate-in slide-in-from-top duration-300 overflow-y-auto">
-          <div className="flex flex-col p-8 gap-8">
+        <div className="fixed inset-0 bg-white z-[90] md:hidden animate-in fade-in slide-in-from-top duration-300">
+          <div className="flex flex-col p-8 pt-32 gap-6">
             <Link 
               to="/duvidas" 
               onClick={() => setIsMenuOpen(false)}
-              className="flex items-center gap-4 text-2xl font-elegant font-bold text-gray-900 border-b border-gray-50 pb-4"
+              className="flex items-center justify-between text-2xl font-elegant font-bold text-gray-900 border-b border-gray-50 pb-6"
             >
-              <HelpCircle className="text-rose-500" size={24} />
-              {t.faq}
+              <span>{t.faq}</span>
+              <HelpCircle className="text-rose-300" size={24} />
             </Link>
             <Link 
               to="/contato" 
               onClick={() => setIsMenuOpen(false)}
-              className="flex items-center gap-4 text-2xl font-elegant font-bold text-gray-900 border-b border-gray-50 pb-4"
+              className="flex items-center justify-between text-2xl font-elegant font-bold text-gray-900 border-b border-gray-50 pb-6"
             >
-              <Mail className="text-rose-500" size={24} />
-              {t.contact}
+              <span>{t.contact}</span>
+              <Mail className="text-rose-300" size={24} />
             </Link>
-            <button 
-              onClick={handleCtaClick}
-              className="mt-4 w-full bg-rose-500 text-white py-5 rounded-2xl font-black text-lg uppercase tracking-widest shadow-xl shadow-rose-100"
-            >
-              {t.createBtn}
-            </button>
-            <div className="mt-8 text-center">
-              <p className="text-gray-400 text-xs font-medium italic">KIZUNA - Eternizando Laços</p>
+            
+            <div className="mt-6">
+              <button 
+                onClick={handleCtaClick}
+                className="w-full bg-rose-500 text-white py-5 rounded-2xl font-black text-lg uppercase tracking-widest shadow-xl shadow-rose-100 active:scale-95 transition-transform"
+              >
+                {t.createBtn}
+              </button>
+            </div>
+            
+            <div className="mt-auto text-center pb-12">
+              <p className="text-gray-400 text-xs font-black uppercase tracking-[0.3em] italic">KIZUNA - Eternizando Histórias</p>
             </div>
           </div>
         </div>
       )}
-    </nav>
+    </>
   );
 };
 
