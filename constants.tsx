@@ -37,14 +37,14 @@ export const getPlans = (lang: Language): Plan[] => [
       'Contador de Tempo Real',
       'Foto Especial',
       'Escolha de Fontes',
-      'Efeito de Corações',
+      'Efeito de Partículas Padrão',
       'Design Minimalista'
     ] : [
       '24時間365日オンライン',
       '経過時間カウンター',
       '大切な写真',
       'フォントの選択',
-      'ハートのエフェクト',
+      '標準的なエフェクト',
       'ミニマルデザイン'
     ],
     imageLimit: 1,
@@ -57,35 +57,35 @@ export const getPlans = (lang: Language): Plan[] => [
 export const THEMES = [
   { 
     id: PageTheme.ROMANTIC, 
-    name: 'Romantic Pink', 
-    colors: 'bg-[#fff5f6]', 
-    card: 'bg-white/80',
-    text: 'text-rose-500',
-    accent: 'bg-rose-500'
+    name: 'Kizuna Lavender', 
+    colors: 'bg-[#f8f7f9]', 
+    card: 'bg-white/90',
+    text: 'text-[#a47fba]',
+    accent: 'bg-[#a47fba]'
   },
   { 
     id: PageTheme.CLASSIC, 
-    name: 'Classic Gold', 
-    colors: 'bg-[#faf9f6]', 
+    name: 'Kizuna Azure', 
+    colors: 'bg-[#f0f9ff]', 
     card: 'bg-white/90',
-    text: 'text-amber-700',
-    accent: 'bg-amber-600'
+    text: 'text-[#67cbf1]',
+    accent: 'bg-[#67cbf1]'
   },
   { 
     id: PageTheme.MIDNIGHT, 
-    name: 'Midnight Loft', 
-    colors: 'bg-[#0f172a]', 
-    card: 'bg-slate-900/80',
-    text: 'text-slate-200',
-    accent: 'bg-indigo-500'
+    name: 'Kizuna Graphite', 
+    colors: 'bg-[#30302e]', 
+    card: 'bg-[#3d3d3c]/90',
+    text: 'text-[#f0f9ff]',
+    accent: 'bg-[#a47fba]'
   },
 ];
 
 export const FRAMES = [
   { id: PhotoFrame.NONE, name: 'Sem Moldura' },
   { id: PhotoFrame.POLAROID, name: 'Polaroid Retro' },
-  { id: PhotoFrame.GOLD, name: 'Royal Gold' },
-  { id: PhotoFrame.ORGANIC, name: 'Borda Suave' },
+  { id: PhotoFrame.GOLD, name: 'Borda Artística' },
+  { id: PhotoFrame.ORGANIC, name: 'Minimalista' },
 ];
 
 export const FONTS = [
@@ -97,8 +97,8 @@ export const FONTS = [
 
 export const EFFECTS = (lang: Language) => [
   { id: PageEffect.NONE, name: lang === 'pt' ? 'Nenhum' : 'なし', premium: false },
-  { id: PageEffect.HEARTS, name: lang === 'pt' ? 'Corações' : 'ハート', premium: false },
-  { id: PageEffect.SPARKLES, name: lang === 'pt' ? 'Estrelas' : '星空', premium: true },
+  { id: PageEffect.HEARTS, name: lang === 'pt' ? 'Púrpura' : 'パープル', premium: false },
+  { id: PageEffect.SPARKLES, name: lang === 'pt' ? 'Brilho Celeste' : 'アズールブライト', premium: true },
   { id: PageEffect.FLOWER_PETALS, name: lang === 'pt' ? 'Pétalas' : '桜', premium: true },
   { id: PageEffect.FIREFLIES, name: lang === 'pt' ? 'Vagalumes' : '蛍', premium: true },
 ];

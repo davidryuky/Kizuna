@@ -39,7 +39,7 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, t }) => {
 
   return (
     <>
-      <nav className="sticky top-0 z-[100] bg-white/95 backdrop-blur-xl border-b border-rose-50 shadow-sm">
+      <nav className="sticky top-0 z-[100] bg-white/95 backdrop-blur-xl border-b border-[#f0eef2] shadow-sm">
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
           <Link to="/" className="flex items-center group transition-transform duration-300 hover:scale-105">
             <img 
@@ -52,10 +52,10 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, t }) => {
           <div className="flex gap-3 md:gap-8 items-center">
             {/* Menu Desktop */}
             <div className="hidden md:flex items-center gap-8 mr-4">
-              <Link to="/duvidas" className="text-[11px] font-black uppercase tracking-widest text-gray-400 hover:text-rose-500 transition-colors">
+              <Link to="/duvidas" className="text-[11px] font-black uppercase tracking-widest text-gray-400 hover:text-[#a47fba] transition-colors">
                 {t.faq}
               </Link>
-              <Link to="/contato" className="text-[11px] font-black uppercase tracking-widest text-gray-400 hover:text-rose-500 transition-colors">
+              <Link to="/contato" className="text-[11px] font-black uppercase tracking-widest text-gray-400 hover:text-[#a47fba] transition-colors">
                 {t.contact}
               </Link>
             </div>
@@ -64,23 +64,23 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, t }) => {
             <div className="relative">
               <button 
                 onClick={() => { setShowLangs(!showLangs); }}
-                className="flex items-center gap-1.5 bg-rose-50/50 border border-rose-100 px-3 py-1.5 md:px-4 md:py-2 rounded-full hover:bg-rose-50 transition-all shadow-sm group"
+                className="flex items-center gap-1.5 bg-[#f4f0f7] border border-[#e8e1f0] px-3 py-1.5 md:px-4 md:py-2 rounded-full hover:bg-[#e8e1f0] transition-all shadow-sm group"
               >
                 <span className="text-base md:text-lg leading-none">{currentFlag}</span>
-                <ChevronDown size={12} className={`text-rose-300 transition-transform duration-300 ${showLangs ? 'rotate-180' : ''}`} />
+                <ChevronDown size={12} className={`text-[#a47fba] transition-transform duration-300 ${showLangs ? 'rotate-180' : ''}`} />
               </button>
               
               {showLangs && (
-                <div className="absolute right-0 mt-3 w-40 bg-white rounded-2xl shadow-2xl border border-rose-50 overflow-hidden animate-in fade-in zoom-in slide-in-from-top-2 duration-300 z-[110]">
+                <div className="absolute right-0 mt-3 w-40 bg-white rounded-2xl shadow-2xl border border-[#f0eef2] overflow-hidden animate-in fade-in zoom-in slide-in-from-top-2 duration-300 z-[110]">
                   <button 
                     onClick={() => { setLang('pt'); setShowLangs(false); }}
-                    className={`w-full flex items-center gap-3 px-5 py-3 hover:bg-rose-50 text-sm font-semibold transition-colors ${lang === 'pt' ? 'text-rose-600 bg-rose-50/50' : 'text-gray-500'}`}
+                    className={`w-full flex items-center gap-3 px-5 py-3 hover:bg-[#f4f0f7] text-sm font-semibold transition-colors ${lang === 'pt' ? 'text-[#a47fba] bg-[#f4f0f7]/50' : 'text-gray-500'}`}
                   >
                     <span className="text-lg">🇧🇷</span> Português
                   </button>
                   <button 
                     onClick={() => { setLang('jp'); setShowLangs(false); }}
-                    className={`w-full flex items-center gap-3 px-5 py-3 hover:bg-rose-50 text-sm font-semibold transition-colors ${lang === 'jp' ? 'text-rose-600 bg-rose-50/50' : 'text-gray-500'}`}
+                    className={`w-full flex items-center gap-3 px-5 py-3 hover:bg-[#f4f0f7] text-sm font-semibold transition-colors ${lang === 'jp' ? 'text-[#a47fba] bg-[#f4f0f7]/50' : 'text-gray-500'}`}
                   >
                     <span className="text-lg">🇯🇵</span> 日本語
                   </button>
@@ -91,7 +91,7 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, t }) => {
             {/* CTA Desktop */}
             <button 
               onClick={handleCtaClick}
-              className="hidden md:block bg-rose-500 text-white px-8 py-3 rounded-full hover:bg-rose-600 transition-all shadow-lg shadow-rose-200 hover:shadow-rose-300 transform hover:-translate-y-0.5 font-black text-xs uppercase tracking-widest"
+              className="hidden md:block bg-[#a47fba] text-white px-8 py-3 rounded-full hover:bg-[#8e6aa3] transition-all shadow-lg shadow-[#a47fba22] hover:shadow-[#a47fba44] transform hover:-translate-y-0.5 font-black text-xs uppercase tracking-widest"
             >
               {t.createBtn}
             </button>
@@ -99,7 +99,7 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, t }) => {
             {/* Botão Hambúrguer Mobile */}
             <button 
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="md:hidden p-2 text-gray-500 hover:text-rose-500 transition-colors z-[120]"
+              className="md:hidden p-2 text-gray-500 hover:text-[#a47fba] transition-colors z-[120]"
               aria-label="Abrir menu"
             >
               {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
@@ -115,31 +115,31 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, t }) => {
             <Link 
               to="/duvidas" 
               onClick={() => setIsMenuOpen(false)}
-              className="flex items-center justify-between text-2xl font-elegant font-bold text-gray-900 border-b border-gray-50 pb-6"
+              className="flex items-center justify-between text-2xl font-elegant font-bold text-[#30302e] border-b border-gray-50 pb-6"
             >
               <span>{t.faq}</span>
-              <HelpCircle className="text-rose-300" size={24} />
+              <HelpCircle className="text-[#a47fba]" size={24} />
             </Link>
             <Link 
               to="/contato" 
               onClick={() => setIsMenuOpen(false)}
-              className="flex items-center justify-between text-2xl font-elegant font-bold text-gray-900 border-b border-gray-50 pb-6"
+              className="flex items-center justify-between text-2xl font-elegant font-bold text-[#30302e] border-b border-gray-50 pb-6"
             >
               <span>{t.contact}</span>
-              <Mail className="text-rose-300" size={24} />
+              <Mail className="text-[#a47fba]" size={24} />
             </Link>
             
             <div className="mt-6">
               <button 
                 onClick={handleCtaClick}
-                className="w-full bg-rose-500 text-white py-5 rounded-2xl font-black text-lg uppercase tracking-widest shadow-xl shadow-rose-100 active:scale-95 transition-transform"
+                className="w-full bg-[#a47fba] text-white py-5 rounded-2xl font-black text-lg uppercase tracking-widest shadow-xl shadow-[#a47fba22] active:scale-95 transition-transform"
               >
                 {t.createBtn}
               </button>
             </div>
             
             <div className="mt-auto text-center pb-12">
-              <p className="text-gray-400 text-xs font-black uppercase tracking-[0.3em] italic">KIZUNA - Eternizando Histórias</p>
+              <p className="text-gray-300 text-[10px] font-black uppercase tracking-[0.3em] italic">KIZUNA - Eternizando Histórias</p>
             </div>
           </div>
         </div>

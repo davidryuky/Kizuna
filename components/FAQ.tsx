@@ -10,24 +10,24 @@ interface FAQProps {
 
 const FAQItem: React.FC<{ q: string; a: string; isOpen: boolean; onClick: () => void }> = ({ q, a, isOpen, onClick }) => {
   return (
-    <div className="border-b border-rose-100 last:border-none">
+    <div className="border-b border-[#f4f0f7] last:border-none">
       <button
         onClick={onClick}
         className="w-full flex items-center justify-between py-6 text-left group transition-all"
         aria-expanded={isOpen}
       >
-        <span className={`text-lg md:text-xl font-bold transition-colors ${isOpen ? 'text-rose-500' : 'text-gray-900 group-hover:text-rose-400'}`}>
+        <span className={`text-lg md:text-xl font-bold transition-colors ${isOpen ? 'text-[#a47fba]' : 'text-[#30302e] group-hover:text-[#a47fba]'}`}>
           {q}
         </span>
         <ChevronDown 
           size={20} 
-          className={`text-rose-300 transition-transform duration-500 ${isOpen ? 'rotate-180 text-rose-500' : ''}`} 
+          className={`text-[#e8e1f0] transition-transform duration-500 ${isOpen ? 'rotate-180 text-[#a47fba]' : ''}`} 
         />
       </button>
       <div 
         className={`overflow-hidden transition-all duration-500 ease-in-out ${isOpen ? 'max-h-[500px] pb-6 opacity-100' : 'max-h-0 opacity-0'}`}
       >
-        <p className="text-gray-500 leading-relaxed text-base md:text-lg font-light">
+        <p className="text-gray-400 leading-relaxed text-base md:text-lg font-light">
           {a}
         </p>
       </div>
@@ -41,14 +41,14 @@ const FAQ: React.FC<FAQProps> = ({ lang, t }) => {
   return (
     <div className="max-w-4xl mx-auto px-6 py-20 animate-in fade-in duration-700">
       <div className="text-center mb-20">
-        <div className="inline-flex p-4 bg-rose-50 text-rose-500 rounded-3xl mb-6 shadow-sm">
+        <div className="inline-flex p-4 bg-[#f4f0f7] text-[#a47fba] rounded-3xl mb-6 shadow-sm">
           <HelpCircle size={32} />
         </div>
-        <h1 className="text-5xl md:text-6xl font-elegant font-bold text-gray-900 mb-4">{t.faq}</h1>
-        <div className="w-24 h-1 bg-rose-500 mx-auto rounded-full opacity-20"></div>
+        <h1 className="text-5xl md:text-6xl font-elegant font-bold text-[#30302e] mb-4">{t.faq}</h1>
+        <div className="w-24 h-1 bg-[#a47fba] mx-auto rounded-full opacity-20"></div>
       </div>
       
-      <div className="bg-white p-8 md:p-12 rounded-[3rem] border border-rose-50 shadow-xl shadow-rose-50/50">
+      <div className="bg-white p-8 md:p-12 rounded-[3rem] border border-[#f0eef2] shadow-xl shadow-[#f4f0f7]/50">
         <div className="space-y-2">
           {t.faqItems.map((item: any, i: number) => (
             <FAQItem 
@@ -63,7 +63,7 @@ const FAQ: React.FC<FAQProps> = ({ lang, t }) => {
       </div>
 
       <div className="mt-20 text-center">
-        <p className="text-gray-400 text-sm font-medium italic">
+        <p className="text-gray-300 text-sm font-medium italic">
           {lang === 'pt' 
             ? "Ainda tem dúvidas? Estamos aqui para ajudar através de nossos canais oficiais." 
             : "ご不明な点がございましたら、公式チャンネルからお気軽にお問い合わせください。"}
