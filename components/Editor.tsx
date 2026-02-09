@@ -174,7 +174,7 @@ const Editor: React.FC<EditorProps> = ({ data, plan, onUpdate, lang, t }) => {
           </div>
         </div>
 
-        {/* MENSAGEM ESPECIAL (Agora para todos os planos) */}
+        {/* MENSAGEM ESPECIAL */}
         <section className="space-y-4 pt-6 border-t border-gray-50">
           <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2 px-1">
             <Quote size={14} className="text-[#a47fba]" /> {t.coupleMessageLabel}
@@ -193,7 +193,7 @@ const Editor: React.FC<EditorProps> = ({ data, plan, onUpdate, lang, t }) => {
           </div>
         </section>
 
-        {/* FOTOS COM TRAVA LÓGICA */}
+        {/* FOTOS */}
         <section className="space-y-3 border-t border-gray-50 pt-8">
           <div className="flex justify-between items-center px-1">
              <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2">
@@ -233,7 +233,7 @@ const Editor: React.FC<EditorProps> = ({ data, plan, onUpdate, lang, t }) => {
           )}
         </section>
 
-        {/* MÚSICA DE FUNDO (Premium e Infinity) */}
+        {/* MÚSICA DE FUNDO */}
         {isPremium && (
           <section className="space-y-4 pt-6 border-t border-gray-50">
             <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2 px-1">
@@ -366,38 +366,43 @@ const Editor: React.FC<EditorProps> = ({ data, plan, onUpdate, lang, t }) => {
           </section>
         )}
 
-        {/* CÁPSULA DO TEMPO */}
+        {/* CÁPSULA DO TEMPO - AJUSTE PARA TEMA CLARO */}
         {isInfinity && (
-          <section className="p-6 md:p-8 bg-[#30302e] text-white rounded-[2.5rem] space-y-6 shadow-xl relative overflow-hidden group">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-[#67cbf1]/10 rounded-full blur-3xl -mr-16 -mt-16"></div>
-            <div className="flex items-center gap-4 relative z-10">
-              <div className="w-12 h-12 md:w-14 md:h-14 bg-[#67cbf1] rounded-2xl flex items-center justify-center text-white shadow-lg shadow-[#67cbf133]">
-                <Clock size={24} />
+          <section className="p-8 md:p-12 bg-gradient-to-br from-[#f0f9ff] to-[#fdfaff] text-[#30302e] rounded-[3rem] space-y-8 shadow-xl border-2 border-[#67cbf111] relative overflow-hidden group border-t border-gray-50">
+            <div className="absolute top-0 right-0 w-48 h-48 bg-[#67cbf108] rounded-full blur-3xl -mr-24 -mt-24"></div>
+            
+            <div className="flex flex-col md:flex-row items-center gap-6 relative z-10 text-center md:text-left">
+              <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-[#67cbf1] shadow-xl shadow-[#67cbf111] border border-[#67cbf122]">
+                <Clock size={32} />
               </div>
               <div>
-                <h3 className="text-xl md:text-2xl font-bold">{t.capsuleTitle}</h3>
-                <p className="text-[8px] md:text-[10px] text-[#67cbf1] uppercase tracking-[0.3em] font-black">Uma mensagem que só o tempo revelará</p>
+                <h3 className="text-2xl md:text-3xl font-elegant font-bold text-gray-900">{t.capsuleTitle}</h3>
+                <p className="text-[10px] text-[#67cbf1] uppercase tracking-[0.3em] font-black mt-1">Uma mensagem que só o tempo revelará</p>
               </div>
             </div>
             
             <div className="grid md:grid-cols-2 gap-8 relative z-10">
               <div className="space-y-3">
-                <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest flex items-center gap-2 px-1">{t.capsuleDate} <Clock size={12} /></label>
+                <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2 px-1">
+                  {t.capsuleDate} <Clock size={12} className="text-[#67cbf1]" />
+                </label>
                 <input 
                   type="date" 
                   value={data.capsuleOpenDate || ''} 
                   onChange={e => onUpdate({ capsuleOpenDate: e.target.value })} 
-                  className="w-full px-6 py-4 rounded-xl bg-white/5 border-2 border-white/10 focus:border-[#67cbf1] outline-none transition-all font-medium text-white shadow-inner"
+                  className="w-full px-6 py-4 rounded-2xl bg-white border-2 border-[#f0eef2] focus:border-[#67cbf1] focus:ring-4 focus:ring-[#67cbf111] outline-none transition-all font-bold text-[#30302e] shadow-sm"
                 />
               </div>
               <div className="space-y-3">
-                <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest flex items-center gap-2 px-1">{t.capsuleMsg} <Lock size={12} /></label>
+                <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2 px-1">
+                  {t.capsuleMsg} <Lock size={12} className="text-[#67cbf1]" />
+                </label>
                 <textarea 
                   value={data.capsuleMessage || ''}
                   onChange={e => onUpdate({ capsuleMessage: e.target.value })}
                   rows={3}
-                  placeholder="O que você quer dizer ao seu amor daqui a alguns meses ou anos?"
-                  className="w-full px-6 py-4 rounded-xl bg-white/5 border-2 border-white/10 focus:border-[#67cbf1] outline-none transition-all font-medium text-white resize-none shadow-inner text-sm"
+                  placeholder="Escreva uma mensagem para o futuro..."
+                  className="w-full px-6 py-4 rounded-2xl bg-white border-2 border-[#f0eef2] focus:border-[#67cbf1] focus:ring-4 focus:ring-[#67cbf111] outline-none transition-all font-bold text-[#30302e] resize-none shadow-sm text-sm"
                 />
               </div>
             </div>
