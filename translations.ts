@@ -44,6 +44,7 @@ export const translations = {
     faq: "Dúvidas",
     privacy: "Privacidade",
     contact: "Contato",
+    tokutei: "Lei de Transações Comerciais",
     send: "Enviar",
     nameLabel: "Nome",
     msgLabel: "Mensagem",
@@ -62,6 +63,9 @@ export const translations = {
     effects: "Efeito de Fundo",
     fonts: "Estilo da Fonte",
     premiumOnly: "Exclusivo Premium",
+    refundTitle: "Garantia de Felicidade KIZUNA",
+    refundSubtitle: "Não gostou do resultado? Nós devolvemos seu dinheiro.",
+    refundDesc: "Oferecemos reembolso total em até 7 dias após a compra, sem perguntas. Nosso compromisso é com a celebração do seu amor.",
     faqItems: [
       {
         q: "O que é o KIZUNA?",
@@ -149,6 +153,7 @@ export const translations = {
     faq: "よくある質問",
     privacy: "プライバシー",
     contact: "お問い合わせ",
+    tokutei: "特定商取引法に基づく表記",
     send: "送信",
     nameLabel: "お名前",
     msgLabel: "メッセージ",
@@ -167,6 +172,9 @@ export const translations = {
     effects: "背景エフェクト",
     fonts: "フォントスタイル",
     premiumOnly: "プレミアム限定",
+    refundTitle: "KIZUNA 幸せ保証",
+    refundSubtitle: "ご満足いただけない場合は全額返金いたします。",
+    refundDesc: "ご購入後7日以内であれば、理由を問わず全額返金いたします。私たちの使命は、皆様の愛を祝福することです。",
     faqItems: [
       {
         q: "KIZUNAとは何ですか？",

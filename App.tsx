@@ -10,6 +10,7 @@ import Navbar from './components/Navbar';
 import FAQ from './components/FAQ';
 import Privacy from './components/Privacy';
 import Contact from './components/Contact';
+import Tokutei from './components/Tokutei';
 import { translations } from './translations';
 import { Instagram, Twitter, Facebook, Youtube, Heart } from 'lucide-react';
 
@@ -64,6 +65,7 @@ const AppContent: React.FC<{
           <Route path="/faq" element={<Navigate to="/duvidas" replace />} />
           <Route path="/privacidade" element={<Privacy lang={lang} t={t} />} />
           <Route path="/contato" element={<Contact lang={lang} t={t} />} />
+          <Route path="/tokutei" element={<Tokutei lang={lang} t={t} />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>
@@ -83,21 +85,22 @@ const AppContent: React.FC<{
             </p>
             
             <div className="flex gap-8 mb-12 text-gray-300">
-              <a href="#" className="hover:text-rose-500 transition-colors"><Instagram size={22} /></a>
-              <a href="#" className="hover:text-rose-500 transition-colors"><Twitter size={22} /></a>
-              <a href="#" className="hover:text-rose-500 transition-colors"><Facebook size={22} /></a>
-              <a href="#" className="hover:text-rose-500 transition-colors"><Youtube size={22} /></a>
-              <a href="#" className="hover:text-rose-500 transition-colors"><Heart size={22} /></a>
+              <a href="#" className="hover:text-[#a47fba] transition-colors"><Instagram size={22} /></a>
+              <a href="#" className="hover:text-[#a47fba] transition-colors"><Twitter size={22} /></a>
+              <a href="#" className="hover:text-[#a47fba] transition-colors"><Facebook size={22} /></a>
+              <a href="#" className="hover:text-[#a47fba] transition-colors"><Youtube size={22} /></a>
+              <a href="#" className="hover:text-[#a47fba] transition-colors"><Heart size={22} /></a>
             </div>
 
             <div className="flex flex-wrap justify-center gap-x-8 gap-y-4 mb-12 text-[11px] font-black uppercase tracking-widest text-gray-400">
-              <Link to="/duvidas" className="hover:text-rose-500 transition-colors">{t.faq}</Link>
-              <Link to="/privacidade" className="hover:text-rose-500 transition-colors">{t.privacy}</Link>
-              <Link to="/contato" className="hover:text-rose-500 transition-colors">{t.contact}</Link>
+              <Link to="/duvidas" className="hover:text-[#a47fba] transition-colors">{t.faq}</Link>
+              <Link to="/privacidade" className="hover:text-[#a47fba] transition-colors">{t.privacy}</Link>
+              <Link to="/tokutei" className="hover:text-[#a47fba] transition-colors">{t.tokutei}</Link>
+              <Link to="/contato" className="hover:text-[#a47fba] transition-colors">{t.contact}</Link>
             </div>
             
             <div className="pt-10 border-t border-gray-50 w-full">
-              <p className="text-gray-400 text-[10px] font-black uppercase tracking-[0.3em]">
+              <p className="text-gray-300 text-[10px] font-black uppercase tracking-[0.3em]">
                 {lang === 'pt' ? 'Desenvolvido com ❤️ para Casais Apaixonados' : '愛するカップルのために❤️で作られました'}
               </p>
             </div>

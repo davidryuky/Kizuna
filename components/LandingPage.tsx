@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Heart, Sparkles, Star, CheckCircle2, ArrowRight, CreditCard, Mail, Gift } from 'lucide-react';
+import { Heart, Sparkles, Star, CheckCircle2, ArrowRight, CreditCard, Mail, Gift, ShieldCheck } from 'lucide-react';
 import { PlanType, Language } from '../types';
 import { getPlans } from '../constants';
 import { SocialProof } from './SocialProof';
@@ -109,7 +109,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onSelectPlan, lang, t }) => {
             </div>
           </div>
           
-          <div className="grid md:grid-cols-2 gap-8 md:gap-10 items-stretch max-w-5xl mx-auto mb-16 md:mb-32">
+          <div className="grid md:grid-cols-2 gap-8 md:gap-10 items-stretch max-w-5xl mx-auto mb-16 md:mb-10">
             {plans.map((plan) => (
               <div 
                 key={plan.id}
@@ -154,6 +154,30 @@ const LandingPage: React.FC<LandingPageProps> = ({ onSelectPlan, lang, t }) => {
                 </button>
               </div>
             ))}
+          </div>
+
+          {/* Refund Banner - Versão Refinada e Leve */}
+          <div className="max-w-5xl mx-auto mb-20 md:mb-32">
+            <div className="bg-white rounded-[3rem] p-8 md:p-12 text-[#30302e] flex flex-col md:flex-row items-center gap-10 shadow-xl border-2 border-dashed border-[#a47fba33] relative overflow-hidden group">
+              {/* Elementos decorativos de fundo */}
+              <div className="absolute top-0 right-0 w-64 h-64 bg-[#67cbf10a] rounded-full -mr-32 -mt-32 blur-3xl"></div>
+              <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#a47fba0a] rounded-full -ml-32 -mb-32 blur-3xl"></div>
+              
+              <div className="relative z-10 w-24 h-24 bg-[#f4f0f7] rounded-[2rem] flex items-center justify-center text-[#a47fba] flex-shrink-0 shadow-sm group-hover:scale-110 transition-transform duration-500">
+                 <ShieldCheck size={52} />
+              </div>
+              
+              <div className="relative z-10 text-center md:text-left space-y-3">
+                <div className="inline-flex bg-[#a47fba11] text-[#a47fba] px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest mb-2">
+                  {lang === 'pt' ? 'Segurança Total' : '完全なセキュリティ'}
+                </div>
+                <h3 className="text-2xl md:text-4xl font-elegant font-bold leading-tight">{t.refundTitle}</h3>
+                <p className="text-[#a47fba] font-bold text-lg">{t.refundSubtitle}</p>
+                <p className="text-sm text-gray-400 max-w-2xl leading-relaxed font-medium">
+                  {t.refundDesc}
+                </p>
+              </div>
+            </div>
           </div>
 
           {/* Seção Como Funciona */}
