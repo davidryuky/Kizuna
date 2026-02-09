@@ -60,7 +60,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onSelectPlan, lang, t }) => {
               
               <div className="relative bg-white p-4 rounded-[3.5rem] shadow-[0_50px_100px_-20px_rgba(48,48,46,0.15)] border border-[#f0eef2] overflow-hidden transform rotate-2 group-hover:rotate-0 transition-transform duration-700">
                 <img 
-                  src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&q=80&w=1200" 
+                  src="https://i.postimg.cc/SQT5xd6M/Screenshot-2026-02-08-at-22-30-47-KIZUNA-Eternize-seu-Amor.png" 
                   alt="Kizuna Preview" 
                   className="rounded-[3rem] w-full h-[540px] object-cover shadow-inner"
                 />
