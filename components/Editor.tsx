@@ -82,6 +82,15 @@ const Editor: React.FC<EditorProps> = ({ data, plan, onUpdate, lang, t }) => {
     onUpdate({ milestones: [...data.milestones, newMilestone] });
   };
 
+  const updateMilestone = (id: string, updates: Partial<Milestone>) => {
+    const updated = data.milestones.map(m => m.id === id ? { ...m, ...updates } : m);
+    onUpdate({ milestones: updated });
+  };
+
+  const removeMilestone = (id: string) => {
+    onUpdate({ milestones: data.milestones.filter(m => m.id !== id) });
+  };
+
   const inputClasses = "w-full px-6 py-4 rounded-2xl border-2 border-[#f0eef2] bg-[#f8f7f9]/50 focus:bg-white focus:border-[#a47fba] focus:ring-4 focus:ring-[#a47fba11] outline-none transition-all font-medium text-[#30302e] shadow-sm placeholder:text-gray-300";
 
   return (
@@ -106,7 +115,7 @@ const Editor: React.FC<EditorProps> = ({ data, plan, onUpdate, lang, t }) => {
           </div>
         </header>
 
-        {/* DOMÍNIO (Plano Infinito) */}
+        {/* BUSCADOR DE DOMÍNIO (Somente Plano Infinity) */}
         {isInfinity && (
           <section className="p-8 bg-gradient-to-br from-[#f8f7f9] to-white rounded-[2rem] border-2 border-[#67cbf122] space-y-4">
             <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2 px-1">
@@ -136,25 +145,37 @@ const Editor: React.FC<EditorProps> = ({ data, plan, onUpdate, lang, t }) => {
           </section>
         )}
 
-        {/* NOMES E DATA */}
-        <div className="grid md:grid-cols-2 gap-8">
-          <div className="space-y-3">
-            <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2 px-1"><User size={14} className="text-[#a47fba]" /> {lang === 'pt' ? 'Seu Nome' : 'お名前1'}</label>
-            <input type="text" value={data.partner1} onChange={e => onUpdate({ partner1: e.target.value })} className={inputClasses} placeholder="Ex: Lucas" />
+        {/* NOMES E DATA DE INÍCIO */}
+        <div className="space-y-8">
+          <div className="grid md:grid-cols-2 gap-8">
+            <div className="space-y-3">
+              <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2 px-1"><User size={14} className="text-[#a47fba]" /> {lang === 'pt' ? 'Seu Nome' : 'お名前1'}</label>
+              <input type="text" value={data.partner1} onChange={e => onUpdate({ partner1: e.target.value })} className={inputClasses} placeholder="Ex: Lucas" />
+            </div>
+            <div className="space-y-3">
+              <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2 px-1"><User size={14} className="text-[#a47fba]" /> {lang === 'pt' ? 'Nome do Amor' : 'お名前2'}</label>
+              <input type="text" value={data.partner2} onChange={e => onUpdate({ partner2: e.target.value })} className={inputClasses} placeholder="Ex: Júlia" />
+            </div>
           </div>
+
           <div className="space-y-3">
-            <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2 px-1"><User size={14} className="text-[#a47fba]" /> {lang === 'pt' ? 'Nome do Amor' : 'お名前2'}</label>
-            <input type="text" value={data.partner2} onChange={e => onUpdate({ partner2: e.target.value })} className={inputClasses} placeholder="Ex: Júlia" />
+            <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2 px-1"><Calendar size={14} className="text-[#a47fba]" /> {t.startDateLabel}</label>
+            <input 
+              type="date" 
+              value={data.startDate} 
+              onChange={e => onUpdate({ startDate: e.target.value })} 
+              className={inputClasses} 
+            />
           </div>
         </div>
 
-        {/* MÚSICA DE FUNDO (Premium e Infinito) */}
+        {/* MÚSICA DE FUNDO (Premium e Infinity) */}
         {isPremium && (
           <section className="space-y-4 pt-6 border-t border-gray-50">
             <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2 px-1">
               <Music size={14} className="text-[#a47fba]" /> {t.musicLabel}
             </label>
-            <div className="flex gap-4 p-5 bg-[#f4f0f7]/30 rounded-2xl border-2 border-[#f0eef2] items-center">
+            <div className="flex gap-4 p-5 bg-[#f4f0f7]/30 rounded-3xl border-2 border-[#f0eef2] items-center">
               <Youtube size={24} className="text-rose-500 flex-shrink-0" />
               <input 
                 type="text" 
@@ -167,9 +188,52 @@ const Editor: React.FC<EditorProps> = ({ data, plan, onUpdate, lang, t }) => {
           </section>
         )}
 
-        {/* DESIGN (TEMAS, MOLDURAS, FONTES) */}
+        {/* LINHA DO TEMPO: NOSSOS MARCOS (Premium e Infinity) */}
+        {isPremium && (
+          <section className="space-y-6 pt-6 border-t border-gray-50">
+            <div className="flex justify-between items-center px-1">
+              <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2">
+                <Clock size={14} className="text-[#a47fba]" /> {t.milestones}
+              </label>
+              <button onClick={addMilestone} className="text-[#a47fba] hover:text-[#8e6aa3] flex items-center gap-1 text-[10px] font-black uppercase tracking-widest">
+                <Plus size={14} /> {t.addMilestone}
+              </button>
+            </div>
+            
+            <div className="space-y-4">
+              {data.milestones.map((m) => (
+                <div key={m.id} className="grid md:grid-cols-12 gap-4 p-6 bg-[#f8f7f9] rounded-[2rem] border-2 border-[#f0eef2] animate-in slide-in-from-top-4">
+                  <div className="md:col-span-4">
+                    <input 
+                      type="date" 
+                      value={m.date} 
+                      onChange={e => updateMilestone(m.id, { date: e.target.value })}
+                      className="w-full px-4 py-3 rounded-xl border border-gray-100 bg-white text-sm font-bold text-gray-600 outline-none focus:border-[#a47fba]"
+                    />
+                  </div>
+                  <div className="md:col-span-7">
+                    <input 
+                      type="text" 
+                      value={m.title} 
+                      onChange={e => updateMilestone(m.id, { title: e.target.value })}
+                      placeholder={t.milestoneTitle}
+                      className="w-full px-4 py-3 rounded-xl border border-gray-100 bg-white text-sm font-bold text-gray-700 outline-none focus:border-[#a47fba]"
+                    />
+                  </div>
+                  <div className="md:col-span-1 flex items-center justify-center">
+                    <button onClick={() => removeMilestone(m.id)} className="text-gray-300 hover:text-rose-500 transition-colors">
+                      <Trash2 size={20} />
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* DESIGN: TEMAS, MOLDURAS E FONTES */}
         <section className="space-y-10 pt-6 border-t border-gray-50">
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid md:grid-cols-2 gap-10">
             <div className="space-y-4">
               <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2 px-1"><Layout size={14} className="text-[#a47fba]" /> {t.themes}</label>
               <div className="grid grid-cols-2 gap-3">
@@ -195,6 +259,30 @@ const Editor: React.FC<EditorProps> = ({ data, plan, onUpdate, lang, t }) => {
               </div>
             </div>
 
+            <div className="space-y-4">
+              <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2 px-1"><Frame size={14} className="text-[#a47fba]" /> {t.frames}</label>
+              <div className="grid grid-cols-2 gap-3">
+                {FRAMES.map(frame => {
+                  const isGoldLocked = frame.id === PhotoFrame.GOLD && !isPremium;
+                  return (
+                    <button
+                      key={frame.id}
+                      disabled={isGoldLocked}
+                      onClick={() => onUpdate({ frame: frame.id })}
+                      className={`relative p-4 rounded-[1.5rem] border-2 transition-all text-center flex flex-col items-center gap-2 ${
+                        data.frame === frame.id ? 'border-[#a47fba] bg-[#f4f0f7]' : 'border-gray-100 hover:border-gray-200'
+                      } ${isGoldLocked ? 'opacity-50 grayscale cursor-not-allowed' : ''}`}
+                    >
+                      <span className="text-[10px] font-bold text-[#30302e] uppercase tracking-widest truncate w-full">{frame.name}</span>
+                      {isGoldLocked && <Lock size={14} className="text-gray-400" />}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8">
             <div className="space-y-3">
               <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2 px-1"><Sparkles size={14} className="text-[#a47fba]" /> {t.effects}</label>
               <select value={data.effect} onChange={e => onUpdate({ effect: e.target.value as PageEffect })} className={inputClasses}>
@@ -204,13 +292,12 @@ const Editor: React.FC<EditorProps> = ({ data, plan, onUpdate, lang, t }) => {
                   </option>
                 ))}
               </select>
-              
-              <div className="pt-4 space-y-3">
-                <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2 px-1"><Type size={14} className="text-[#a47fba]" /> {t.fonts}</label>
-                <select value={data.fontFamily} onChange={e => onUpdate({ fontFamily: e.target.value as CoupleFont })} className={inputClasses}>
-                  {FONTS.map(f => <option key={f.id} value={f.id}>{f.name}</option>)}
-                </select>
-              </div>
+            </div>
+            <div className="space-y-3">
+              <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2 px-1"><Type size={14} className="text-[#a47fba]" /> {t.fonts}</label>
+              <select value={data.fontFamily} onChange={e => onUpdate({ fontFamily: e.target.value as CoupleFont })} className={inputClasses}>
+                {FONTS.map(f => <option key={f.id} value={f.id}>{f.name}</option>)}
+              </select>
             </div>
           </div>
         </section>
@@ -279,8 +366,8 @@ const Editor: React.FC<EditorProps> = ({ data, plan, onUpdate, lang, t }) => {
 
         {/* VÍDEOS (Plano Infinito) */}
         <section className="space-y-6 border-t border-gray-50 pt-8">
-          <div className="flex justify-between items-center">
-             <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2 px-1">
+          <div className="flex justify-between items-center px-1">
+             <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2">
                <Video size={14} className="text-[#a47fba]" /> {t.videosLabel} {!isInfinity && <span className="text-[#a47fba] ml-2 text-[8px] border border-[#a47fba22] px-2 py-0.5 rounded-full">🔒 {t.infinityOnly}</span>}
              </label>
              {isInfinity && (data.videos || []).length < 5 && (
@@ -290,7 +377,7 @@ const Editor: React.FC<EditorProps> = ({ data, plan, onUpdate, lang, t }) => {
              )}
           </div>
           {isInfinity && (data.videos || []).map((v, i) => (
-            <div key={i} className="flex gap-4 p-5 bg-[#f8f7f9] rounded-2xl border-2 border-[#f0eef2] animate-in slide-in-from-top-4 duration-300 items-center">
+            <div key={i} className="flex gap-4 p-5 bg-[#f8f7f9] rounded-2xl border-2 border-[#f0eef2] animate-in slide-in-from-top-4 items-center">
                <Youtube size={24} className="text-rose-500" />
                <input type="text" value={v} onChange={e => updateVideo(i, e.target.value)} className="bg-transparent outline-none flex-grow font-bold text-gray-700 placeholder:text-gray-300" placeholder="Cole o link do YouTube aqui..." />
                <button onClick={() => removeVideo(i)} className="text-gray-300 hover:text-rose-400 p-2"><Trash2 size={20} /></button>

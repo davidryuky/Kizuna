@@ -29,7 +29,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onSelectPlan, lang, t }) => {
     <div className="animate-in fade-in duration-700 bg-white">
       <SocialProof t={t} />
       
-      {/* Hero Section */}
+      {/* Seção Hero */}
       <section className="relative pt-10 md:pt-24 pb-12 md:pb-32 px-6 overflow-hidden flex items-start lg:items-center min-h-[60vh] lg:min-h-[90vh]">
         <div className="max-w-7xl mx-auto w-full grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           
@@ -96,7 +96,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onSelectPlan, lang, t }) => {
         </div>
       </section>
 
-      {/* Plans Section */}
+      {/* Seção de Planos */}
       <section id="plans" className="py-12 md:py-24 bg-[#f8f7f9] relative overflow-hidden border-t border-[#f0eef2]">
         <div className="max-w-[1400px] mx-auto px-6">
           <div className="text-center mb-16 md:mb-24">
@@ -163,7 +163,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onSelectPlan, lang, t }) => {
             ))}
           </div>
 
-          {/* Refund Banner */}
+          {/* Banner de Segurança Total e Reembolso */}
           <div className="max-w-5xl mx-auto mb-20 md:mb-32 mt-20">
             <div className="bg-white rounded-[3rem] p-8 md:p-12 text-[#30302e] flex flex-col md:flex-row items-center gap-10 shadow-xl border-2 border-dashed border-[#a47fba33] relative overflow-hidden group">
               <div className="absolute top-0 right-0 w-64 h-64 bg-[#67cbf10a] rounded-full -mr-32 -mt-32 blur-3xl"></div>
@@ -175,9 +175,9 @@ const LandingPage: React.FC<LandingPageProps> = ({ onSelectPlan, lang, t }) => {
               
               <div className="relative z-10 text-center md:text-left space-y-3">
                 <div className="inline-flex bg-[#a47fba11] text-[#a47fba] px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest mb-2">
-                  {lang === 'pt' ? 'Segurança Total' : '完全なセキュリティ'}
+                  {t.securityTag}
                 </div>
-                <h3 className="text-2xl md:text-4xl font-elegant font-bold leading-tight">{t.refundTitle}</h3>
+                <h3 className="text-2xl md:text-4xl font-elegant font-bold leading-tight text-[#30302e]">{t.refundTitle}</h3>
                 <p className="text-[#a47fba] font-bold text-lg">{t.refundSubtitle}</p>
                 <p className="text-sm text-gray-400 max-w-2xl leading-relaxed font-medium">
                   {t.refundDesc}

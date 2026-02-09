@@ -116,7 +116,7 @@ const Preview: React.FC<{ data: CoupleData, lang: any, t: any }> = ({ data, lang
         <button onClick={() => navigate('/checkout')} className="pointer-events-auto bg-rose-500 text-white shadow-xl px-8 py-3 rounded-full flex items-center gap-2 font-black text-[10px] uppercase tracking-widest hover:bg-rose-600 transition-all transform hover:scale-105 active:scale-95">{t.finishPage} <CheckCircle size={16} /></button>
       </div>
 
-      {/* Background Music Iframe (Only for Premium/Infinity) */}
+      {/* Música de Fundo (YouTube Iframe) */}
       {isPremium && musicVideoId && (
         <div className="fixed -top-[2000px] pointer-events-none">
           <iframe 
@@ -134,7 +134,7 @@ const Preview: React.FC<{ data: CoupleData, lang: any, t: any }> = ({ data, lang
         
         {/* Glow animado para Tema Infinity */}
         {isInfinityTheme && (
-          <div className="absolute -top-[50%] -left-[50%] w-[200%] h-[200%] bg-gradient-to-br from-[#67cbf111] via-transparent to-[#a47fba11] animate-spin-slow opacity-30"></div>
+          <div className="absolute -top-[50%] -left-[50%] w-[200%] h-[200%] bg-gradient-to-br from-[#67cbf111] via-transparent to-[#a47fba11] animate-spin-slow opacity-40"></div>
         )}
 
         <header className="text-center mb-20 relative z-10">
@@ -151,12 +151,12 @@ const Preview: React.FC<{ data: CoupleData, lang: any, t: any }> = ({ data, lang
           <p className={`${isInfinityTheme ? 'text-[#67cbf1]' : 'text-gray-400'} font-elegant italic tracking-[0.5em] text-[12px] uppercase opacity-80`}>{t.togetherForever}</p>
         </header>
 
-        {/* Galeria Grid (Infinito) ou Slider (Outros) */}
+        {/* Galeria Grid (Infinito) ou Slider (Outros) com aplicação de MOLDURAS */}
         <section className="mb-20 relative z-10">
           {isInfinity ? (
             <div className="columns-2 md:columns-3 gap-6 space-y-6">
               {data.images.map((img, idx) => (
-                <div key={idx} className={`${frameClasses[data.frame]} overflow-hidden shadow-2xl transition-all hover:scale-[1.05] group cursor-zoom-in`}>
+                <div key={idx} className={`${frameClasses[data.frame]} overflow-hidden shadow-2xl transition-all hover:scale-[1.05] group cursor-zoom-in relative`}>
                   <img src={img} className="w-full h-auto object-cover" alt="Memória" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 </div>
@@ -177,7 +177,7 @@ const Preview: React.FC<{ data: CoupleData, lang: any, t: any }> = ({ data, lang
           )}
         </section>
 
-        {/* Contador Cronológico */}
+        {/* Contador de Tempo Real */}
         {counter && (
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20 relative z-10">
             {Object.entries(counter).map(([k, v]) => (
@@ -189,7 +189,7 @@ const Preview: React.FC<{ data: CoupleData, lang: any, t: any }> = ({ data, lang
           </div>
         )}
 
-        {/* Vídeos das Memórias (Funcional) */}
+        {/* Galeria de Vídeos (Plano Infinito) */}
         {isInfinity && (data.videos || []).length > 0 && (
           <section className="mb-20 space-y-12 relative z-10">
             <div className="text-center">
@@ -215,7 +215,7 @@ const Preview: React.FC<{ data: CoupleData, lang: any, t: any }> = ({ data, lang
           </section>
         )}
 
-        {/* Cápsula do Tempo (Funcional com Bloqueio) */}
+        {/* Cápsula do Tempo Digital (Plano Infinito) */}
         {isInfinity && data.capsuleOpenDate && (
           <section className={`mb-20 p-10 md:p-20 rounded-[4rem] text-center shadow-2xl relative overflow-hidden ${isInfinityTheme ? 'bg-white/5 border border-white/10' : 'bg-gray-900'}`}>
             <div className="absolute inset-0 bg-gradient-to-br from-[#67cbf111] to-[#a47fba11] opacity-50"></div>
@@ -262,15 +262,18 @@ const Preview: React.FC<{ data: CoupleData, lang: any, t: any }> = ({ data, lang
           </div>
         )}
 
-        <Timeline milestones={data.milestones} colorClass={activeTheme.text} />
+        {/* LINHA DO TEMPO (Premium e Infinito) */}
+        {isPremium && <Timeline milestones={data.milestones} colorClass={activeTheme.text} />}
       </div>
 
+      {/* Botão de Compartilhamento */}
       <div className="mt-20 mb-40 text-center relative z-10">
          <button onClick={() => setShowShareModal(true)} className={`${isInfinityTheme ? 'bg-[#67cbf1] text-white shadow-[#67cbf133]' : 'bg-white text-rose-500 shadow-rose-100'} backdrop-blur shadow-2xl px-16 py-6 rounded-2xl font-black uppercase text-xs tracking-[0.3em] flex items-center justify-center gap-5 mx-auto hover:scale-105 transition-all transform active:scale-95`}>
            <Share2 size={24} /> {t.shareBtn}
          </button>
       </div>
 
+      {/* Controle de Áudio */}
       {isPremium && musicVideoId && (
         <button onClick={() => setIsMusicPlaying(!isMusicPlaying)} className="fixed bottom-10 right-10 z-[100] bg-white/95 backdrop-blur shadow-2xl p-6 rounded-full flex items-center gap-5 border border-white/50 hover:scale-110 transition-all group">
            <div className={`w-14 h-14 ${isMusicPlaying ? (isInfinityTheme ? 'bg-[#67cbf1]' : 'bg-rose-500') + ' animate-spin-slow shadow-lg' : 'bg-gray-200'} rounded-full flex items-center justify-center text-white transition-all`}>
@@ -280,6 +283,7 @@ const Preview: React.FC<{ data: CoupleData, lang: any, t: any }> = ({ data, lang
         </button>
       )}
 
+      {/* Modal de Compartilhamento */}
       {showShareModal && (
         <div className="fixed inset-0 z-[200] flex items-center justify-center p-6 bg-black/80 backdrop-blur-xl animate-in fade-in duration-500">
            <div className="bg-white rounded-[4rem] p-12 max-w-md w-full shadow-[0_0_100px_rgba(0,0,0,0.5)] relative animate-in zoom-in duration-500 text-center border-t-8 border-rose-500">
