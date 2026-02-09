@@ -20,7 +20,6 @@ const ScrollToTop = () => {
   return null;
 };
 
-// Fixed INITIAL_DATA by adding missing required 'videos' property
 const INITIAL_DATA: CoupleData = {
   partner1: '', partner2: '',
   startDate: '', images: [],
@@ -82,10 +81,7 @@ const AppContent: React.FC<{
                 className="h-14 md:h-16 w-auto object-contain"
               />
             </Link>
-            <p className="text-gray-400 text-sm font-medium mb-10 max-w-lg leading-relaxed">
-              {t.footerDesc}
-            </p>
-            
+            <p className="text-gray-400 text-sm font-medium mb-10 max-w-lg leading-relaxed">{t.footerDesc}</p>
             <div className="flex gap-8 mb-12 text-gray-300">
               <a href="#" className="hover:text-[#a47fba] transition-colors"><Instagram size={22} /></a>
               <a href="#" className="hover:text-[#a47fba] transition-colors"><Twitter size={22} /></a>
@@ -93,19 +89,13 @@ const AppContent: React.FC<{
               <a href="#" className="hover:text-[#a47fba] transition-colors"><Youtube size={22} /></a>
               <a href="#" className="hover:text-[#a47fba] transition-colors"><Heart size={22} /></a>
             </div>
-
             <div className="flex flex-wrap justify-center gap-x-8 gap-y-4 mb-12 text-[11px] font-black uppercase tracking-widest text-gray-400">
               <Link to="/duvidas" className="hover:text-[#a47fba] transition-colors">{t.faq}</Link>
               <Link to="/privacidade" className="hover:text-[#a47fba] transition-colors">{t.privacy}</Link>
               <Link to="/tokutei" className="hover:text-[#a47fba] transition-colors">{t.tokutei}</Link>
               <Link to="/contato" className="hover:text-[#a47fba] transition-colors">{t.contact}</Link>
             </div>
-            
-            <div className="pt-10 border-t border-gray-50 w-full">
-              <p className="text-gray-300 text-[10px] font-black uppercase tracking-[0.3em]">
-                {lang === 'pt' ? 'Desenvolvido com ❤️ para Casais Apaixonados' : '愛するカップルのために❤️で作られました'}
-              </p>
-            </div>
+            <p className="text-gray-300 text-[10px] font-black uppercase tracking-[0.3em]">{lang === 'pt' ? 'Desenvolvido com ❤️ para Casais Apaixonados' : '愛するカップルのために❤️で作られました'}</p>
           </div>
         </footer>
       )}
@@ -114,26 +104,20 @@ const AppContent: React.FC<{
 };
 
 const App: React.FC = () => {
-  const [lang, setLang] = useState<Language>(() => {
-    return (localStorage.getItem('kizuna_lang') as Language) || 'pt';
-  });
-  
-  const [selectedPlan, setSelectedPlan] = useState<PlanType | null>(() => {
-    return (localStorage.getItem('kizuna_plan') as PlanType) || null;
-  });
-
+  const [lang, setLang] = useState<Language>(() => (localStorage.getItem('kizuna_lang') as Language) || 'pt');
+  const [selectedPlan, setSelectedPlan] = useState<PlanType | null>(() => (localStorage.getItem('kizuna_plan') as PlanType) || null);
   const [coupleData, setCoupleData] = useState<CoupleData>(() => {
     const saved = localStorage.getItem('kizuna_data');
     return saved ? JSON.parse(saved) : INITIAL_DATA;
   });
 
-  useEffect(() => {
-    localStorage.setItem('kizuna_lang', lang);
-  }, [lang]);
-
-  useEffect(() => {
+  useEffect(() => { localStorage.setItem('kizuna_lang', lang); }, [lang]);
+  useEffect(() => { 
     localStorage.setItem('kizuna_data', JSON.stringify(coupleData));
-    if (coupleData.plan) setSelectedPlan(coupleData.plan);
+    if (coupleData.plan) {
+      setSelectedPlan(coupleData.plan);
+      localStorage.setItem('kizuna_plan', coupleData.plan);
+    }
   }, [coupleData]);
 
   const updateCoupleData = (data: Partial<CoupleData>) => setCoupleData(prev => ({ ...prev, ...data }));

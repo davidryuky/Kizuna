@@ -2,8 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CoupleData, PlanType, PageEffect, Language, PageTheme, PhotoFrame, Milestone, CoupleFont } from '../types';
-// Fixed missing imports: Crown, CheckCircle2
-import { Camera, Calendar, Sparkles, User, ArrowRight, ArrowLeft, Youtube, Palette, Plus, Trash2, Link as LinkIcon, Zap, Type, Music, Search, Globe, Video, Crown, CheckCircle2 } from 'lucide-react';
+import { Camera, Calendar, Sparkles, User, ArrowRight, ArrowLeft, Youtube, Palette, Plus, Trash2, Link as LinkIcon, Type, Search, Globe, Video, Crown, CheckCircle2, Heart, Layout, Frame } from 'lucide-react';
 import { THEMES, FRAMES, EFFECTS, FONTS } from '../constants';
 
 interface EditorProps {
@@ -30,7 +29,6 @@ const Editor: React.FC<EditorProps> = ({ data, plan, onUpdate, lang, t }) => {
     if (!domainSearch) return;
     setDomainStatus('checking');
     setTimeout(() => {
-      // Simulação de busca de domínio
       const available = !domainSearch.includes('love') && domainSearch.length > 3;
       setDomainStatus(available ? 'available' : 'unavailable');
       if (available) onUpdate({ requestedDomain: domainSearch });
@@ -62,7 +60,7 @@ const Editor: React.FC<EditorProps> = ({ data, plan, onUpdate, lang, t }) => {
   };
 
   const removeVideo = (index: number) => {
-    onUpdate({ videos: data.videos.filter((_, i) => i !== index) });
+    onUpdate({ videos: (data.videos || []).filter((_, i) => i !== index) });
   };
 
   const addMilestone = () => {
@@ -81,7 +79,7 @@ const Editor: React.FC<EditorProps> = ({ data, plan, onUpdate, lang, t }) => {
   const inputClasses = "w-full px-6 py-4 rounded-2xl border-2 border-[#f0eef2] bg-[#f8f7f9]/50 focus:bg-white focus:border-[#a47fba] focus:ring-4 focus:ring-[#a47fba11] outline-none transition-all font-medium text-[#30302e] shadow-sm placeholder:text-gray-300";
 
   return (
-    <div className={`max-w-4xl mx-auto px-4 py-12 animate-in fade-in duration-500`}>
+    <div className="max-w-4xl mx-auto px-4 py-12 animate-in fade-in duration-500">
       <button 
         onClick={() => navigate('/')} 
         className="mb-8 flex items-center gap-3 text-[#a47fba] font-black text-xs uppercase tracking-widest hover:translate-x-[-4px] transition-transform"
@@ -102,9 +100,9 @@ const Editor: React.FC<EditorProps> = ({ data, plan, onUpdate, lang, t }) => {
           </div>
         </header>
 
-        {/* BUSCADOR DE DOMÍNIO (Apenas para Plano Infinito) */}
+        {/* DOMÍNIO (Plano Infinito) */}
         {isInfinity && (
-          <div className="p-8 bg-gradient-to-br from-[#f8f7f9] to-white rounded-[2rem] border-2 border-[#67cbf122] space-y-4">
+          <section className="p-8 bg-gradient-to-br from-[#f8f7f9] to-white rounded-[2rem] border-2 border-[#67cbf122] space-y-4">
             <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2 px-1">
               <Globe size={14} className="text-[#67cbf1]" /> {t.domainSearch}
             </label>
@@ -114,7 +112,7 @@ const Editor: React.FC<EditorProps> = ({ data, plan, onUpdate, lang, t }) => {
                   type="text" 
                   value={domainSearch}
                   onChange={(e) => setDomainSearch(e.target.value.toLowerCase().replace(/[^a-z0-9-.]/g, ''))}
-                  placeholder="seu-amor.love"
+                  placeholder="ex: joao-e-maria.love"
                   className="bg-transparent outline-none flex-grow font-bold text-[#30302e]" 
                 />
               </div>
@@ -126,15 +124,13 @@ const Editor: React.FC<EditorProps> = ({ data, plan, onUpdate, lang, t }) => {
                 {domainStatus === 'checking' ? <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div> : <Search size={20} />}
               </button>
             </div>
-            
             {domainStatus === 'available' && <p className="text-xs font-bold text-green-500 flex items-center gap-2"><CheckCircle2 size={14} /> {t.domainAvailable}</p>}
             {domainStatus === 'unavailable' && <p className="text-xs font-bold text-rose-400 flex items-center gap-2"><Trash2 size={14} /> {t.domainUnavailable}</p>}
-            
-            <p className="text-[10px] text-gray-400 italic">Disponível em extensões .love, .com, .site, .life</p>
-          </div>
+            <p className="text-[10px] text-gray-400 italic">Extensões disponíveis: .love, .com, .site, .life</p>
+          </section>
         )}
 
-        {/* Nomes */}
+        {/* NOMES E DATA */}
         <div className="grid md:grid-cols-2 gap-8">
           <div className="space-y-3">
             <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2 px-1"><User size={14} className="text-[#a47fba]" /> {lang === 'pt' ? 'Seu Nome' : 'お名前1'}</label>
@@ -144,77 +140,136 @@ const Editor: React.FC<EditorProps> = ({ data, plan, onUpdate, lang, t }) => {
             <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2 px-1"><User size={14} className="text-[#a47fba]" /> {lang === 'pt' ? 'Nome do Amor' : 'お名前2'}</label>
             <input type="text" value={data.partner2} onChange={e => onUpdate({ partner2: e.target.value })} className={inputClasses} placeholder="Ex: Júlia" />
           </div>
+          <div className="md:col-span-2 space-y-3">
+            <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2 px-1"><Calendar size={14} className="text-[#a47fba]" /> {lang === 'pt' ? 'Quando tudo começou?' : '記念日'}</label>
+            <input type="date" value={data.startDate} onChange={e => onUpdate({ startDate: e.target.value })} className={inputClasses} />
+          </div>
         </div>
 
-        {/* Galeria de Fotos (Diferenciado por Plano) */}
-        <div className="space-y-3">
+        {/* FOTOS */}
+        <section className="space-y-3">
           <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2 px-1">
-            <Camera size={14} className="text-[#a47fba]" /> {lang === 'pt' ? 'Fotos das memórias' : '写真'} ({data.images.length}/{isInfinity ? 20 : (isPremium ? 4 : 1)})
+            <Camera size={14} className="text-[#a47fba]" /> {lang === 'pt' ? 'Galeria de Fotos' : '写真'} ({data.images.length}/{isInfinity ? 20 : (isPremium ? 4 : 1)})
           </label>
           <div className="relative group">
             <input type="file" multiple={isPremium} accept="image/*" onChange={handleFileChange} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" />
-            <div className="w-full px-6 py-6 rounded-3xl border-2 border-dashed border-[#f0eef2] bg-[#f8f7f9]/50 group-hover:bg-white group-hover:border-[#a47fba] transition-all flex flex-col items-center gap-3">
+            <div className="w-full px-6 py-8 rounded-3xl border-2 border-dashed border-[#f0eef2] bg-[#f8f7f9]/50 group-hover:bg-white group-hover:border-[#a47fba] transition-all flex flex-col items-center gap-3">
               <Camera size={32} className="text-gray-200 group-hover:text-[#a47fba]" />
-              <span className="text-sm font-bold text-gray-400">{lang === 'pt' ? 'Selecione suas fotos mais especiais' : '画像を選択'}</span>
+              <span className="text-sm font-bold text-gray-400">{lang === 'pt' ? 'Clique para selecionar as fotos' : '画像を選択'}</span>
             </div>
           </div>
           {data.images.length > 0 && (
             <div className="grid grid-cols-5 md:grid-cols-10 gap-2 mt-4">
               {data.images.map((img, i) => (
-                <div key={i} className="aspect-square rounded-lg overflow-hidden border border-gray-100 shadow-sm">
+                <div key={i} className="aspect-square rounded-lg overflow-hidden border border-gray-100 shadow-sm relative group">
                   <img src={img} className="w-full h-full object-cover" alt="Preview" />
+                  <button onClick={() => onUpdate({ images: data.images.filter((_, idx) => idx !== i) })} className="absolute top-1 right-1 bg-white/80 rounded-full p-1 text-rose-500 opacity-0 group-hover:opacity-100 transition-opacity"><Trash2 size={12} /></button>
                 </div>
               ))}
             </div>
           )}
-        </div>
+        </section>
 
-        {/* Gerenciamento de Vídeos (Apenas Plano Infinito) */}
-        <div className="space-y-6">
+        {/* VÍDEOS (Plano Infinito) */}
+        <section className="space-y-6">
           <div className="flex justify-between items-center">
              <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2 px-1">
-               <Video size={14} className="text-[#a47fba]" /> {t.videosLabel} {!isInfinity && <span className="text-[#a47fba] ml-2">🔒 {t.infinityOnly}</span>}
+               <Video size={14} className="text-[#a47fba]" /> {t.videosLabel} {!isInfinity && <span className="text-[#a47fba] ml-2 text-[8px] border border-[#a47fba22] px-2 py-0.5 rounded-full">🔒 {t.infinityOnly}</span>}
              </label>
-             {isInfinity && data.videos.length < 5 && (
-               <button onClick={addVideo} className="text-[#a47fba] hover:text-[#8e6aa3] flex items-center gap-1 text-xs font-black uppercase tracking-widest">
-                 <Plus size={16} /> Adicionar Vídeo
+             {isInfinity && (data.videos || []).length < 5 && (
+               <button onClick={addVideo} className="text-[#a47fba] hover:text-[#8e6aa3] flex items-center gap-1 text-[10px] font-black uppercase tracking-widest">
+                 <Plus size={14} /> {lang === 'pt' ? 'Novo Vídeo' : '追加'}
                </button>
              )}
           </div>
-          
           {isInfinity && (data.videos || []).map((v, i) => (
             <div key={i} className="flex gap-4 p-4 bg-[#f8f7f9] rounded-2xl border border-[#f0eef2] animate-in slide-in-from-top-4 duration-300">
                <Youtube size={20} className="text-[#a47fba] mt-3" />
-               <input 
-                 type="text" 
-                 value={v} 
-                 onChange={e => updateVideo(i, e.target.value)} 
-                 className={inputClasses} 
-                 placeholder="Link do YouTube (v=...)" 
-               />
+               <input type="text" value={v} onChange={e => updateVideo(i, e.target.value)} className={inputClasses} placeholder="Link do YouTube" />
                <button onClick={() => removeVideo(i)} className="text-gray-300 hover:text-rose-400 p-2"><Trash2 size={20} /></button>
             </div>
           ))}
-        </div>
+        </section>
 
-        {/* Demais Campos (Apenas abreviados para manter o XML limpo, assumindo o resto do Editor original) */}
-        <div className="grid md:grid-cols-2 gap-8">
-          <div className="space-y-3">
-            <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2 px-1"><LinkIcon size={14} className="text-[#a47fba]" /> {t.customUrl}</label>
-            <div className="flex items-center gap-2 bg-[#f8f7f9]/50 px-6 py-4 rounded-2xl border-2 border-[#f0eef2] focus-within:border-[#a47fba] transition-all shadow-sm">
-               <span className="text-gray-400 text-sm font-bold">kizuna.love/</span>
-               <input type="text" value={data.slug} onChange={e => onUpdate({ slug: e.target.value.toLowerCase().replace(/\s+/g, '-') })} placeholder={t.slugPlaceholder} className="bg-transparent outline-none flex-grow font-bold text-[#a47fba]" />
+        {/* DESIGN (TEMAS, MOLDURAS, FONTES) */}
+        <section className="space-y-8 pt-6 border-t border-gray-50">
+          <div className="grid md:grid-cols-2 gap-8">
+            {/* Temas */}
+            <div className="space-y-4">
+              <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2 px-1"><Layout size={14} className="text-[#a47fba]" /> {t.themes}</label>
+              <div className="grid grid-cols-3 gap-2">
+                {THEMES.map(theme => (
+                  <button
+                    key={theme.id}
+                    onClick={() => onUpdate({ theme: theme.id })}
+                    className={`p-3 rounded-2xl border-2 transition-all flex flex-col items-center gap-2 ${data.theme === theme.id ? 'border-[#a47fba] bg-[#f4f0f7]' : 'border-gray-100 hover:border-gray-200'}`}
+                  >
+                    <div className={`w-full h-8 rounded-lg ${theme.colors} border border-black/5`}></div>
+                    <span className="text-[10px] font-bold text-[#30302e] truncate w-full text-center">{theme.name}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Molduras */}
+            <div className="space-y-4">
+              <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2 px-1"><Frame size={14} className="text-[#a47fba]" /> {t.frames}</label>
+              <div className="grid grid-cols-2 gap-2">
+                {FRAMES.map(frame => (
+                  <button
+                    key={frame.id}
+                    onClick={() => onUpdate({ frame: frame.id })}
+                    className={`px-4 py-3 rounded-2xl border-2 transition-all text-left ${data.frame === frame.id ? 'border-[#a47fba] bg-[#f4f0f7]' : 'border-gray-100 hover:border-gray-200'}`}
+                  >
+                    <span className="text-[10px] font-bold text-[#30302e]">{frame.name}</span>
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
-          <div className="space-y-3">
-            <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2 px-1"><Type size={14} className="text-[#a47fba]" /> {t.fonts}</label>
-            <select value={data.fontFamily} onChange={e => onUpdate({ fontFamily: e.target.value as CoupleFont })} className={inputClasses}>
-              {FONTS.map(f => <option key={f.id} value={f.id}>{f.name}</option>)}
-            </select>
-          </div>
-        </div>
 
-        {/* Botões de Ação */}
+          <div className="grid md:grid-cols-2 gap-8">
+            <div className="space-y-3">
+              <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2 px-1"><Type size={14} className="text-[#a47fba]" /> {t.fonts}</label>
+              <select value={data.fontFamily} onChange={e => onUpdate({ fontFamily: e.target.value as CoupleFont })} className={inputClasses}>
+                {FONTS.map(f => <option key={f.id} value={f.id}>{f.name}</option>)}
+              </select>
+            </div>
+            <div className="space-y-3">
+              <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2 px-1"><Sparkles size={14} className="text-[#a47fba]" /> {t.effects}</label>
+              <select value={data.effect} onChange={e => onUpdate({ effect: e.target.value as PageEffect })} className={inputClasses}>
+                {EFFECTS(lang).map(eff => (
+                  <option key={eff.id} value={eff.id} disabled={eff.premium && !isPremium}>
+                    {eff.name} {eff.premium && !isPremium ? '(Premium)' : ''}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+        </section>
+
+        {/* MARCOS DA HISTÓRIA */}
+        {isPremium && (
+          <section className="space-y-6 pt-6 border-t border-gray-50">
+            <div className="flex justify-between items-center">
+              <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2 px-1"><Heart size={14} className="text-rose-400" /> {t.milestones}</label>
+              <button onClick={addMilestone} className="text-[#a47fba] hover:text-[#8e6aa3] flex items-center gap-1 text-[10px] font-black uppercase tracking-widest">
+                <Plus size={14} /> {t.addMilestone}
+              </button>
+            </div>
+            <div className="space-y-4">
+              {data.milestones.map((m) => (
+                <div key={m.id} className="grid grid-cols-12 gap-4 p-5 bg-[#f8f7f9] rounded-3xl border border-[#f0eef2]">
+                  <input type="date" value={m.date} onChange={e => updateMilestone(m.id, { date: e.target.value })} className="col-span-4 bg-white px-4 py-2 rounded-xl text-sm outline-none border border-gray-100" />
+                  <input type="text" value={m.title} onChange={e => updateMilestone(m.id, { title: e.target.value })} className="col-span-7 bg-white px-4 py-2 rounded-xl text-sm outline-none border border-gray-100" placeholder={t.milestoneTitle} />
+                  <button onClick={() => removeMilestone(m.id)} className="col-span-1 text-gray-300 hover:text-rose-400 flex items-center justify-center"><Trash2 size={18} /></button>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* BOTÕES FINAIS */}
         <div className="flex flex-col sm:flex-row gap-6 pt-10">
           <button onClick={() => navigate('/preview')} className="flex-1 border-2 border-[#a47fba] text-[#a47fba] py-5 rounded-2xl font-black uppercase text-xs tracking-widest hover:bg-[#f4f0f7] transition-all shadow-md">{t.preview}</button>
           <button onClick={() => navigate('/checkout')} className="flex-1 bg-[#a47fba] text-white py-5 rounded-2xl font-black uppercase text-xs tracking-widest shadow-xl shadow-[#a47fba22] flex items-center justify-center gap-3 hover:bg-[#8e6aa3] transition-all transform hover:-translate-y-1">{t.finalize} <ArrowRight size={18} /></button>
