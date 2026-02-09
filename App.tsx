@@ -31,7 +31,9 @@ const INITIAL_DATA: CoupleData = {
   fontFamily: CoupleFont.ROMANTIC,
   milestones: [],
   plan: PlanType.BASIC,
-  slug: ''
+  slug: '',
+  capsuleMessage: '',
+  capsuleOpenDate: ''
 };
 
 const AppContent: React.FC<{

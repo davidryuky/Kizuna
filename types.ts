@@ -10,7 +10,8 @@ export enum PageEffect {
   HEARTS = 'hearts',
   SPARKLES = 'sparkles',
   FLOWER_PETALS = 'petals',
-  FIREFLIES = 'fireflies'
+  FIREFLIES = 'fireflies',
+  INFINITY = 'infinity'
 }
 
 export enum PageTheme {
@@ -57,6 +58,8 @@ export interface CoupleData {
   plan: PlanType;
   slug?: string;
   requestedDomain?: string;
+  capsuleMessage?: string;
+  capsuleOpenDate?: string;
 }
 
 export interface Plan {

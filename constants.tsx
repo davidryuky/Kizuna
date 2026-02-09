@@ -133,4 +133,5 @@ export const EFFECTS = (lang: Language) => [
   { id: PageEffect.SPARKLES, name: lang === 'pt' ? 'Brilho Celeste' : 'アズールブライト', premium: true },
   { id: PageEffect.FLOWER_PETALS, name: lang === 'pt' ? 'Pétalas' : '桜', premium: true },
   { id: PageEffect.FIREFLIES, name: lang === 'pt' ? 'Vagalumes' : '蛍', premium: true },
+  { id: PageEffect.INFINITY, name: lang === 'pt' ? 'Infinity (Exclusivo ∞)' : '無限', premium: true },
 ];

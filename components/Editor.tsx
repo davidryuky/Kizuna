@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CoupleData, PlanType, PageEffect, Language, PageTheme, PhotoFrame, Milestone, CoupleFont } from '../types';
-import { Camera, Calendar, Sparkles, User, ArrowRight, ArrowLeft, Youtube, Palette, Plus, Trash2, Link as LinkIcon, Type, Search, Globe, Video, Crown, CheckCircle2, Heart, Layout, Frame } from 'lucide-react';
+import { Camera, Calendar, Sparkles, User, ArrowRight, ArrowLeft, Youtube, Palette, Plus, Trash2, Link as LinkIcon, Type, Search, Globe, Video, Crown, CheckCircle2, Heart, Layout, Frame, Clock, Lock } from 'lucide-react';
 import { THEMES, FRAMES, EFFECTS, FONTS } from '../constants';
 
 interface EditorProps {
@@ -20,6 +20,7 @@ const Editor: React.FC<EditorProps> = ({ data, plan, onUpdate, lang, t }) => {
 
   const [domainSearch, setDomainSearch] = useState('');
   const [domainStatus, setDomainStatus] = useState<'idle' | 'checking' | 'available' | 'unavailable'>('idle');
+  const [searchStep, setSearchStep] = useState('');
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -28,11 +29,29 @@ const Editor: React.FC<EditorProps> = ({ data, plan, onUpdate, lang, t }) => {
   const checkDomain = () => {
     if (!domainSearch) return;
     setDomainStatus('checking');
-    setTimeout(() => {
-      const available = !domainSearch.includes('love') && domainSearch.length > 3;
-      setDomainStatus(available ? 'available' : 'unavailable');
-      if (available) onUpdate({ requestedDomain: domainSearch });
-    }, 1500);
+    
+    const steps = [
+      "Consultando registros WHOIS...",
+      "Verificando servidores de DNS...",
+      "Validando extensões .love e .com...",
+      "Confirmando disponibilidade..."
+    ];
+
+    let i = 0;
+    const interval = setInterval(() => {
+      setSearchStep(steps[i]);
+      i++;
+      if (i === steps.length) {
+        clearInterval(interval);
+        setTimeout(() => {
+          // Lógica de simulação realista
+          const takenKeywords = ['love', 'google', 'casal', 'amor', 'kizuna', 'teste'];
+          const isTaken = takenKeywords.some(k => domainSearch.toLowerCase().includes(k)) && domainSearch.length < 10;
+          setDomainStatus(isTaken ? 'unavailable' : 'available');
+          if (!isTaken) onUpdate({ requestedDomain: domainSearch.includes('.') ? domainSearch : `${domainSearch}.love` });
+        }, 1000);
+      }
+    }, 800);
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -49,7 +68,7 @@ const Editor: React.FC<EditorProps> = ({ data, plan, onUpdate, lang, t }) => {
   };
 
   const addVideo = () => {
-    if (data.videos.length >= 5) return;
+    if ((data.videos || []).length >= 5) return;
     onUpdate({ videos: [...(data.videos || []), ''] });
   };
 
@@ -124,9 +143,10 @@ const Editor: React.FC<EditorProps> = ({ data, plan, onUpdate, lang, t }) => {
                 {domainStatus === 'checking' ? <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div> : <Search size={20} />}
               </button>
             </div>
-            {domainStatus === 'available' && <p className="text-xs font-bold text-green-500 flex items-center gap-2"><CheckCircle2 size={14} /> {t.domainAvailable}</p>}
-            {domainStatus === 'unavailable' && <p className="text-xs font-bold text-rose-400 flex items-center gap-2"><Trash2 size={14} /> {t.domainUnavailable}</p>}
-            <p className="text-[10px] text-gray-400 italic">Extensões disponíveis: .love, .com, .site, .life</p>
+            {domainStatus === 'checking' && <p className="text-[10px] font-black text-[#67cbf1] uppercase tracking-widest animate-pulse pl-2">{searchStep}</p>}
+            {domainStatus === 'available' && <p className="text-xs font-bold text-green-500 flex items-center gap-2 pl-2"><CheckCircle2 size={14} /> {t.domainAvailable}</p>}
+            {domainStatus === 'unavailable' && <p className="text-xs font-bold text-rose-400 flex items-center gap-2 pl-2"><Trash2 size={14} /> {t.domainUnavailable}</p>}
+            <p className="text-[10px] text-gray-400 italic">Domínios disponíveis: .love, .com, .site, .life, .me</p>
           </section>
         )}
 
@@ -185,16 +205,52 @@ const Editor: React.FC<EditorProps> = ({ data, plan, onUpdate, lang, t }) => {
           {isInfinity && (data.videos || []).map((v, i) => (
             <div key={i} className="flex gap-4 p-4 bg-[#f8f7f9] rounded-2xl border border-[#f0eef2] animate-in slide-in-from-top-4 duration-300">
                <Youtube size={20} className="text-[#a47fba] mt-3" />
-               <input type="text" value={v} onChange={e => updateVideo(i, e.target.value)} className={inputClasses} placeholder="Link do YouTube" />
+               <input type="text" value={v} onChange={e => updateVideo(i, e.target.value)} className={inputClasses} placeholder="Link do YouTube (ex: https://youtu.be/abc)" />
                <button onClick={() => removeVideo(i)} className="text-gray-300 hover:text-rose-400 p-2"><Trash2 size={20} /></button>
             </div>
           ))}
         </section>
 
+        {/* CÁPSULA DO TEMPO (Plano Infinito) */}
+        {isInfinity && (
+          <section className="p-8 bg-[#30302e] text-white rounded-[2rem] space-y-6">
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 bg-[#67cbf1] rounded-2xl flex items-center justify-center text-white shadow-lg">
+                <Clock size={24} />
+              </div>
+              <div>
+                <h3 className="text-xl font-bold">{lang === 'pt' ? 'Cápsula do Tempo' : 'タイムカプセル'}</h3>
+                <p className="text-[10px] text-[#67cbf1] uppercase tracking-widest font-black">Presenteie o futuro do seu amor</p>
+              </div>
+            </div>
+            
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Data de Abertura</label>
+                <input 
+                  type="date" 
+                  value={data.capsuleOpenDate} 
+                  onChange={e => onUpdate({ capsuleOpenDate: e.target.value })} 
+                  className="w-full px-6 py-4 rounded-xl bg-white/10 border-2 border-white/10 focus:border-[#67cbf1] outline-none transition-all font-medium text-white"
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Mensagem Secreta</label>
+                <textarea 
+                  value={data.capsuleMessage}
+                  onChange={e => onUpdate({ capsuleMessage: e.target.value })}
+                  rows={3}
+                  placeholder="Escreva algo para ser lido apenas no futuro..."
+                  className="w-full px-6 py-4 rounded-xl bg-white/10 border-2 border-white/10 focus:border-[#67cbf1] outline-none transition-all font-medium text-white resize-none"
+                />
+              </div>
+            </div>
+          </section>
+        )}
+
         {/* DESIGN (TEMAS, MOLDURAS, FONTES) */}
         <section className="space-y-8 pt-6 border-t border-gray-50">
           <div className="grid md:grid-cols-2 gap-8">
-            {/* Temas */}
             <div className="space-y-4">
               <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2 px-1"><Layout size={14} className="text-[#a47fba]" /> {t.themes}</label>
               <div className="grid grid-cols-3 gap-2">
@@ -210,8 +266,6 @@ const Editor: React.FC<EditorProps> = ({ data, plan, onUpdate, lang, t }) => {
                 ))}
               </div>
             </div>
-
-            {/* Molduras */}
             <div className="space-y-4">
               <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2 px-1"><Frame size={14} className="text-[#a47fba]" /> {t.frames}</label>
               <div className="grid grid-cols-2 gap-2">
@@ -241,6 +295,7 @@ const Editor: React.FC<EditorProps> = ({ data, plan, onUpdate, lang, t }) => {
                 {EFFECTS(lang).map(eff => (
                   <option key={eff.id} value={eff.id} disabled={eff.premium && !isPremium}>
                     {eff.name} {eff.premium && !isPremium ? '(Premium)' : ''}
+                    {eff.id === PageEffect.INFINITY ? ' (Exclusivo ∞)' : ''}
                   </option>
                 ))}
               </select>
@@ -269,7 +324,6 @@ const Editor: React.FC<EditorProps> = ({ data, plan, onUpdate, lang, t }) => {
           </section>
         )}
 
-        {/* BOTÕES FINAIS */}
         <div className="flex flex-col sm:flex-row gap-6 pt-10">
           <button onClick={() => navigate('/preview')} className="flex-1 border-2 border-[#a47fba] text-[#a47fba] py-5 rounded-2xl font-black uppercase text-xs tracking-widest hover:bg-[#f4f0f7] transition-all shadow-md">{t.preview}</button>
           <button onClick={() => navigate('/checkout')} className="flex-1 bg-[#a47fba] text-white py-5 rounded-2xl font-black uppercase text-xs tracking-widest shadow-xl shadow-[#a47fba22] flex items-center justify-center gap-3 hover:bg-[#8e6aa3] transition-all transform hover:-translate-y-1">{t.finalize} <ArrowRight size={18} /></button>
