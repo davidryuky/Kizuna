@@ -10,14 +10,14 @@ export enum PageEffect {
   HEARTS = 'hearts',
   SPARKLES = 'sparkles',
   FLOWER_PETALS = 'petals',
-  FIREFLIES = 'fireflies',
-  INFINITY = 'infinity'
+  FIREFLIES = 'fireflies'
 }
 
 export enum PageTheme {
   ROMANTIC = 'romantic',
   CLASSIC = 'classic',
-  MIDNIGHT = 'midnight'
+  MIDNIGHT = 'midnight',
+  INFINITY = 'infinity'
 }
 
 export enum PhotoFrame {

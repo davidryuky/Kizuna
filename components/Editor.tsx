@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CoupleData, PlanType, PageEffect, Language, PageTheme, PhotoFrame, Milestone, CoupleFont } from '../types';
-import { Camera, Calendar, Sparkles, User, ArrowRight, ArrowLeft, Youtube, Palette, Plus, Trash2, Link as LinkIcon, Type, Search, Globe, Video, Crown, CheckCircle2, Heart, Layout, Frame, Clock, Lock } from 'lucide-react';
+import { Camera, Calendar, Sparkles, User, ArrowRight, ArrowLeft, Youtube, Palette, Plus, Trash2, Link as LinkIcon, Type, Search, Globe, Video, Crown, CheckCircle2, Heart, Layout, Frame, Clock, Lock, Music } from 'lucide-react';
 import { THEMES, FRAMES, EFFECTS, FONTS } from '../constants';
 
 interface EditorProps {
@@ -26,7 +26,7 @@ const Editor: React.FC<EditorProps> = ({ data, plan, onUpdate, lang, t }) => {
     window.scrollTo(0, 0);
   }, []);
 
-  const checkDomain = () => {
+  const checkDomain = async () => {
     if (!domainSearch) return;
     setDomainStatus('checking');
     
@@ -34,24 +34,19 @@ const Editor: React.FC<EditorProps> = ({ data, plan, onUpdate, lang, t }) => {
       "Consultando registros WHOIS...",
       "Verificando servidores de DNS...",
       "Validando extensões .love e .com...",
-      "Confirmando disponibilidade..."
+      "Confirmando disponibilidade na rede..."
     ];
 
-    let i = 0;
-    const interval = setInterval(() => {
+    for (let i = 0; i < steps.length; i++) {
       setSearchStep(steps[i]);
-      i++;
-      if (i === steps.length) {
-        clearInterval(interval);
-        setTimeout(() => {
-          // Lógica de simulação realista
-          const takenKeywords = ['love', 'google', 'casal', 'amor', 'kizuna', 'teste'];
-          const isTaken = takenKeywords.some(k => domainSearch.toLowerCase().includes(k)) && domainSearch.length < 10;
-          setDomainStatus(isTaken ? 'unavailable' : 'available');
-          if (!isTaken) onUpdate({ requestedDomain: domainSearch.includes('.') ? domainSearch : `${domainSearch}.love` });
-        }, 1000);
-      }
-    }, 800);
+      await new Promise(r => setTimeout(r, 700));
+    }
+
+    const invalidKeywords = ['google', 'facebook', 'kizuna', 'teste', 'admin', 'love'];
+    const isTaken = invalidKeywords.some(k => domainSearch.toLowerCase() === k) || domainSearch.length < 3;
+    
+    setDomainStatus(isTaken ? 'unavailable' : 'available');
+    if (!isTaken) onUpdate({ requestedDomain: domainSearch.includes('.') ? domainSearch : `${domainSearch}.love` });
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -87,14 +82,6 @@ const Editor: React.FC<EditorProps> = ({ data, plan, onUpdate, lang, t }) => {
     onUpdate({ milestones: [...data.milestones, newMilestone] });
   };
 
-  const updateMilestone = (id: string, updates: Partial<Milestone>) => {
-    onUpdate({ milestones: data.milestones.map(m => m.id === id ? { ...m, ...updates } : m) });
-  };
-
-  const removeMilestone = (id: string) => {
-    onUpdate({ milestones: data.milestones.filter(m => m.id !== id) });
-  };
-
   const inputClasses = "w-full px-6 py-4 rounded-2xl border-2 border-[#f0eef2] bg-[#f8f7f9]/50 focus:bg-white focus:border-[#a47fba] focus:ring-4 focus:ring-[#a47fba11] outline-none transition-all font-medium text-[#30302e] shadow-sm placeholder:text-gray-300";
 
   return (
@@ -109,8 +96,8 @@ const Editor: React.FC<EditorProps> = ({ data, plan, onUpdate, lang, t }) => {
       <div className="bg-white rounded-[2.5rem] shadow-2xl p-8 md:p-12 border border-[#f0eef2] space-y-12">
         <header className="border-b border-gray-50 pb-8 flex flex-col md:flex-row justify-between items-start gap-4">
           <div>
-            <h2 className="text-4xl font-elegant font-bold text-[#30302e]">{lang === 'pt' ? 'Sua História de Amor' : 'カスタマイズ'}</h2>
-            <p className="text-gray-400 mt-2 text-lg font-light">{lang === 'pt' ? 'Personalize cada detalhe do seu santuário digital.' : '細部までこだわって作りましょう。'}</p>
+            <h2 className="text-4xl font-elegant font-bold text-[#30302e]">{lang === 'pt' ? 'Personalização' : 'カスタマイズ'}</h2>
+            <p className="text-gray-400 mt-2 text-lg font-light">{lang === 'pt' ? 'Construa sua obra de arte digital.' : '自分たちのページをデザインしましょう。'}</p>
           </div>
           <div className={`inline-flex items-center gap-2 px-5 py-2 rounded-full text-[10px] font-black uppercase tracking-widest border shadow-sm ${
             isInfinity ? 'bg-[#30302e] text-[#67cbf1] border-black' : 'bg-[#f4f0f7] text-[#a47fba] border-[#e8e1f0]'
@@ -131,14 +118,14 @@ const Editor: React.FC<EditorProps> = ({ data, plan, onUpdate, lang, t }) => {
                   type="text" 
                   value={domainSearch}
                   onChange={(e) => setDomainSearch(e.target.value.toLowerCase().replace(/[^a-z0-9-.]/g, ''))}
-                  placeholder="ex: joao-e-maria.love"
+                  placeholder="ex: lucas-e-carol"
                   className="bg-transparent outline-none flex-grow font-bold text-[#30302e]" 
                 />
               </div>
               <button 
                 onClick={checkDomain}
                 disabled={domainStatus === 'checking'}
-                className="bg-[#67cbf1] text-white px-6 rounded-2xl hover:bg-[#5bb8dc] transition-all flex items-center justify-center min-w-[60px]"
+                className="bg-[#67cbf1] text-white px-6 rounded-2xl hover:bg-[#5bb8dc] transition-all flex items-center justify-center min-w-[60px] shadow-lg shadow-[#67cbf133]"
               >
                 {domainStatus === 'checking' ? <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div> : <Search size={20} />}
               </button>
@@ -146,7 +133,6 @@ const Editor: React.FC<EditorProps> = ({ data, plan, onUpdate, lang, t }) => {
             {domainStatus === 'checking' && <p className="text-[10px] font-black text-[#67cbf1] uppercase tracking-widest animate-pulse pl-2">{searchStep}</p>}
             {domainStatus === 'available' && <p className="text-xs font-bold text-green-500 flex items-center gap-2 pl-2"><CheckCircle2 size={14} /> {t.domainAvailable}</p>}
             {domainStatus === 'unavailable' && <p className="text-xs font-bold text-rose-400 flex items-center gap-2 pl-2"><Trash2 size={14} /> {t.domainUnavailable}</p>}
-            <p className="text-[10px] text-gray-400 italic">Domínios disponíveis: .love, .com, .site, .life, .me</p>
           </section>
         )}
 
@@ -160,173 +146,161 @@ const Editor: React.FC<EditorProps> = ({ data, plan, onUpdate, lang, t }) => {
             <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2 px-1"><User size={14} className="text-[#a47fba]" /> {lang === 'pt' ? 'Nome do Amor' : 'お名前2'}</label>
             <input type="text" value={data.partner2} onChange={e => onUpdate({ partner2: e.target.value })} className={inputClasses} placeholder="Ex: Júlia" />
           </div>
-          <div className="md:col-span-2 space-y-3">
-            <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2 px-1"><Calendar size={14} className="text-[#a47fba]" /> {lang === 'pt' ? 'Quando tudo começou?' : '記念日'}</label>
-            <input type="date" value={data.startDate} onChange={e => onUpdate({ startDate: e.target.value })} className={inputClasses} />
-          </div>
         </div>
 
-        {/* FOTOS */}
-        <section className="space-y-3">
-          <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2 px-1">
-            <Camera size={14} className="text-[#a47fba]" /> {lang === 'pt' ? 'Galeria de Fotos' : '写真'} ({data.images.length}/{isInfinity ? 20 : (isPremium ? 4 : 1)})
-          </label>
-          <div className="relative group">
-            <input type="file" multiple={isPremium} accept="image/*" onChange={handleFileChange} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" />
-            <div className="w-full px-6 py-8 rounded-3xl border-2 border-dashed border-[#f0eef2] bg-[#f8f7f9]/50 group-hover:bg-white group-hover:border-[#a47fba] transition-all flex flex-col items-center gap-3">
-              <Camera size={32} className="text-gray-200 group-hover:text-[#a47fba]" />
-              <span className="text-sm font-bold text-gray-400">{lang === 'pt' ? 'Clique para selecionar as fotos' : '画像を選択'}</span>
-            </div>
-          </div>
-          {data.images.length > 0 && (
-            <div className="grid grid-cols-5 md:grid-cols-10 gap-2 mt-4">
-              {data.images.map((img, i) => (
-                <div key={i} className="aspect-square rounded-lg overflow-hidden border border-gray-100 shadow-sm relative group">
-                  <img src={img} className="w-full h-full object-cover" alt="Preview" />
-                  <button onClick={() => onUpdate({ images: data.images.filter((_, idx) => idx !== i) })} className="absolute top-1 right-1 bg-white/80 rounded-full p-1 text-rose-500 opacity-0 group-hover:opacity-100 transition-opacity"><Trash2 size={12} /></button>
-                </div>
-              ))}
-            </div>
-          )}
-        </section>
-
-        {/* VÍDEOS (Plano Infinito) */}
-        <section className="space-y-6">
-          <div className="flex justify-between items-center">
-             <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2 px-1">
-               <Video size={14} className="text-[#a47fba]" /> {t.videosLabel} {!isInfinity && <span className="text-[#a47fba] ml-2 text-[8px] border border-[#a47fba22] px-2 py-0.5 rounded-full">🔒 {t.infinityOnly}</span>}
-             </label>
-             {isInfinity && (data.videos || []).length < 5 && (
-               <button onClick={addVideo} className="text-[#a47fba] hover:text-[#8e6aa3] flex items-center gap-1 text-[10px] font-black uppercase tracking-widest">
-                 <Plus size={14} /> {lang === 'pt' ? 'Novo Vídeo' : '追加'}
-               </button>
-             )}
-          </div>
-          {isInfinity && (data.videos || []).map((v, i) => (
-            <div key={i} className="flex gap-4 p-4 bg-[#f8f7f9] rounded-2xl border border-[#f0eef2] animate-in slide-in-from-top-4 duration-300">
-               <Youtube size={20} className="text-[#a47fba] mt-3" />
-               <input type="text" value={v} onChange={e => updateVideo(i, e.target.value)} className={inputClasses} placeholder="Link do YouTube (ex: https://youtu.be/abc)" />
-               <button onClick={() => removeVideo(i)} className="text-gray-300 hover:text-rose-400 p-2"><Trash2 size={20} /></button>
-            </div>
-          ))}
-        </section>
-
-        {/* CÁPSULA DO TEMPO (Plano Infinito) */}
-        {isInfinity && (
-          <section className="p-8 bg-[#30302e] text-white rounded-[2rem] space-y-6">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-[#67cbf1] rounded-2xl flex items-center justify-center text-white shadow-lg">
-                <Clock size={24} />
-              </div>
-              <div>
-                <h3 className="text-xl font-bold">{lang === 'pt' ? 'Cápsula do Tempo' : 'タイムカプセル'}</h3>
-                <p className="text-[10px] text-[#67cbf1] uppercase tracking-widest font-black">Presenteie o futuro do seu amor</p>
-              </div>
-            </div>
-            
-            <div className="grid md:grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Data de Abertura</label>
-                <input 
-                  type="date" 
-                  value={data.capsuleOpenDate} 
-                  onChange={e => onUpdate({ capsuleOpenDate: e.target.value })} 
-                  className="w-full px-6 py-4 rounded-xl bg-white/10 border-2 border-white/10 focus:border-[#67cbf1] outline-none transition-all font-medium text-white"
-                />
-              </div>
-              <div className="space-y-2">
-                <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Mensagem Secreta</label>
-                <textarea 
-                  value={data.capsuleMessage}
-                  onChange={e => onUpdate({ capsuleMessage: e.target.value })}
-                  rows={3}
-                  placeholder="Escreva algo para ser lido apenas no futuro..."
-                  className="w-full px-6 py-4 rounded-xl bg-white/10 border-2 border-white/10 focus:border-[#67cbf1] outline-none transition-all font-medium text-white resize-none"
-                />
-              </div>
+        {/* MÚSICA DE FUNDO (Premium e Infinito) */}
+        {isPremium && (
+          <section className="space-y-4 pt-6 border-t border-gray-50">
+            <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2 px-1">
+              <Music size={14} className="text-[#a47fba]" /> {t.musicLabel}
+            </label>
+            <div className="flex gap-4 p-5 bg-[#f4f0f7]/30 rounded-2xl border-2 border-[#f0eef2] items-center">
+              <Youtube size={24} className="text-rose-500 flex-shrink-0" />
+              <input 
+                type="text" 
+                value={data.musicUrl || ''} 
+                onChange={e => onUpdate({ musicUrl: e.target.value })} 
+                className="bg-transparent outline-none flex-grow font-bold text-gray-700 placeholder:text-gray-300" 
+                placeholder={t.musicPlaceholder} 
+              />
             </div>
           </section>
         )}
 
         {/* DESIGN (TEMAS, MOLDURAS, FONTES) */}
-        <section className="space-y-8 pt-6 border-t border-gray-50">
+        <section className="space-y-10 pt-6 border-t border-gray-50">
           <div className="grid md:grid-cols-2 gap-8">
             <div className="space-y-4">
               <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2 px-1"><Layout size={14} className="text-[#a47fba]" /> {t.themes}</label>
-              <div className="grid grid-cols-3 gap-2">
-                {THEMES.map(theme => (
-                  <button
-                    key={theme.id}
-                    onClick={() => onUpdate({ theme: theme.id })}
-                    className={`p-3 rounded-2xl border-2 transition-all flex flex-col items-center gap-2 ${data.theme === theme.id ? 'border-[#a47fba] bg-[#f4f0f7]' : 'border-gray-100 hover:border-gray-200'}`}
-                  >
-                    <div className={`w-full h-8 rounded-lg ${theme.colors} border border-black/5`}></div>
-                    <span className="text-[10px] font-bold text-[#30302e] truncate w-full text-center">{theme.name}</span>
-                  </button>
-                ))}
+              <div className="grid grid-cols-2 gap-3">
+                {THEMES.map(theme => {
+                  const isLocked = theme.id === PageTheme.INFINITY && !isInfinity;
+                  return (
+                    <button
+                      key={theme.id}
+                      disabled={isLocked}
+                      onClick={() => onUpdate({ theme: theme.id })}
+                      className={`relative p-4 rounded-[1.5rem] border-2 transition-all flex flex-col items-center gap-3 overflow-hidden ${
+                        data.theme === theme.id ? 'border-[#a47fba] bg-[#f4f0f7]' : 'border-gray-100 hover:border-gray-200'
+                      } ${isLocked ? 'opacity-50 grayscale cursor-not-allowed' : ''}`}
+                    >
+                      <div className={`w-full h-12 rounded-xl ${theme.colors} border border-black/5 flex items-center justify-center`}>
+                        {theme.id === PageTheme.INFINITY && <Crown size={16} className="text-[#67cbf1]" />}
+                      </div>
+                      <span className="text-[10px] font-bold text-[#30302e] uppercase tracking-widest">{theme.name}</span>
+                      {isLocked && <div className="absolute inset-0 bg-white/40 flex items-center justify-center backdrop-blur-[1px]"><Lock size={20} className="text-gray-400" /></div>}
+                    </button>
+                  );
+                })}
               </div>
             </div>
-            <div className="space-y-4">
-              <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2 px-1"><Frame size={14} className="text-[#a47fba]" /> {t.frames}</label>
-              <div className="grid grid-cols-2 gap-2">
-                {FRAMES.map(frame => (
-                  <button
-                    key={frame.id}
-                    onClick={() => onUpdate({ frame: frame.id })}
-                    className={`px-4 py-3 rounded-2xl border-2 transition-all text-left ${data.frame === frame.id ? 'border-[#a47fba] bg-[#f4f0f7]' : 'border-gray-100 hover:border-gray-200'}`}
-                  >
-                    <span className="text-[10px] font-bold text-[#30302e]">{frame.name}</span>
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
 
-          <div className="grid md:grid-cols-2 gap-8">
-            <div className="space-y-3">
-              <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2 px-1"><Type size={14} className="text-[#a47fba]" /> {t.fonts}</label>
-              <select value={data.fontFamily} onChange={e => onUpdate({ fontFamily: e.target.value as CoupleFont })} className={inputClasses}>
-                {FONTS.map(f => <option key={f.id} value={f.id}>{f.name}</option>)}
-              </select>
-            </div>
             <div className="space-y-3">
               <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2 px-1"><Sparkles size={14} className="text-[#a47fba]" /> {t.effects}</label>
               <select value={data.effect} onChange={e => onUpdate({ effect: e.target.value as PageEffect })} className={inputClasses}>
                 {EFFECTS(lang).map(eff => (
                   <option key={eff.id} value={eff.id} disabled={eff.premium && !isPremium}>
                     {eff.name} {eff.premium && !isPremium ? '(Premium)' : ''}
-                    {eff.id === PageEffect.INFINITY ? ' (Exclusivo ∞)' : ''}
                   </option>
                 ))}
               </select>
+              
+              <div className="pt-4 space-y-3">
+                <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2 px-1"><Type size={14} className="text-[#a47fba]" /> {t.fonts}</label>
+                <select value={data.fontFamily} onChange={e => onUpdate({ fontFamily: e.target.value as CoupleFont })} className={inputClasses}>
+                  {FONTS.map(f => <option key={f.id} value={f.id}>{f.name}</option>)}
+                </select>
+              </div>
             </div>
           </div>
         </section>
 
-        {/* MARCOS DA HISTÓRIA */}
-        {isPremium && (
-          <section className="space-y-6 pt-6 border-t border-gray-50">
-            <div className="flex justify-between items-center">
-              <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2 px-1"><Heart size={14} className="text-rose-400" /> {t.milestones}</label>
-              <button onClick={addMilestone} className="text-[#a47fba] hover:text-[#8e6aa3] flex items-center gap-1 text-[10px] font-black uppercase tracking-widest">
-                <Plus size={14} /> {t.addMilestone}
-              </button>
+        {/* FOTOS */}
+        <section className="space-y-3 border-t border-gray-50 pt-8">
+          <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2 px-1">
+            <Camera size={14} className="text-[#a47fba]" /> {t.gallery} ({data.images.length}/{isInfinity ? 20 : (isPremium ? 4 : 1)})
+          </label>
+          <div className="relative group">
+            <input type="file" multiple={isPremium} accept="image/*" onChange={handleFileChange} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" />
+            <div className="w-full px-6 py-10 rounded-3xl border-2 border-dashed border-[#f0eef2] bg-[#f8f7f9]/50 group-hover:bg-white group-hover:border-[#a47fba] transition-all flex flex-col items-center gap-3">
+              <Camera size={40} className="text-gray-200 group-hover:text-[#a47fba]" />
+              <span className="text-sm font-bold text-gray-400">{lang === 'pt' ? 'Selecione suas memórias fotográficas' : '写真を選択'}</span>
             </div>
-            <div className="space-y-4">
-              {data.milestones.map((m) => (
-                <div key={m.id} className="grid grid-cols-12 gap-4 p-5 bg-[#f8f7f9] rounded-3xl border border-[#f0eef2]">
-                  <input type="date" value={m.date} onChange={e => updateMilestone(m.id, { date: e.target.value })} className="col-span-4 bg-white px-4 py-2 rounded-xl text-sm outline-none border border-gray-100" />
-                  <input type="text" value={m.title} onChange={e => updateMilestone(m.id, { title: e.target.value })} className="col-span-7 bg-white px-4 py-2 rounded-xl text-sm outline-none border border-gray-100" placeholder={t.milestoneTitle} />
-                  <button onClick={() => removeMilestone(m.id)} className="col-span-1 text-gray-300 hover:text-rose-400 flex items-center justify-center"><Trash2 size={18} /></button>
+          </div>
+          {data.images.length > 0 && (
+            <div className="grid grid-cols-4 md:grid-cols-10 gap-3 mt-6">
+              {data.images.map((img, i) => (
+                <div key={i} className="aspect-square rounded-xl overflow-hidden border border-gray-100 shadow-sm relative group ring-2 ring-transparent hover:ring-[#a47fba] transition-all">
+                  <img src={img} className="w-full h-full object-cover" alt="Preview" />
+                  <button onClick={() => onUpdate({ images: data.images.filter((_, idx) => idx !== i) })} className="absolute top-1 right-1 bg-white/90 rounded-full p-1.5 text-rose-500 opacity-0 group-hover:opacity-100 transition-opacity shadow-md"><Trash2 size={12} /></button>
                 </div>
               ))}
+            </div>
+          )}
+        </section>
+
+        {/* CÁPSULA DO TEMPO (Plano Infinito) */}
+        {isInfinity && (
+          <section className="p-8 bg-[#30302e] text-white rounded-[2.5rem] space-y-6 shadow-xl relative overflow-hidden group">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-[#67cbf1]/10 rounded-full blur-3xl -mr-16 -mt-16"></div>
+            <div className="flex items-center gap-4 relative z-10">
+              <div className="w-14 h-14 bg-[#67cbf1] rounded-2xl flex items-center justify-center text-white shadow-lg shadow-[#67cbf133]">
+                <Clock size={28} />
+              </div>
+              <div>
+                <h3 className="text-2xl font-bold">{t.capsuleTitle}</h3>
+                <p className="text-[10px] text-[#67cbf1] uppercase tracking-[0.3em] font-black">Uma mensagem que só o tempo revelará</p>
+              </div>
+            </div>
+            
+            <div className="grid md:grid-cols-2 gap-8 relative z-10">
+              <div className="space-y-3">
+                <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest flex items-center gap-2 px-1">{t.capsuleDate} <Clock size={12} /></label>
+                <input 
+                  type="date" 
+                  value={data.capsuleOpenDate || ''} 
+                  onChange={e => onUpdate({ capsuleOpenDate: e.target.value })} 
+                  className="w-full px-6 py-4 rounded-xl bg-white/5 border-2 border-white/10 focus:border-[#67cbf1] outline-none transition-all font-medium text-white shadow-inner"
+                />
+              </div>
+              <div className="space-y-3">
+                <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest flex items-center gap-2 px-1">{t.capsuleMsg} <Lock size={12} /></label>
+                <textarea 
+                  value={data.capsuleMessage || ''}
+                  onChange={e => onUpdate({ capsuleMessage: e.target.value })}
+                  rows={3}
+                  placeholder="O que você quer dizer ao seu amor daqui a alguns meses ou anos?"
+                  className="w-full px-6 py-4 rounded-xl bg-white/5 border-2 border-white/10 focus:border-[#67cbf1] outline-none transition-all font-medium text-white resize-none shadow-inner"
+                />
+              </div>
             </div>
           </section>
         )}
 
+        {/* VÍDEOS (Plano Infinito) */}
+        <section className="space-y-6 border-t border-gray-50 pt-8">
+          <div className="flex justify-between items-center">
+             <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2 px-1">
+               <Video size={14} className="text-[#a47fba]" /> {t.videosLabel} {!isInfinity && <span className="text-[#a47fba] ml-2 text-[8px] border border-[#a47fba22] px-2 py-0.5 rounded-full">🔒 {t.infinityOnly}</span>}
+             </label>
+             {isInfinity && (data.videos || []).length < 5 && (
+               <button onClick={addVideo} className="text-[#a47fba] hover:text-[#8e6aa3] flex items-center gap-1 text-[10px] font-black uppercase tracking-widest">
+                 <Plus size={14} /> Adicionar Vídeo
+               </button>
+             )}
+          </div>
+          {isInfinity && (data.videos || []).map((v, i) => (
+            <div key={i} className="flex gap-4 p-5 bg-[#f8f7f9] rounded-2xl border-2 border-[#f0eef2] animate-in slide-in-from-top-4 duration-300 items-center">
+               <Youtube size={24} className="text-rose-500" />
+               <input type="text" value={v} onChange={e => updateVideo(i, e.target.value)} className="bg-transparent outline-none flex-grow font-bold text-gray-700 placeholder:text-gray-300" placeholder="Cole o link do YouTube aqui..." />
+               <button onClick={() => removeVideo(i)} className="text-gray-300 hover:text-rose-400 p-2"><Trash2 size={20} /></button>
+            </div>
+          ))}
+        </section>
+
         <div className="flex flex-col sm:flex-row gap-6 pt-10">
-          <button onClick={() => navigate('/preview')} className="flex-1 border-2 border-[#a47fba] text-[#a47fba] py-5 rounded-2xl font-black uppercase text-xs tracking-widest hover:bg-[#f4f0f7] transition-all shadow-md">{t.preview}</button>
-          <button onClick={() => navigate('/checkout')} className="flex-1 bg-[#a47fba] text-white py-5 rounded-2xl font-black uppercase text-xs tracking-widest shadow-xl shadow-[#a47fba22] flex items-center justify-center gap-3 hover:bg-[#8e6aa3] transition-all transform hover:-translate-y-1">{t.finalize} <ArrowRight size={18} /></button>
+          <button onClick={() => navigate('/preview')} className="flex-1 border-2 border-[#a47fba] text-[#a47fba] py-5 rounded-2xl font-black uppercase text-xs tracking-widest hover:bg-[#f4f0f7] transition-all shadow-md transform hover:-translate-y-1 active:scale-95">{t.preview}</button>
+          <button onClick={() => navigate('/checkout')} className="flex-1 bg-[#a47fba] text-white py-5 rounded-2xl font-black uppercase text-xs tracking-widest shadow-xl shadow-[#a47fba22] flex items-center justify-center gap-3 hover:bg-[#8e6aa3] transition-all transform hover:-translate-y-1 active:scale-95">{t.finalize} <ArrowRight size={18} /></button>
         </div>
       </div>
     </div>

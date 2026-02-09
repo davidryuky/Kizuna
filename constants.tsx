@@ -62,20 +62,20 @@ export const getPlans = (lang: Language): Plan[] => [
     price: lang === 'pt' ? 'R$ 89,90' : '¥ 2500',
     features: lang === 'pt' ? [
       'Tudo do Plano Amor Máximo',
+      'Tema Exclusivo "Luminous Infinity"',
       'Domínio Próprio (.love ou .com)',
       'Galeria Estendida (20 fotos)',
       'Suporte a 5 Vídeos (YouTube)',
       'Cápsula do Tempo Digital',
-      'Suporte Prioritário 24h',
-      'Efeito Visual Exclusivo "Infinity"'
+      'Suporte Prioritário 24h'
     ] : [
       '永遠の絆プランの全機能',
+      '特別テーマ「Luminous Infinity」',
       '独自ドメイン (.love または .com)',
       '最大20枚のフォトギャラリー',
       '5つのビデオサポート',
       'デジタルタイムカプセル',
-      '24時間優先サポート',
-      '特別エフェクト「インフィニティ」'
+      '24時間優先サポート'
     ],
     imageLimit: 20,
     videoLimit: 5,
@@ -111,6 +111,14 @@ export const THEMES = [
     text: 'text-[#f0f9ff]',
     accent: 'bg-[#a47fba]'
   },
+  { 
+    id: PageTheme.INFINITY, 
+    name: 'Luminous Infinity', 
+    colors: 'bg-[#050505]', 
+    card: 'bg-black/80 border-2 border-[#67cbf1]/30 backdrop-blur-3xl shadow-[0_0_50px_rgba(103,203,241,0.1)]',
+    text: 'text-white',
+    accent: 'bg-[#67cbf1]'
+  },
 ];
 
 export const FRAMES = [
@@ -129,9 +137,8 @@ export const FONTS = [
 
 export const EFFECTS = (lang: Language) => [
   { id: PageEffect.NONE, name: lang === 'pt' ? 'Nenhum' : 'なし', premium: false },
-  { id: PageEffect.HEARTS, name: lang === 'pt' ? 'Púrpura' : 'パープル', premium: false },
+  { id: PageEffect.HEARTS, name: lang === 'pt' ? 'Corações Púrpura' : 'パープルハート', premium: false },
   { id: PageEffect.SPARKLES, name: lang === 'pt' ? 'Brilho Celeste' : 'アズールブライト', premium: true },
-  { id: PageEffect.FLOWER_PETALS, name: lang === 'pt' ? 'Pétalas' : '桜', premium: true },
-  { id: PageEffect.FIREFLIES, name: lang === 'pt' ? 'Vagalumes' : '蛍', premium: true },
-  { id: PageEffect.INFINITY, name: lang === 'pt' ? 'Infinity (Exclusivo ∞)' : '無限', premium: true },
+  { id: PageEffect.FLOWER_PETALS, name: lang === 'pt' ? 'Pétalas de Cerejeira' : '桜', premium: true },
+  { id: PageEffect.FIREFLIES, name: lang === 'pt' ? 'Vagalumes Mágicos' : '蛍', premium: true },
 ];
