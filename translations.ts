@@ -63,10 +63,13 @@ export const translations = {
     capsuleTitle: "Cápsula do Tempo Digital",
     capsuleDate: "Data de Liberação",
     capsuleMsg: "Mensagem do Futuro",
+    coupleMessageLabel: "Nossa Mensagem Especial",
+    coupleMessagePlaceholder: "Escreva uma dedicatória, um poema ou apenas o que você sente pelo seu amor...",
     refundTitle: "Garantia de Felicidade KIZUNA",
     refundSubtitle: "Satisfação Total ou seu Dinheiro de Volta",
     refundDesc: "Acreditamos tanto na magia do KIZUNA que oferecemos 7 dias de garantia incondicional. Se você não sentir que sua história foi elevada a uma obra de arte, devolvemos 100% do valor investido, sem burocracia ou perguntas. Sua felicidade é nosso compromisso sagrado.",
     securityTag: "Segurança Total",
+    photoLimitReached: "Limite de fotos atingido para este plano. Selecionamos apenas as primeiras {limit} fotos.",
     faqItems: [
       {
         q: "O que é o KIZUNA?",
@@ -130,10 +133,13 @@ export const translations = {
     capsuleTitle: "デジタルタイムカプセル",
     capsuleDate: "リリース日",
     capsuleMsg: "未来へのメッセージ",
+    coupleMessageLabel: "愛のメッセージ",
+    coupleMessagePlaceholder: "愛する人への特別なメッセージをここに書きましょう...",
     refundTitle: "KIZUNA 幸福の保証",
     refundSubtitle: "100%の満足または全額返金",
     refundDesc: "KIZUNAの魔法を信じているからこそ、7日間の無条件返金保証を提供しています。私たちのサービスが二人の物語を素晴らしいアートへと昇華させることができなかった場合、質問なしで100%返金いたします。あなたの幸せが私たちの神聖な約束です。",
     securityTag: "完全なセキュリティ",
+    photoLimitReached: "プランの写真制限に達しました。最初の{limit}枚のみが選択されました。",
     faqItems: []
   }
 };

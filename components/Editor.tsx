@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CoupleData, PlanType, PageEffect, Language, PageTheme, PhotoFrame, Milestone, CoupleFont } from '../types';
-import { Camera, Calendar, Sparkles, User, ArrowRight, ArrowLeft, Youtube, Palette, Plus, Trash2, Link as LinkIcon, Type, Search, Globe, Video, Crown, CheckCircle2, Heart, Layout, Frame, Clock, Lock, Music } from 'lucide-react';
+import { Camera, Calendar, Sparkles, User, ArrowRight, ArrowLeft, Youtube, Palette, Plus, Trash2, Link as LinkIcon, Type, Search, Globe, Video, Crown, CheckCircle2, Heart, Layout, Frame, Clock, Lock, Music, Quote } from 'lucide-react';
 import { THEMES, FRAMES, EFFECTS, FONTS } from '../constants';
 
 interface EditorProps {
@@ -17,6 +17,7 @@ const Editor: React.FC<EditorProps> = ({ data, plan, onUpdate, lang, t }) => {
   const navigate = useNavigate();
   const isPremium = plan === PlanType.PREMIUM || plan === PlanType.INFINITY;
   const isInfinity = plan === PlanType.INFINITY;
+  const photoLimit = isInfinity ? 20 : (isPremium ? 4 : 1);
 
   const [domainSearch, setDomainSearch] = useState('');
   const [domainStatus, setDomainStatus] = useState<'idle' | 'checking' | 'available' | 'unavailable'>('idle');
@@ -51,9 +52,13 @@ const Editor: React.FC<EditorProps> = ({ data, plan, onUpdate, lang, t }) => {
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
-    if (!files) return;
-    const limit = isInfinity ? 20 : (isPremium ? 4 : 1);
-    const selectedFiles = Array.from(files).slice(0, limit) as File[];
+    if (!files || files.length === 0) return;
+
+    if (files.length > photoLimit) {
+      alert(t.photoLimitReached.replace('{limit}', photoLimit.toString()));
+    }
+
+    const selectedFiles = Array.from(files).slice(0, photoLimit) as File[];
     const promises = selectedFiles.map(file => new Promise<string>((resolve) => {
       const reader = new FileReader();
       reader.onloadend = () => resolve(reader.result as string);
@@ -94,7 +99,7 @@ const Editor: React.FC<EditorProps> = ({ data, plan, onUpdate, lang, t }) => {
   const inputClasses = "w-full px-6 py-4 rounded-2xl border-2 border-[#f0eef2] bg-[#f8f7f9]/50 focus:bg-white focus:border-[#a47fba] focus:ring-4 focus:ring-[#a47fba11] outline-none transition-all font-medium text-[#30302e] shadow-sm placeholder:text-gray-300";
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-12 animate-in fade-in duration-500 overflow-x-hidden">
+    <div className="max-w-4xl mx-auto px-4 py-12 animate-in fade-in duration-500 overflow-x-hidden pb-32">
       <button 
         onClick={() => navigate('/')} 
         className="mb-8 flex items-center gap-3 text-[#a47fba] font-black text-xs uppercase tracking-widest hover:translate-x-[-4px] transition-transform"
@@ -115,7 +120,7 @@ const Editor: React.FC<EditorProps> = ({ data, plan, onUpdate, lang, t }) => {
           </div>
         </header>
 
-        {/* BUSCADOR DE DOMÍNIO (Somente Plano Infinity) - CORREÇÃO MOBILE AQUI */}
+        {/* BUSCADOR DE DOMÍNIO */}
         {isInfinity && (
           <section className="p-5 md:p-8 bg-gradient-to-br from-[#f8f7f9] to-white rounded-[2rem] border-2 border-[#67cbf122] space-y-4 overflow-hidden">
             <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2 px-1">
@@ -169,6 +174,65 @@ const Editor: React.FC<EditorProps> = ({ data, plan, onUpdate, lang, t }) => {
           </div>
         </div>
 
+        {/* MENSAGEM ESPECIAL (Agora para todos os planos) */}
+        <section className="space-y-4 pt-6 border-t border-gray-50">
+          <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2 px-1">
+            <Quote size={14} className="text-[#a47fba]" /> {t.coupleMessageLabel}
+          </label>
+          <div className="relative group">
+            <textarea 
+              value={data.message || ''} 
+              onChange={e => onUpdate({ message: e.target.value })} 
+              rows={4}
+              className={`${inputClasses} resize-none py-6 italic`} 
+              placeholder={t.coupleMessagePlaceholder}
+            />
+            <div className="absolute bottom-4 right-4 text-[9px] font-black text-gray-300 uppercase tracking-widest">
+              {(data.message || '').length} caracteres
+            </div>
+          </div>
+        </section>
+
+        {/* FOTOS COM TRAVA LÓGICA */}
+        <section className="space-y-3 border-t border-gray-50 pt-8">
+          <div className="flex justify-between items-center px-1">
+             <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2">
+               <Camera size={14} className="text-[#a47fba]" /> {t.gallery} 
+               <span className={`ml-2 px-2 py-0.5 rounded-full text-[9px] border ${data.images.length >= photoLimit ? 'text-rose-500 border-rose-100 bg-rose-50' : 'text-gray-400 border-gray-100 bg-gray-50'}`}>
+                 {data.images.length} / {photoLimit}
+               </span>
+             </label>
+          </div>
+          <div className="relative group">
+            <input 
+              type="file" 
+              multiple={photoLimit > 1} 
+              accept="image/*" 
+              onChange={handleFileChange} 
+              disabled={data.images.length >= photoLimit && photoLimit === 1}
+              className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" 
+            />
+            <div className={`w-full px-6 py-10 rounded-3xl border-2 border-dashed transition-all flex flex-col items-center gap-3 ${
+              data.images.length >= photoLimit ? 'bg-gray-50 border-gray-200 cursor-not-allowed opacity-60' : 'bg-[#f8f7f9]/50 border-[#f0eef2] group-hover:bg-white group-hover:border-[#a47fba]'
+            }`}>
+              <Camera size={40} className={`transition-colors ${data.images.length >= photoLimit ? 'text-gray-300' : 'text-gray-200 group-hover:text-[#a47fba]'}`} />
+              <span className="text-sm font-bold text-gray-400">
+                {data.images.length >= photoLimit ? 'Limite Atingido' : (lang === 'pt' ? `Selecione até ${photoLimit} memórias` : `${photoLimit}枚まで選択可能`)}
+              </span>
+            </div>
+          </div>
+          {data.images.length > 0 && (
+            <div className="grid grid-cols-4 md:grid-cols-10 gap-3 mt-6">
+              {data.images.map((img, i) => (
+                <div key={i} className="aspect-square rounded-xl overflow-hidden border border-gray-100 shadow-sm relative group ring-2 ring-transparent hover:ring-[#a47fba] transition-all">
+                  <img src={img} className="w-full h-full object-cover" alt="Preview" />
+                  <button onClick={() => onUpdate({ images: data.images.filter((_, idx) => idx !== i) })} className="absolute top-1 right-1 bg-white/90 rounded-full p-1.5 text-rose-500 opacity-0 group-hover:opacity-100 transition-opacity shadow-md"><Trash2 size={12} /></button>
+                </div>
+              ))}
+            </div>
+          )}
+        </section>
+
         {/* MÚSICA DE FUNDO (Premium e Infinity) */}
         {isPremium && (
           <section className="space-y-4 pt-6 border-t border-gray-50">
@@ -184,49 +248,6 @@ const Editor: React.FC<EditorProps> = ({ data, plan, onUpdate, lang, t }) => {
                 className="bg-transparent outline-none flex-grow font-bold text-gray-700 placeholder:text-gray-300" 
                 placeholder={t.musicPlaceholder} 
               />
-            </div>
-          </section>
-        )}
-
-        {/* LINHA DO TEMPO */}
-        {isPremium && (
-          <section className="space-y-6 pt-6 border-t border-gray-50">
-            <div className="flex justify-between items-center px-1">
-              <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2">
-                <Clock size={14} className="text-[#a47fba]" /> {t.milestones}
-              </label>
-              <button onClick={addMilestone} className="text-[#a47fba] hover:text-[#8e6aa3] flex items-center gap-1 text-[10px] font-black uppercase tracking-widest">
-                <Plus size={14} /> {t.addMilestone}
-              </button>
-            </div>
-            
-            <div className="space-y-4">
-              {data.milestones.map((m) => (
-                <div key={m.id} className="grid md:grid-cols-12 gap-4 p-6 bg-[#f8f7f9] rounded-[2rem] border-2 border-[#f0eef2] animate-in slide-in-from-top-4">
-                  <div className="md:col-span-4">
-                    <input 
-                      type="date" 
-                      value={m.date} 
-                      onChange={e => updateMilestone(m.id, { date: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl border border-gray-100 bg-white text-sm font-bold text-gray-600 outline-none focus:border-[#a47fba]"
-                    />
-                  </div>
-                  <div className="md:col-span-7">
-                    <input 
-                      type="text" 
-                      value={m.title} 
-                      onChange={e => updateMilestone(m.id, { title: e.target.value })}
-                      placeholder={t.milestoneTitle}
-                      className="w-full px-4 py-3 rounded-xl border border-gray-100 bg-white text-sm font-bold text-gray-700 outline-none focus:border-[#a47fba]"
-                    />
-                  </div>
-                  <div className="md:col-span-1 flex items-center justify-center">
-                    <button onClick={() => removeMilestone(m.id)} className="text-gray-300 hover:text-rose-500 transition-colors">
-                      <Trash2 size={20} />
-                    </button>
-                  </div>
-                </div>
-              ))}
             </div>
           </section>
         )}
@@ -302,29 +323,48 @@ const Editor: React.FC<EditorProps> = ({ data, plan, onUpdate, lang, t }) => {
           </div>
         </section>
 
-        {/* FOTOS */}
-        <section className="space-y-3 border-t border-gray-50 pt-8">
-          <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2 px-1">
-            <Camera size={14} className="text-[#a47fba]" /> {t.gallery} ({data.images.length}/{isInfinity ? 20 : (isPremium ? 4 : 1)})
-          </label>
-          <div className="relative group">
-            <input type="file" multiple={isPremium} accept="image/*" onChange={handleFileChange} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" />
-            <div className="w-full px-6 py-10 rounded-3xl border-2 border-dashed border-[#f0eef2] bg-[#f8f7f9]/50 group-hover:bg-white group-hover:border-[#a47fba] transition-all flex flex-col items-center gap-3">
-              <Camera size={40} className="text-gray-200 group-hover:text-[#a47fba]" />
-              <span className="text-sm font-bold text-gray-400">{lang === 'pt' ? 'Selecione suas memórias fotográficas' : '写真を選択'}</span>
+        {/* LINHA DO TEMPO */}
+        {isPremium && (
+          <section className="space-y-6 pt-6 border-t border-gray-50">
+            <div className="flex justify-between items-center px-1">
+              <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2">
+                <Clock size={14} className="text-[#a47fba]" /> {t.milestones}
+              </label>
+              <button onClick={addMilestone} className="text-[#a47fba] hover:text-[#8e6aa3] flex items-center gap-1 text-[10px] font-black uppercase tracking-widest">
+                <Plus size={14} /> {t.addMilestone}
+              </button>
             </div>
-          </div>
-          {data.images.length > 0 && (
-            <div className="grid grid-cols-4 md:grid-cols-10 gap-3 mt-6">
-              {data.images.map((img, i) => (
-                <div key={i} className="aspect-square rounded-xl overflow-hidden border border-gray-100 shadow-sm relative group ring-2 ring-transparent hover:ring-[#a47fba] transition-all">
-                  <img src={img} className="w-full h-full object-cover" alt="Preview" />
-                  <button onClick={() => onUpdate({ images: data.images.filter((_, idx) => idx !== i) })} className="absolute top-1 right-1 bg-white/90 rounded-full p-1.5 text-rose-500 opacity-0 group-hover:opacity-100 transition-opacity shadow-md"><Trash2 size={12} /></button>
+            
+            <div className="space-y-4">
+              {data.milestones.map((m) => (
+                <div key={m.id} className="grid md:grid-cols-12 gap-4 p-6 bg-[#f8f7f9] rounded-[2rem] border-2 border-[#f0eef2] animate-in slide-in-from-top-4">
+                  <div className="md:col-span-4">
+                    <input 
+                      type="date" 
+                      value={m.date} 
+                      onChange={e => updateMilestone(m.id, { date: e.target.value })}
+                      className="w-full px-4 py-3 rounded-xl border border-gray-100 bg-white text-sm font-bold text-gray-600 outline-none focus:border-[#a47fba]"
+                    />
+                  </div>
+                  <div className="md:col-span-7">
+                    <input 
+                      type="text" 
+                      value={m.title} 
+                      onChange={e => updateMilestone(m.id, { title: e.target.value })}
+                      placeholder={t.milestoneTitle}
+                      className="w-full px-4 py-3 rounded-xl border border-gray-100 bg-white text-sm font-bold text-gray-700 outline-none focus:border-[#a47fba]"
+                    />
+                  </div>
+                  <div className="md:col-span-1 flex items-center justify-center">
+                    <button onClick={() => removeMilestone(m.id)} className="text-gray-300 hover:text-rose-500 transition-colors">
+                      <Trash2 size={20} />
+                    </button>
+                  </div>
                 </div>
               ))}
             </div>
-          )}
-        </section>
+          </section>
+        )}
 
         {/* CÁPSULA DO TEMPO */}
         {isInfinity && (
@@ -387,7 +427,12 @@ const Editor: React.FC<EditorProps> = ({ data, plan, onUpdate, lang, t }) => {
 
         <div className="flex flex-col sm:flex-row gap-6 pt-10">
           <button onClick={() => navigate('/preview')} className="flex-1 border-2 border-[#a47fba] text-[#a47fba] py-5 rounded-2xl font-black uppercase text-xs tracking-widest hover:bg-[#f4f0f7] transition-all shadow-md transform hover:-translate-y-1 active:scale-95">{t.preview}</button>
-          <button onClick={() => navigate('/checkout')} className="flex-1 bg-[#a47fba] text-white py-5 rounded-2xl font-black uppercase text-xs tracking-widest shadow-xl shadow-[#a47fba22] flex items-center justify-center gap-3 hover:bg-[#8e6aa3] transition-all transform hover:-translate-y-1 active:scale-95">{t.finalize} <ArrowRight size={18} /></button>
+          <button 
+            onClick={() => navigate('/checkout')} 
+            className="flex-1 bg-[#a47fba] text-white py-5 rounded-2xl font-black uppercase text-xs tracking-widest shadow-xl shadow-[#a47fba22] flex items-center justify-center gap-3 hover:bg-[#8e6aa3] transition-all transform hover:-translate-y-1 active:scale-95"
+          >
+            {t.finalize} <ArrowRight size={18} />
+          </button>
         </div>
       </div>
     </div>
