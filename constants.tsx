@@ -3,32 +3,6 @@ import { PlanType, Plan, Language, PageTheme, PhotoFrame, PageEffect, CoupleFont
 
 export const getPlans = (lang: Language): Plan[] => [
   {
-    id: PlanType.PREMIUM,
-    name: lang === 'pt' ? 'Plano Amor Máximo' : '永遠の絆プラン',
-    price: lang === 'pt' ? 'R$ 49,90' : '¥ 1400',
-    features: lang === 'pt' ? [
-      'Temas Premium Exclusivos',
-      'Molduras Artísticas Personalizadas',
-      'Música de Fundo (YouTube)',
-      'Linha do Tempo "Nossos Marcos"',
-      'Slideshow Automático de Fotos',
-      'Link Personalizado (Slug)',
-      'Efeitos de Partículas Avançados'
-    ] : [
-      '限定プレミアムテーマ',
-      'カスタムアーティスティックフレーム',
-      'BGM設定（YouTube）',
-      '二人の軌跡（タイムライン）',
-      '思い出のフォトギャラリー',
-      'カスタムURL設定',
-      '高度な粒子エフェクト'
-    ],
-    imageLimit: 4,
-    hasMusic: true,
-    premiumEffects: true,
-    premiumThemes: true
-  },
-  {
     id: PlanType.BASIC,
     name: lang === 'pt' ? 'Plano Essencial' : 'ベーシックプラン',
     price: lang === 'pt' ? 'R$ 29,90' : '¥ 800',
@@ -48,9 +22,67 @@ export const getPlans = (lang: Language): Plan[] => [
       'ミニマルデザイン'
     ],
     imageLimit: 1,
+    videoLimit: 0,
     hasMusic: false,
     premiumEffects: false,
-    premiumThemes: false
+    premiumThemes: false,
+    hasDomain: false
+  },
+  {
+    id: PlanType.PREMIUM,
+    name: lang === 'pt' ? 'Plano Amor Máximo' : '永遠の絆プラン',
+    price: lang === 'pt' ? 'R$ 49,90' : '¥ 1400',
+    features: lang === 'pt' ? [
+      'Temas Premium Exclusivos',
+      'Molduras Artísticas Personalizadas',
+      'Música de Fundo (YouTube)',
+      'Linha do Tempo "Nossos Marcos"',
+      'Galeria com 4 Fotos',
+      'Link Personalizado (Slug)',
+      'Efeitos de Partículas Avançados'
+    ] : [
+      '限定プレミアムテーマ',
+      'カスタムアーティスティックフレーム',
+      'BGM設定（YouTube）',
+      '二人の軌跡（タイムライン）',
+      '4枚の思い出ギャラリー',
+      'カスタムURL設定',
+      '高度な粒子エフェクト'
+    ],
+    imageLimit: 4,
+    videoLimit: 0,
+    hasMusic: true,
+    premiumEffects: true,
+    premiumThemes: true,
+    hasDomain: false
+  },
+  {
+    id: PlanType.INFINITY,
+    name: lang === 'pt' ? 'Plano Infinito' : 'インフィニティプラン',
+    price: lang === 'pt' ? 'R$ 89,90' : '¥ 2500',
+    features: lang === 'pt' ? [
+      'Tudo do Plano Amor Máximo',
+      'Domínio Próprio (.love ou .com)',
+      'Galeria Estendida (20 fotos)',
+      'Suporte a 5 Vídeos (YouTube)',
+      'Cápsula do Tempo Digital',
+      'Suporte Prioritário 24h',
+      'Efeito Visual Exclusivo "Infinity"'
+    ] : [
+      '永遠の絆プランの全機能',
+      '独自ドメイン (.love または .com)',
+      '最大20枚のフォトギャラリー',
+      '5つのビデオサポート',
+      'デジタルタイムカプセル',
+      '24時間優先サポート',
+      '特別エフェクト「インフィニティ」'
+    ],
+    imageLimit: 20,
+    videoLimit: 5,
+    hasMusic: true,
+    premiumEffects: true,
+    premiumThemes: true,
+    hasDomain: true
   }
 ];
 

@@ -20,9 +20,11 @@ const ScrollToTop = () => {
   return null;
 };
 
+// Fixed INITIAL_DATA by adding missing required 'videos' property
 const INITIAL_DATA: CoupleData = {
   partner1: '', partner2: '',
   startDate: '', images: [],
+  videos: [],
   musicUrl: '',
   message: '', effect: PageEffect.NONE,
   theme: PageTheme.ROMANTIC,

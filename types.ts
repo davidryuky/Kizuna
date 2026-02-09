@@ -1,7 +1,8 @@
 
 export enum PlanType {
   BASIC = 'BASIC',
-  PREMIUM = 'PREMIUM'
+  PREMIUM = 'PREMIUM',
+  INFINITY = 'INFINITY'
 }
 
 export enum PageEffect {
@@ -45,6 +46,7 @@ export interface CoupleData {
   partner2: string;
   startDate: string;
   images: string[];
+  videos: string[];
   musicUrl?: string;
   message: string;
   effect: PageEffect;
@@ -54,6 +56,7 @@ export interface CoupleData {
   milestones: Milestone[];
   plan: PlanType;
   slug?: string;
+  requestedDomain?: string;
 }
 
 export interface Plan {
@@ -62,7 +65,9 @@ export interface Plan {
   price: string;
   features: string[];
   imageLimit: number;
+  videoLimit: number;
   hasMusic: boolean;
   premiumEffects: boolean;
   premiumThemes: boolean;
+  hasDomain: boolean;
 }

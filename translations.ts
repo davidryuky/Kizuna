@@ -21,8 +21,10 @@ export const translations = {
     planSelectionSub: "KIZUNA: Mais que um site, um tributo à sua história.",
     basicPlan: "Essência do Laço",
     premiumPlan: "Amor Máximo",
+    infinityPlan: "Infinito & Além",
     startNow: "Começar Agora",
-    bestSeller: "MAIS COMPLETO",
+    bestSeller: "MAIS ESCOLHIDO",
+    mostExclusive: "MÁXIMA EXCLUSIVIDADE",
     footerMsg: "Feito com devoção. © 2024",
     preview: "Visualizar",
     finalize: "Finalizar e Criar",
@@ -63,49 +65,20 @@ export const translations = {
     effects: "Efeito de Fundo",
     fonts: "Estilo da Fonte",
     premiumOnly: "Exclusivo Premium",
+    infinityOnly: "Exclusivo Plano Infinito",
     refundTitle: "Garantia de Felicidade KIZUNA",
     refundSubtitle: "Não gostou do resultado? Nós devolvemos seu dinheiro.",
     refundDesc: "Oferecemos reembolso total em até 7 dias após a compra, sem perguntas. Nosso compromisso é com a celebração do seu amor.",
+    domainSearch: "Buscar seu Domínio Próprio",
+    domainCheck: "Verificar Disponibilidade",
+    domainAvailable: "Domínio disponível! Será seu em breve.",
+    domainUnavailable: "Domínio indisponível. Tente outro nome.",
+    domain48h: "Atenção: A configuração do seu domínio próprio pode levar até 48 horas.",
+    videosLabel: "Vídeos das Memórias (URL YouTube)",
     faqItems: [
       {
         q: "O que é o KIZUNA?",
         a: "KIZUNA é uma plataforma exclusiva dedicada a transformar relacionamentos em experiências digitais eternas. Oferecemos um espaço refinado onde casais podem centralizar suas memórias, cronologias e sentimentos em uma página personalizada de alta estética."
-      },
-      {
-        q: "Como realizo a criação da minha página?",
-        a: "O processo é intuitivo: selecione o plano que melhor se adapta à sua história, preencha os dados do casal, escolha uma data marcante e anexe suas fotografias. Após a personalização do design e confirmação do pagamento, sua página é gerada instantaneamente."
-      },
-      {
-        q: "Quais recursos estão disponíveis no meu site personalizado?",
-        a: "Sua página contará com um contador cronológico de precisão, galeria de imagens, mensagens dedicadas e, no plano premium, trilha sonora personalizada, linha do tempo de marcos importantes e efeitos visuais imersivos."
-      },
-      {
-        q: "Como terei acesso ao projeto após a aquisição?",
-        a: "Imediatamente após a confirmação do pagamento, você visualizará seu QR Code exclusivo e receberá um link direto via e-mail para acesso e compartilhamento imediato."
-      },
-      {
-        q: "A página possui um prazo de validade?",
-        a: "No plano essencial, sua página permanece ativa por 12 meses. Ao optar pelo plano premium, você garante acesso vitalício, tornando sua história uma presença permanente na rede."
-      },
-      {
-        q: "É possível realizar alterações após a publicação?",
-        a: "Sim. O KIZUNA oferece um painel de gestão onde você pode atualizar fotos, mensagens e marcos sempre que desejar, garantindo que o site evolua junto com o seu relacionamento."
-      },
-      {
-        q: "Quais são os valores para os planos?",
-        a: "Oferecemos o Plano Essência por R$ 29,90 e o Plano Amor Máximo, com todos os recursos exclusivos, por R$ 49,90. Ambos são pagamentos únicos, sem mensalidades."
-      },
-      {
-        q: "Qual o tempo de processamento para o recebimento do link?",
-        a: "Pagamentos via cartão de crédito e métodos digitais são processados em tempo real, liberando seu acesso no mesmo instante. Outros métodos podem levar até 48 horas úteis para compensação."
-      },
-      {
-        q: "Quais modalidades de pagamento são aceitas?",
-        a: "Aceitamos os principais cartões de crédito internacionais e nacionais, além de métodos de pagamento digital seguros processados via Stripe."
-      },
-      {
-        q: "Como posso contatar o suporte especializado?",
-        a: "Nossa equipe de atendimento está disponível através do e-mail suporte@kizuna.love para auxiliar em qualquer etapa da sua jornada conosco."
       }
     ]
   },
@@ -130,8 +103,10 @@ export const translations = {
     planSelectionSub: "KIZUNA：単なるサイトではなく、愛の証明として。",
     basicPlan: "絆の原点",
     premiumPlan: "究極の愛",
+    infinityPlan: "インフィニティプラン",
     startNow: "今すぐ始める",
     bestSeller: "一番人気",
+    mostExclusive: "最高級",
     footerMsg: "二人の絆が永遠に輝き続けることを願って. © 2024",
     preview: "プレビュー",
     finalize: "完了して作成",
@@ -172,50 +147,16 @@ export const translations = {
     effects: "背景エフェクト",
     fonts: "フォントスタイル",
     premiumOnly: "プレミアム限定",
+    infinityOnly: "インフィニティ限定",
     refundTitle: "KIZUNA 幸せ保証",
     refundSubtitle: "ご満足いただけない場合は全額返金いたします。",
     refundDesc: "ご購入後7日以内であれば、理由を問わず全額返金いたします。私たちの使命は、皆様の愛を祝福することです。",
-    faqItems: [
-      {
-        q: "KIZUNAとは何ですか？",
-        a: "KIZUNAは、大切なパートナーとの思い出を永遠のデジタル体験に変えるためのプレミアムプラットフォームです。洗練されたデザインのページを通じて、二人の軌跡を美しく記録できます。"
-      },
-      {
-        q: "ページの作成方法は？",
-        a: "プランを選択し、二人の名前、記念日、写真をアップロードするだけで簡単に作成できます。お支払い完了後、すぐにページが生成されます。"
-      },
-      {
-        q: "どのような機能が含まれますか？",
-        a: "経過時間カウンター、フォトギャラリー、メッセージ機能が含まれます。プレミアムプランではBGMやタイムライン、特別な背景エフェクトも利用可能です。"
-      },
-      {
-        q: "支払った後、どのようにページを受け取りますか？",
-        a: "お支払い完了後、メールで専用リンクとQRコードが即座に送付されます。"
-      },
-      {
-        q: "公開期限はありますか？",
-        a: "ベーシックプランは1年間、プレミアムプランでは永久的に公開され続けます。"
-      },
-      {
-        q: "作成後に内容を変更できますか？",
-        a: "はい、お送りする管理用リンクから、いつでも写真やメッセージの更新が可能です。"
-      },
-      {
-        q: "料金はいくらですか？",
-        a: "ベーシックプランは800円、プレミアムプランは1400円です。月額料金のない一回払いです。"
-      },
-      {
-        q: "支払いの反映時間は？",
-        a: "クレジットカード決済の場合は即座に反映されます。"
-      },
-      {
-        q: "どのような支払い方法がありますか？",
-        a: "Stripeを通じた主要なクレジットカード決済に対応しています。"
-      },
-      {
-        q: "サポートへの連絡方法は？",
-        a: "サポートチーム（suporte@kizuna.love）までお気軽にお問い合わせください。"
-      }
-    ]
+    domainSearch: "独自ドメインの検索",
+    domainCheck: "空き状況を確認",
+    domainAvailable: "ドメインは利用可能です！",
+    domainUnavailable: "ドメインは利用できません。別の名前をお試しください。",
+    domain48h: "注意：独自ドメインの設定には最大48時間かかる場合があります。",
+    videosLabel: "思い出のビデオ (YouTube URL)",
+    faqItems: []
   }
 };
