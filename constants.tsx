@@ -90,34 +90,42 @@ export const THEMES = [
   { 
     id: PageTheme.ROMANTIC, 
     name: 'Kizuna Lavender', 
-    colors: 'bg-[#f8f7f9]', 
-    card: 'bg-white/90',
-    text: 'text-[#a47fba]',
-    accent: 'bg-[#a47fba]'
+    colors: 'bg-[#fdfaff]', 
+    card: 'bg-white/80 backdrop-blur-md border-white/40',
+    text: 'text-purple-950',
+    muted: 'text-purple-900/50',
+    accent: 'bg-purple-400',
+    isDark: false
   },
   { 
     id: PageTheme.CLASSIC, 
     name: 'Kizuna Azure', 
     colors: 'bg-[#f0f9ff]', 
-    card: 'bg-white/95',
-    text: 'text-[#0369a1]', // Cor azul mais escura para contraste (Sky-700)
-    accent: 'bg-[#67cbf1]'
+    card: 'bg-white/70 backdrop-blur-md border-white/60',
+    text: 'text-sky-950', 
+    muted: 'text-sky-900/50',
+    accent: 'bg-sky-500',
+    isDark: false
   },
   { 
     id: PageTheme.MIDNIGHT, 
     name: 'Kizuna Graphite', 
-    colors: 'bg-[#30302e]', 
-    card: 'bg-[#3d3d3c]/95',
-    text: 'text-[#f0f9ff]',
-    accent: 'bg-[#a47fba]'
+    colors: 'bg-[#121212]', 
+    card: 'bg-[#1e1e1e]/90 backdrop-blur-md border-white/5',
+    text: 'text-slate-100',
+    muted: 'text-slate-400',
+    accent: 'bg-purple-500',
+    isDark: true
   },
   { 
     id: PageTheme.INFINITY, 
     name: 'Luminous Infinity', 
-    colors: 'bg-[#050505]', 
-    card: 'bg-black/80 border-2 border-[#67cbf1]/30 backdrop-blur-3xl shadow-[0_0_50px_rgba(103,203,241,0.1)]',
+    colors: 'bg-[#020617]', 
+    card: 'bg-black/60 backdrop-blur-3xl border-cyan-500/20 shadow-[0_0_40px_rgba(34,211,238,0.1)]',
     text: 'text-white',
-    accent: 'bg-[#67cbf1]'
+    muted: 'text-cyan-400/50',
+    accent: 'bg-cyan-400',
+    isDark: true
   },
 ];
 

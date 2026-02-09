@@ -4,11 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { CoupleData, PageEffect, PlanType } from '../types';
 import { ArrowLeft, CheckCircle, QrCode, Share2, X, Download, Star, Music, Heart } from 'lucide-react';
 import { THEMES } from '../constants';
-
-// Plan Views
-import BasicPreview from './plans/BasicPreview';
-import PremiumPreview from './plans/PremiumPreview';
-import InfinityPreview from './plans/InfinityPreview';
+import UnifiedPreview from './UnifiedPreview';
 
 interface CounterState {
   days: number;
@@ -73,48 +69,53 @@ const Preview: React.FC<{ data: CoupleData, lang: any, t: any }> = ({ data, lang
   const pageUrl = isInfinity && data.requestedDomain ? `https://www.${data.requestedDomain}` : `https://kizuna.love/${data.slug || 'nosso-amor'}`;
   const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=${encodeURIComponent(pageUrl)}&color=050505&bgcolor=ffffff`;
 
-  const renderPlanView = () => {
-    const commonProps = { data, t, counter, activeTheme, selectedFont: data.fontFamily };
-    if (data.plan === PlanType.INFINITY) return <InfinityPreview {...commonProps} />;
-    if (data.plan === PlanType.PREMIUM) return <PremiumPreview {...commonProps} />;
-    return <BasicPreview {...commonProps} />;
-  };
-
   return (
     <div className={`relative min-h-screen flex flex-col items-center p-6 overflow-x-hidden ${activeTheme.colors} transition-all duration-1000`}>
       {data.effect === PageEffect.HEARTS && <HeartEffect />}
       {data.effect === PageEffect.SPARKLES && <StarEffect />}
       
+      {/* Botões de Navegação da Prévia */}
       <div className="fixed top-6 left-0 right-0 z-[100] flex justify-between px-6 pointer-events-none">
-        <button onClick={() => navigate('/editar')} className="pointer-events-auto bg-white/90 backdrop-blur shadow-xl px-6 py-3 rounded-full text-gray-900 border border-white/50 flex items-center gap-2 font-black text-[10px] uppercase tracking-widest hover:bg-white transition-all transform hover:scale-105 active:scale-95"><ArrowLeft size={16} /> {t.backEditor}</button>
-        <button onClick={() => navigate('/checkout')} className="pointer-events-auto bg-rose-500 text-white shadow-xl px-8 py-3 rounded-full flex items-center gap-2 font-black text-[10px] uppercase tracking-widest hover:bg-rose-600 transition-all transform hover:scale-105 active:scale-95">{t.finishPage} <CheckCircle size={16} /></button>
+        <button onClick={() => navigate('/editar')} className="pointer-events-auto bg-white/90 backdrop-blur shadow-xl px-6 py-3 rounded-full text-gray-900 border border-white/50 flex items-center gap-2 font-black text-[10px] uppercase tracking-widest hover:bg-white transition-all transform hover:scale-105 active:scale-95 shadow-black/5"><ArrowLeft size={16} /> {t.backEditor}</button>
+        <button onClick={() => navigate('/checkout')} className="pointer-events-auto bg-rose-500 text-white shadow-xl px-8 py-3 rounded-full flex items-center gap-2 font-black text-[10px] uppercase tracking-widest hover:bg-rose-600 transition-all transform hover:scale-105 active:scale-95 shadow-rose-200">{t.finishPage} <CheckCircle size={16} /></button>
       </div>
 
+      {/* Áudio em Background */}
       {isPremium && musicVideoId && (
         <div className="fixed -top-[2000px] pointer-events-none">
           <iframe width="1" height="1" src={`https://www.youtube.com/embed/${musicVideoId}?autoplay=${isMusicPlaying ? '1' : '0'}&loop=1&playlist=${musicVideoId}`} allow="autoplay" title="Audio"></iframe>
         </div>
       )}
 
+      {/* Unified Preview - Template Igual para Todos os Planos */}
       <div className="mt-28 w-full flex justify-center">
-        {renderPlanView()}
+        <UnifiedPreview 
+          data={data} 
+          t={t} 
+          counter={counter} 
+          activeTheme={activeTheme} 
+          selectedFont={data.fontFamily} 
+        />
       </div>
 
+      {/* Botão de Compartilhamento */}
       <div className="mt-20 mb-40 text-center relative z-10">
-         <button onClick={() => setShowShareModal(true)} className="bg-white text-rose-500 shadow-xl px-16 py-6 rounded-2xl font-black uppercase text-xs tracking-[0.3em] flex items-center justify-center gap-5 mx-auto hover:scale-105 transition-all transform active:scale-95">
+         <button onClick={() => setShowShareModal(true)} className={`${activeTheme.card} ${activeTheme.text} shadow-xl px-16 py-6 rounded-2xl font-black uppercase text-xs tracking-[0.3em] flex items-center justify-center gap-5 mx-auto hover:scale-105 transition-all transform active:scale-95 border`}>
            <Share2 size={24} /> {t.shareBtn}
          </button>
       </div>
 
+      {/* Floating Audio Toggle */}
       {isPremium && musicVideoId && (
-        <button onClick={() => setIsMusicPlaying(!isMusicPlaying)} className="fixed bottom-10 right-10 z-[100] bg-white/95 backdrop-blur shadow-2xl p-6 rounded-full flex items-center gap-5 border border-white/50 hover:scale-110 transition-all group">
+        <button onClick={() => setIsMusicPlaying(!isMusicPlaying)} className={`${activeTheme.card} fixed bottom-10 right-10 z-[100] shadow-2xl p-6 rounded-full flex items-center gap-5 border hover:scale-110 transition-all group`}>
            <div className={`w-14 h-14 ${isMusicPlaying ? 'bg-rose-500 animate-spin-slow' : 'bg-gray-200'} rounded-full flex items-center justify-center text-white transition-all`}>
              <Music size={24} fill={isMusicPlaying ? "white" : "none"} />
            </div>
-           {isMusicPlaying && <span className="text-[11px] font-black uppercase tracking-widest pr-2 animate-pulse text-rose-500">Em Sintonia</span>}
+           {isMusicPlaying && <span className={`text-[11px] font-black uppercase tracking-widest pr-2 animate-pulse ${activeTheme.text}`}>Em Sintonia</span>}
         </button>
       )}
 
+      {/* Modal Share */}
       {showShareModal && (
         <div className="fixed inset-0 z-[200] flex items-center justify-center p-6 bg-black/80 backdrop-blur-xl animate-in fade-in">
            <div className="bg-white rounded-[4rem] p-12 max-w-md w-full shadow-2xl relative text-center border-t-8 border-rose-500">

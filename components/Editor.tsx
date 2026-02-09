@@ -94,7 +94,7 @@ const Editor: React.FC<EditorProps> = ({ data, plan, onUpdate, lang, t }) => {
   const inputClasses = "w-full px-6 py-4 rounded-2xl border-2 border-[#f0eef2] bg-[#f8f7f9]/50 focus:bg-white focus:border-[#a47fba] focus:ring-4 focus:ring-[#a47fba11] outline-none transition-all font-medium text-[#30302e] shadow-sm placeholder:text-gray-300";
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-12 animate-in fade-in duration-500">
+    <div className="max-w-4xl mx-auto px-4 py-12 animate-in fade-in duration-500 overflow-x-hidden">
       <button 
         onClick={() => navigate('/')} 
         className="mb-8 flex items-center gap-3 text-[#a47fba] font-black text-xs uppercase tracking-widest hover:translate-x-[-4px] transition-transform"
@@ -102,11 +102,11 @@ const Editor: React.FC<EditorProps> = ({ data, plan, onUpdate, lang, t }) => {
         <ArrowLeft size={18} /> {lang === 'pt' ? 'Mudar Plano' : 'プラン変更'}
       </button>
 
-      <div className="bg-white rounded-[2.5rem] shadow-2xl p-8 md:p-12 border border-[#f0eef2] space-y-12">
+      <div className="bg-white rounded-[2.5rem] shadow-2xl p-6 md:p-12 border border-[#f0eef2] space-y-12">
         <header className="border-b border-gray-50 pb-8 flex flex-col md:flex-row justify-between items-start gap-4">
           <div>
-            <h2 className="text-4xl font-elegant font-bold text-[#30302e]">{lang === 'pt' ? 'Personalização' : 'カスタマイズ'}</h2>
-            <p className="text-gray-400 mt-2 text-lg font-light">{lang === 'pt' ? 'Construa sua obra de arte digital.' : '自分たちのページをデザインしましょう。'}</p>
+            <h2 className="text-3xl md:text-4xl font-elegant font-bold text-[#30302e]">{lang === 'pt' ? 'Personalização' : 'カスタマイズ'}</h2>
+            <p className="text-gray-400 mt-2 text-base md:text-lg font-light">{lang === 'pt' ? 'Construa sua obra de arte digital.' : '自分たちのページをデザインしましょう。'}</p>
           </div>
           <div className={`inline-flex items-center gap-2 px-5 py-2 rounded-full text-[10px] font-black uppercase tracking-widest border shadow-sm ${
             isInfinity ? 'bg-[#30302e] text-[#67cbf1] border-black' : 'bg-[#f4f0f7] text-[#a47fba] border-[#e8e1f0]'
@@ -115,26 +115,26 @@ const Editor: React.FC<EditorProps> = ({ data, plan, onUpdate, lang, t }) => {
           </div>
         </header>
 
-        {/* BUSCADOR DE DOMÍNIO (Somente Plano Infinity) */}
+        {/* BUSCADOR DE DOMÍNIO (Somente Plano Infinity) - CORREÇÃO MOBILE AQUI */}
         {isInfinity && (
-          <section className="p-8 bg-gradient-to-br from-[#f8f7f9] to-white rounded-[2rem] border-2 border-[#67cbf122] space-y-4">
+          <section className="p-5 md:p-8 bg-gradient-to-br from-[#f8f7f9] to-white rounded-[2rem] border-2 border-[#67cbf122] space-y-4 overflow-hidden">
             <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2 px-1">
               <Globe size={14} className="text-[#67cbf1]" /> {t.domainSearch}
             </label>
-            <div className="flex gap-2">
-              <div className="flex-grow flex items-center bg-white px-6 py-4 rounded-2xl border-2 border-[#f0eef2] shadow-inner">
+            <div className="flex gap-2 w-full">
+              <div className="flex-grow flex items-center bg-white px-4 md:px-6 py-4 rounded-2xl border-2 border-[#f0eef2] shadow-inner min-w-0">
                 <input 
                   type="text" 
                   value={domainSearch}
                   onChange={(e) => setDomainSearch(e.target.value.toLowerCase().replace(/[^a-z0-9-.]/g, ''))}
                   placeholder="ex: lucas-e-carol"
-                  className="bg-transparent outline-none flex-grow font-bold text-[#30302e]" 
+                  className="bg-transparent outline-none w-full font-bold text-[#30302e] text-sm md:text-base" 
                 />
               </div>
               <button 
                 onClick={checkDomain}
                 disabled={domainStatus === 'checking'}
-                className="bg-[#67cbf1] text-white px-6 rounded-2xl hover:bg-[#5bb8dc] transition-all flex items-center justify-center min-w-[60px] shadow-lg shadow-[#67cbf133]"
+                className="bg-[#67cbf1] text-white px-4 md:px-6 rounded-2xl hover:bg-[#5bb8dc] transition-all flex items-center justify-center min-w-[50px] md:min-w-[60px] shadow-lg shadow-[#67cbf133] flex-shrink-0"
               >
                 {domainStatus === 'checking' ? <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div> : <Search size={20} />}
               </button>
@@ -188,7 +188,7 @@ const Editor: React.FC<EditorProps> = ({ data, plan, onUpdate, lang, t }) => {
           </section>
         )}
 
-        {/* LINHA DO TEMPO: NOSSOS MARCOS (Premium e Infinity) */}
+        {/* LINHA DO TEMPO */}
         {isPremium && (
           <section className="space-y-6 pt-6 border-t border-gray-50">
             <div className="flex justify-between items-center px-1">
@@ -231,7 +231,7 @@ const Editor: React.FC<EditorProps> = ({ data, plan, onUpdate, lang, t }) => {
           </section>
         )}
 
-        {/* DESIGN: TEMAS, MOLDURAS E FONTES */}
+        {/* DESIGN */}
         <section className="space-y-10 pt-6 border-t border-gray-50">
           <div className="grid md:grid-cols-2 gap-10">
             <div className="space-y-4">
@@ -326,17 +326,17 @@ const Editor: React.FC<EditorProps> = ({ data, plan, onUpdate, lang, t }) => {
           )}
         </section>
 
-        {/* CÁPSULA DO TEMPO (Plano Infinito) */}
+        {/* CÁPSULA DO TEMPO */}
         {isInfinity && (
-          <section className="p-8 bg-[#30302e] text-white rounded-[2.5rem] space-y-6 shadow-xl relative overflow-hidden group">
+          <section className="p-6 md:p-8 bg-[#30302e] text-white rounded-[2.5rem] space-y-6 shadow-xl relative overflow-hidden group">
             <div className="absolute top-0 right-0 w-32 h-32 bg-[#67cbf1]/10 rounded-full blur-3xl -mr-16 -mt-16"></div>
             <div className="flex items-center gap-4 relative z-10">
-              <div className="w-14 h-14 bg-[#67cbf1] rounded-2xl flex items-center justify-center text-white shadow-lg shadow-[#67cbf133]">
-                <Clock size={28} />
+              <div className="w-12 h-12 md:w-14 md:h-14 bg-[#67cbf1] rounded-2xl flex items-center justify-center text-white shadow-lg shadow-[#67cbf133]">
+                <Clock size={24} />
               </div>
               <div>
-                <h3 className="text-2xl font-bold">{t.capsuleTitle}</h3>
-                <p className="text-[10px] text-[#67cbf1] uppercase tracking-[0.3em] font-black">Uma mensagem que só o tempo revelará</p>
+                <h3 className="text-xl md:text-2xl font-bold">{t.capsuleTitle}</h3>
+                <p className="text-[8px] md:text-[10px] text-[#67cbf1] uppercase tracking-[0.3em] font-black">Uma mensagem que só o tempo revelará</p>
               </div>
             </div>
             
@@ -357,14 +357,14 @@ const Editor: React.FC<EditorProps> = ({ data, plan, onUpdate, lang, t }) => {
                   onChange={e => onUpdate({ capsuleMessage: e.target.value })}
                   rows={3}
                   placeholder="O que você quer dizer ao seu amor daqui a alguns meses ou anos?"
-                  className="w-full px-6 py-4 rounded-xl bg-white/5 border-2 border-white/10 focus:border-[#67cbf1] outline-none transition-all font-medium text-white resize-none shadow-inner"
+                  className="w-full px-6 py-4 rounded-xl bg-white/5 border-2 border-white/10 focus:border-[#67cbf1] outline-none transition-all font-medium text-white resize-none shadow-inner text-sm"
                 />
               </div>
             </div>
           </section>
         )}
 
-        {/* VÍDEOS (Plano Infinito) */}
+        {/* VÍDEOS */}
         <section className="space-y-6 border-t border-gray-50 pt-8">
           <div className="flex justify-between items-center px-1">
              <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2">
@@ -379,7 +379,7 @@ const Editor: React.FC<EditorProps> = ({ data, plan, onUpdate, lang, t }) => {
           {isInfinity && (data.videos || []).map((v, i) => (
             <div key={i} className="flex gap-4 p-5 bg-[#f8f7f9] rounded-2xl border-2 border-[#f0eef2] animate-in slide-in-from-top-4 items-center">
                <Youtube size={24} className="text-rose-500" />
-               <input type="text" value={v} onChange={e => updateVideo(i, e.target.value)} className="bg-transparent outline-none flex-grow font-bold text-gray-700 placeholder:text-gray-300" placeholder="Cole o link do YouTube aqui..." />
+               <input type="text" value={v} onChange={e => updateVideo(i, e.target.value)} className="bg-transparent outline-none flex-grow font-bold text-gray-700 placeholder:text-gray-300 text-sm" placeholder="Cole o link do YouTube aqui..." />
                <button onClick={() => removeVideo(i)} className="text-gray-300 hover:text-rose-400 p-2"><Trash2 size={20} /></button>
             </div>
           ))}
