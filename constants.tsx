@@ -99,15 +99,15 @@ export const THEMES = [
     id: PageTheme.CLASSIC, 
     name: 'Kizuna Azure', 
     colors: 'bg-[#f0f9ff]', 
-    card: 'bg-white/90',
-    text: 'text-[#67cbf1]',
+    card: 'bg-white/95',
+    text: 'text-[#0369a1]', // Cor azul mais escura para contraste (Sky-700)
     accent: 'bg-[#67cbf1]'
   },
   { 
     id: PageTheme.MIDNIGHT, 
     name: 'Kizuna Graphite', 
     colors: 'bg-[#30302e]', 
-    card: 'bg-[#3d3d3c]/90',
+    card: 'bg-[#3d3d3c]/95',
     text: 'text-[#f0f9ff]',
     accent: 'bg-[#a47fba]'
   },
